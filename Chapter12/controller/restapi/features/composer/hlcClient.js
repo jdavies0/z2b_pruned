@@ -372,8 +372,12 @@ function _monitor(locals, _event)
     console.log(method+ ' _event received: '+_event.$type+' for Order: '+_event.orderID);
     // create an event object and give it the event type, the orderID, the buyer id and the eventID
     // send that event back to the requestor
-    // ========> Your Code Goes Here <=========
-    
+    let event = {};
+    event.type = _event.$type;
+    event.orderID = _event.orderID;
+    event.ID = _event.buyerID;
+    svc.send(locals, 'Alert',JSON.stringify(event));
+
     // using switch/case logic, send events back to each participant who should be notified. 
     // for example, when a seller requests payment, they should be notified when the transaction has completed
     // and the financeCo should be notified at the same time. 
@@ -386,26 +390,47 @@ function _monitor(locals, _event)
         break;
     case 'Bought':
     case 'PaymentRequested':
-        // ========> Your Code Goes Here <=========
+        event.ID = _event.sellerID;
+        svc.send(locals, 'Alert',JSON.stringify(event));
+        event.ID = _event.financeCoID;
+        svc.send(locals, 'Alert',JSON.stringify(event));
         break;
     case 'Ordered':
     case 'Cancelled':
     case 'Backordered':
-        // ========> Your Code Goes Here <=========
+        event.ID = _event.sellerID;
+        svc.send(locals, 'Alert',JSON.stringify(event));
+        event.ID = _event.providerID;
+        svc.send(locals, 'Alert',JSON.stringify(event));
         break;
     case 'ShipRequest':
     case 'DeliveryStarted':
     case 'DeliveryCompleted':
-        // ========> Your Code Goes Here <=========
+        event.ID = _event.sellerID;
+        svc.send(locals, 'Alert',JSON.stringify(event));
+        event.ID = _event.providerID;
+        svc.send(locals, 'Alert',JSON.stringify(event));
+        event.ID = _event.shipperID;
+        svc.send(locals, 'Alert',JSON.stringify(event));
         break;
     case 'DisputeOpened':
     case 'Resolved':
     case 'Refunded':
     case 'Paid':
-        // ========> Your Code Goes Here <=========
+        event.ID = _event.sellerID;
+        svc.send(locals, 'Alert',JSON.stringify(event));
+        event.ID = _event.providerID;
+        svc.send(locals, 'Alert',JSON.stringify(event));
+        event.ID = _event.shipperID;
+        svc.send(locals, 'Alert',JSON.stringify(event));
+        event.ID = _event.financeCoID;
+        svc.send(locals, 'Alert',JSON.stringify(event));
         break;
     case 'PaymentAuthorized':
-        // ========> Your Code Goes Here <=========
+        event.ID = _event.sellerID;
+        svc.send(locals, 'Alert',JSON.stringify(event));
+        event.ID = _event.financeCoID;
+        svc.send(locals, 'Alert',JSON.stringify(event));
         break;
     default:
         break;

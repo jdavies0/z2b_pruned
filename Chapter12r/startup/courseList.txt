@@ -1,0 +1,6 @@
+{ "courses": [
+{"courseUID":1,"courseID":"ACC-120","courseDescription":"Prin of Financial Accounting", "courseSection":"0001"  "creditHours":4, "term":"Spring 2019", "location":"Online","seats":34,"instructor","Cox,S"},
+{"courseUID":2,"courseID":"ACC-121","courseDescription":"Prin of Managerial Accounting", "courseSection":"0001"  "creditHours":4, "term":"Spring 2019", "location":"Online","seats":20, "instructor","Best,T}
+]}
+
+

@@ -29,7 +29,7 @@ function singleUX ()
         {
         $('#body').empty();
         $('#body').append(_page);
-        loadBuyerUX();
+        loadStudentUX();
         loadSellerUX();
         loadProviderUX();
         loadShipperUX();
@@ -42,7 +42,7 @@ function singleUX ()
         {
             $('#body').empty();
             $('#body').append(_page);
-            loadBuyerUX();
+            loadStudentUX();
             loadSellerUX();
             loadProviderUX();
             loadShipperUX();

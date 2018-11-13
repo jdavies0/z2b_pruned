@@ -1,0 +1,33 @@
+{ "members":
+    [
+        {"type": "Seller", "pw": "bob", "companyName": "PC Hardware, Inc", "id": "bob@pchardwareinc.com"},
+        {"type": "Seller", "pw": "jojo", "companyName": "Inovative Solutions, Inc", "id": "jojo@innovativesolutionsinc.com"},
+        {"type": "Seller", "pw": "mary", "companyName": "The i-Series Experts, Inc", "id": "mary@iseriesexpertsinc.com"},
+        {"type": "Seller", "pw": "wilber", "companyName": "Cooling Systems R Us, Inc", "id": "wilber@coolingsystemsrusinc.com"},
+        {"type": "Seller", "pw": "erin", "companyName": "2nd Life Systems, Inc", "id": "Erin@2ndlifesystemsinc.com"},
+        {"type": "Seller", "pw": "abdul", "companyName": "The Cognitive Advantage, Inc", "id": "abdul@cognitiveadvantageinc.com"},
+        {"type": "Seller", "pw": "aiesha", "companyName": "Cloud Nine Software, Inc", "id": "aiesha@cloudninesoftwareinc.com"},
+        {"type": "Seller", "pw": "joshua", "companyName": "Office Experts, Inc", "id": "joshua@officeexpertsinc.com"},
+        {"type": "Seller", "pw": "alwayson", "companyName": "NonStop, Inc", "id": "alwayson@nonstopinc.com"},
+        {"type": "Seller", "pw": "anytime", "companyName": "Virtual Paper, Inc", "id": "anytime@virtualpaperinc.com"},
+        {"type": "Shipper", "pw": "speedmatters", "companyName": "Fast Eddy, Inc", "id": "speedmatters@fasteddyinc.com"},
+        {"type": "Shipper", "pw": "wantitnow", "companyName": "The Overnight Experts, Inc", "id": "wantitnow@overnightexpressinc.com"},
+        {"type": "Provider", "pw": "info", "companyName": "PC Hardware Now, Inc", "id": "info@pchardwarenowinc.com"},
+        {"type": "Shipper", "pw": "dummyShipper", "companyName": "dummy shipper", "id": "noop@dummy"},
+        {"type": "Provider", "pw": "dummyProvider", "companyName": "dummy provider", "id": "noop@dummy"},
+        {"type": "Provider", "pw": "power", "companyName": "UPS Systems, Inc", "id": "power@upssystemsinc.com"},
+        {"type": "Provider", "pw": "online", "companyName": "The App Store, Inc", "id": "online@theappstoreinc.com"},
+        {"type": "FinanceCo", "pw": "easymoney", "companyName": "The Global Financier", "id": "easymoney@easymoneyinc.com"}
+    ],
+    "items":
+    [
+        {"itemNo": 1, "itemDescription": "Macbook Pro 16Gb, 1Tb", "quantity": 2000, "unitPrice": 1285},
+        {"itemNo": 2, "itemDescription": "Macbook Pro 8Gb, .5Tb", "quantity": 2000, "unitPrice": 985},
+        {"itemNo": 3, "itemDescription": "Lenovo Thinkpad W520 16Gb, .25Tb", "quantity": 1000, "unitPrice": 500},
+        {"itemNo": 4, "itemDescription": "Lenovo Thinkpad W520 32Gb, 1Tb", "quantity": 4000, "unitPrice": 1565},
+        {"itemNo": 5, "itemDescription": "4K Monitor - 25", "quantity": 4000, "unitPrice": 265},
+        {"itemNo": 6, "itemDescription": "4K Monitor - 32", "quantity": 4000, "unitPrice": 365},
+        {"itemNo": 7, "itemDescription": "4K Monitor - 37", "quantity": 4000, "unitPrice": 465},
+        {"itemNo": 8, "itemDescription": "4K Monitor - 42", "quantity": 4000, "unitPrice": 565}
+    ]
+}

@@ -1,0 +1,294 @@
+member list
+
+{ "members":
+    [
+        {"type": "Seller", "pw": "bob", "companyName": "PC Hardware, Inc", "id": "bob@pchardwareinc.com"},
+        {"type": "Seller", "pw": "jojo", "companyName": "Inovative Solutions, Inc", "id": "jojo@innovativesolutionsinc.com"},
+        {"type": "Seller", "pw": "mary", "companyName": "The i-Series Experts, Inc", "id": "mary@iseriesexpertsinc.com"},
+        {"type": "Seller", "pw": "wilber", "companyName": "Cooling Systems R Us, Inc", "id": "wilber@coolingsystemsrusinc.com"},
+        {"type": "Seller", "pw": "erin", "companyName": "2nd Life Systems, Inc", "id": "Erin@2ndlifesystemsinc.com"},
+        {"type": "Seller", "pw": "abdul", "companyName": "The Cognitive Advantage, Inc", "id": "abdul@cognitiveadvantageinc.com"},
+        {"type": "Seller", "pw": "aiesha", "companyName": "Cloud Nine Software, Inc", "id": "aiesha@cloudninesoftwareinc.com"},
+        {"type": "Seller", "pw": "joshua", "companyName": "Office Experts, Inc", "id": "joshua@officeexpertsinc.com"},
+        {"type": "Seller", "pw": "alwayson", "companyName": "NonStop, Inc", "id": "alwayson@nonstopinc.com"},
+        {"type": "Seller", "pw": "anytime", "companyName": "Virtual Paper, Inc", "id": "anytime@virtualpaperinc.com"},
+        {"type": "Buyer", "pw": "yes", "companyName": "Software Solutions, Inc", "id": "yes@softwaresolutionsinc.com"},
+        {"type": "Buyer", "pw": "buyer1", "companyName": "Hybrid Cloud Designs, Inc", "id": "buyer1@hybridclouddesignsinc.com"},
+        {"type": "Buyer", "pw": "eric", "companyName": "Born On The Cloud, Inc", "id": "eric@bornonthecloudinc.com"},
+        {"type": "Buyer", "pw": "abby", "companyName": "Kid Friendly Learning, Inc", "id": "abby@kidfriendlyinc.com"},
+        {"type": "Buyer", "pw": "kristen", "companyName": "The Education Game, Inc", "id": "kristen@gameify.com"},
+        {"type": "Shipper", "pw": "speedmatters", "companyName": "Fast Eddy, Inc", "id": "speedmatters@fasteddyinc.com"},
+        {"type": "Shipper", "pw": "wantitnow", "companyName": "The Overnight Experts, Inc", "id": "wantitnow@overnightexpressinc.com"},
+        {"type": "Provider", "pw": "info", "companyName": "PC Hardware Now, Inc", "id": "info@pchardwarenowinc.com"},
+        {"type": "Shipper", "pw": "dummyShipper", "companyName": "dummy shipper", "id": "noop@dummy"},
+        {"type": "Provider", "pw": "dummyProvider", "companyName": "dummy provider", "id": "noop@dummy"},
+        {"type": "Provider", "pw": "power", "companyName": "UPS Systems, Inc", "id": "power@upssystemsinc.com"},
+        {"type": "Provider", "pw": "online", "companyName": "The App Store, Inc", "id": "online@theappstoreinc.com"},
+        {"type": "FinanceCo", "pw": "easymoney", "companyName": "The Global Financier", "id": "easymoney@easymoneyinc.com"}
+    ],
+
+
+    "courses":
+    [
+	{"courseUID":1,"courseID":"ACC-120","courseDescription":"Prin of Financial Accounting", "courseSection":"0001"  "creditHours":4, "term":"Spring 2019", "location":"Online","seats":34,"instructor","Cox,S"},
+	{"courseUID":2,"courseID":"ACC-121","courseDescription":"Prin of Managerial Accounting", "courseSection":"0001"  "creditHours":4, "term":"Spring 2019", "location":"Online","seats":20, "instructor","Best,T}
+    ],
+
+
+    "assets":
+    [   
+        {"type": "Order", "id": "001", "buyer": "yes@softwaresolutionsinc.com", "seller": "bob@pchardwareinc.com", "items": [{"itemNo": 1, "quantity": 5}, {"itemNo": 2, "quantity": 2}, {"itemNo": 6, "quantity": 2}] },
+        {"type": "Order", "id": "002", "buyer": "yes@softwaresolutionsinc.com", "seller": "jojo@innovativesolutionsinc.com", "items": [{"itemNo": 2, "quantity": 5}, {"itemNo": 8, "quantity": 2}] },
+        {"type": "Order", "id": "003", "buyer": "yes@softwaresolutionsinc.com", "seller": "Erin@2ndlifesystemsinc.com", "items": [{"itemNo": 3, "quantity": 15}, {"itemNo": 4, "quantity": 20}] },
+        {"type": "Order", "id": "004", "buyer": "yes@softwaresolutionsinc.com", "seller": "aiesha@cloudninesoftwareinc.com", "items": [{"itemNo": 1, "quantity": 5}, {"itemNo": 2, "quantity": 2}, {"itemNo": 6, "quantity": 2}] },
+        {"type": "Order", "id": "005", "buyer": "yes@softwaresolutionsinc.com", "seller": "joshua@officeexpertsinc.com", "items": [{"itemNo": 2, "quantity": 5}, {"itemNo": 8, "quantity": 2}] },
+        {"type": "Order", "id": "006", "buyer": "eric@bornonthecloudinc.com", "seller": "Erin@2ndlifesystemsinc.com", "items": [{"itemNo": 3, "quantity": 15}, {"itemNo": 4, "quantity": 20}] },
+        {"type": "Order", "id": "007", "buyer": "eric@bornonthecloudinc.com", "seller": "bob@pchardwareinc.com", "items": [{"itemNo": 1, "quantity": 5}, {"itemNo": 2, "quantity": 2}, {"itemNo": 6, "quantity": 2}] },
+        {"type": "Order", "id": "008", "buyer": "eric@bornonthecloudinc.com", "seller": "jojo@innovativesolutionsinc.com", "items": [{"itemNo": 2, "quantity": 5}, {"itemNo": 8, "quantity": 2}] },
+        {"type": "Order", "id": "009", "buyer": "eric@bornonthecloudinc.com", "seller": "Erin@2ndlifesystemsinc.com", "items": [{"itemNo": 3, "quantity": 15}, {"itemNo": 4, "quantity": 20}] }
+    ]
+member list
+
+{ "members":
+    [
+        {"type": "Seller", "pw": "bob", "companyName": "PC Hardware, Inc", "id": "bob@pchardwareinc.com"},
+        {"type": "Seller", "pw": "jojo", "companyName": "Inovative Solutions, Inc", "id": "jojo@innovativesolutionsinc.com"},
+        {"type": "Seller", "pw": "mary", "companyName": "The i-Series Experts, Inc", "id": "mary@iseriesexpertsinc.com"},
+        {"type": "Seller", "pw": "wilber", "companyName": "Cooling Systems R Us, Inc", "id": "wilber@coolingsystemsrusinc.com"},
+        {"type": "Seller", "pw": "erin", "companyName": "2nd Life Systems, Inc", "id": "Erin@2ndlifesystemsinc.com"},
+        {"type": "Seller", "pw": "abdul", "companyName": "The Cognitive Advantage, Inc", "id": "abdul@cognitiveadvantageinc.com"},
+        {"type": "Seller", "pw": "aiesha", "companyName": "Cloud Nine Software, Inc", "id": "aiesha@cloudninesoftwareinc.com"},
+        {"type": "Seller", "pw": "joshua", "companyName": "Office Experts, Inc", "id": "joshua@officeexpertsinc.com"},
+        {"type": "Seller", "pw": "alwayson", "companyName": "NonStop, Inc", "id": "alwayson@nonstopinc.com"},
+        {"type": "Seller", "pw": "anytime", "companyName": "Virtual Paper, Inc", "id": "anytime@virtualpaperinc.com"},
+        {"type": "Buyer", "pw": "yes", "companyName": "Software Solutions, Inc", "id": "yes@softwaresolutionsinc.com"},
+        {"type": "Buyer", "pw": "buyer1", "companyName": "Hybrid Cloud Designs, Inc", "id": "buyer1@hybridclouddesignsinc.com"},
+        {"type": "Buyer", "pw": "eric", "companyName": "Born On The Cloud, Inc", "id": "eric@bornonthecloudinc.com"},
+        {"type": "Buyer", "pw": "abby", "companyName": "Kid Friendly Learning, Inc", "id": "abby@kidfriendlyinc.com"},
+        {"type": "Buyer", "pw": "kristen", "companyName": "The Education Game, Inc", "id": "kristen@gameify.com"},
+        {"type": "Shipper", "pw": "speedmatters", "companyName": "Fast Eddy, Inc", "id": "speedmatters@fasteddyinc.com"},
+        {"type": "Shipper", "pw": "wantitnow", "companyName": "The Overnight Experts, Inc", "id": "wantitnow@overnightexpressinc.com"},
+        {"type": "Provider", "pw": "info", "companyName": "PC Hardware Now, Inc", "id": "info@pchardwarenowinc.com"},
+        {"type": "Shipper", "pw": "dummyShipper", "companyName": "dummy shipper", "id": "noop@dummy"},
+        {"type": "Provider", "pw": "dummyProvider", "companyName": "dummy provider", "id": "noop@dummy"},
+        {"type": "Provider", "pw": "power", "companyName": "UPS Systems, Inc", "id": "power@upssystemsinc.com"},
+        {"type": "Provider", "pw": "online", "companyName": "The App Store, Inc", "id": "online@theappstoreinc.com"},
+        {"type": "FinanceCo", "pw": "easymoney", "companyName": "The Global Financier", "id": "easymoney@easymoneyinc.com"}
+    ],
+
+
+    "courses":
+    [
+	{"courseUID":1,"courseID":"ACC-120","courseDescription":"Prin of Financial Accounting", "courseSection":"0001"  "creditHours":4, "term":"Spring 2019", "location":"Online","seats":34,"instructor","Cox,S"},
+	{"courseUID":2,"courseID":"ACC-121","courseDescription":"Prin of Managerial Accounting", "courseSection":"0001"  "creditHours":4, "term":"Spring 2019", "location":"Online","seats":20, "instructor","Best,T}
+    ],
+
+
+    "assets":
+    [   
+        {"type": "Order", "id": "001", "buyer": "yes@softwaresolutionsinc.com", "seller": "bob@pchardwareinc.com", "items": [{"itemNo": 1, "quantity": 5}, {"itemNo": 2, "quantity": 2}, {"itemNo": 6, "quantity": 2}] },
+        {"type": "Order", "id": "002", "buyer": "yes@softwaresolutionsinc.com", "seller": "jojo@innovativesolutionsinc.com", "items": [{"itemNo": 2, "quantity": 5}, {"itemNo": 8, "quantity": 2}] },
+        {"type": "Order", "id": "003", "buyer": "yes@softwaresolutionsinc.com", "seller": "Erin@2ndlifesystemsinc.com", "items": [{"itemNo": 3, "quantity": 15}, {"itemNo": 4, "quantity": 20}] },
+        {"type": "Order", "id": "004", "buyer": "yes@softwaresolutionsinc.com", "seller": "aiesha@cloudninesoftwareinc.com", "items": [{"itemNo": 1, "quantity": 5}, {"itemNo": 2, "quantity": 2}, {"itemNo": 6, "quantity": 2}] },
+        {"type": "Order", "id": "005", "buyer": "yes@softwaresolutionsinc.com", "seller": "joshua@officeexpertsinc.com", "items": [{"itemNo": 2, "quantity": 5}, {"itemNo": 8, "quantity": 2}] },
+        {"type": "Order", "id": "006", "buyer": "eric@bornonthecloudinc.com", "seller": "Erin@2ndlifesystemsinc.com", "items": [{"itemNo": 3, "quantity": 15}, {"itemNo": 4, "quantity": 20}] },
+        {"type": "Order", "id": "007", "buyer": "eric@bornonthecloudinc.com", "seller": "bob@pchardwareinc.com", "items": [{"itemNo": 1, "quantity": 5}, {"itemNo": 2, "quantity": 2}, {"itemNo": 6, "quantity": 2}] },
+        {"type": "Order", "id": "008", "buyer": "eric@bornonthecloudinc.com", "seller": "jojo@innovativesolutionsinc.com", "items": [{"itemNo": 2, "quantity": 5}, {"itemNo": 8, "quantity": 2}] },
+        {"type": "Order", "id": "009", "buyer": "eric@bornonthecloudinc.com", "seller": "Erin@2ndlifesystemsinc.com", "items": [{"itemNo": 3, "quantity": 15}, {"itemNo": 4, "quantity": 20}] }
+    ]
+member list
+
+{ "members":
+    [
+        {"type": "Seller", "pw": "bob", "companyName": "PC Hardware, Inc", "id": "bob@pchardwareinc.com"},
+        {"type": "Seller", "pw": "jojo", "companyName": "Inovative Solutions, Inc", "id": "jojo@innovativesolutionsinc.com"},
+        {"type": "Seller", "pw": "mary", "companyName": "The i-Series Experts, Inc", "id": "mary@iseriesexpertsinc.com"},
+        {"type": "Seller", "pw": "wilber", "companyName": "Cooling Systems R Us, Inc", "id": "wilber@coolingsystemsrusinc.com"},
+        {"type": "Seller", "pw": "erin", "companyName": "2nd Life Systems, Inc", "id": "Erin@2ndlifesystemsinc.com"},
+        {"type": "Seller", "pw": "abdul", "companyName": "The Cognitive Advantage, Inc", "id": "abdul@cognitiveadvantageinc.com"},
+        {"type": "Seller", "pw": "aiesha", "companyName": "Cloud Nine Software, Inc", "id": "aiesha@cloudninesoftwareinc.com"},
+        {"type": "Seller", "pw": "joshua", "companyName": "Office Experts, Inc", "id": "joshua@officeexpertsinc.com"},
+        {"type": "Seller", "pw": "alwayson", "companyName": "NonStop, Inc", "id": "alwayson@nonstopinc.com"},
+        {"type": "Seller", "pw": "anytime", "companyName": "Virtual Paper, Inc", "id": "anytime@virtualpaperinc.com"},
+        {"type": "Buyer", "pw": "yes", "companyName": "Software Solutions, Inc", "id": "yes@softwaresolutionsinc.com"},
+        {"type": "Buyer", "pw": "buyer1", "companyName": "Hybrid Cloud Designs, Inc", "id": "buyer1@hybridclouddesignsinc.com"},
+        {"type": "Buyer", "pw": "eric", "companyName": "Born On The Cloud, Inc", "id": "eric@bornonthecloudinc.com"},
+        {"type": "Buyer", "pw": "abby", "companyName": "Kid Friendly Learning, Inc", "id": "abby@kidfriendlyinc.com"},
+        {"type": "Buyer", "pw": "kristen", "companyName": "The Education Game, Inc", "id": "kristen@gameify.com"},
+        {"type": "Shipper", "pw": "speedmatters", "companyName": "Fast Eddy, Inc", "id": "speedmatters@fasteddyinc.com"},
+        {"type": "Shipper", "pw": "wantitnow", "companyName": "The Overnight Experts, Inc", "id": "wantitnow@overnightexpressinc.com"},
+        {"type": "Provider", "pw": "info", "companyName": "PC Hardware Now, Inc", "id": "info@pchardwarenowinc.com"},
+        {"type": "Shipper", "pw": "dummyShipper", "companyName": "dummy shipper", "id": "noop@dummy"},
+        {"type": "Provider", "pw": "dummyProvider", "companyName": "dummy provider", "id": "noop@dummy"},
+        {"type": "Provider", "pw": "power", "companyName": "UPS Systems, Inc", "id": "power@upssystemsinc.com"},
+        {"type": "Provider", "pw": "online", "companyName": "The App Store, Inc", "id": "online@theappstoreinc.com"},
+        {"type": "FinanceCo", "pw": "easymoney", "companyName": "The Global Financier", "id": "easymoney@easymoneyinc.com"}
+    ],
+
+
+    "courses":
+    [
+	{"courseUID":1,"courseID":"ACC-120","courseDescription":"Prin of Financial Accounting", "courseSection":"0001"  "creditHours":4, "term":"Spring 2019", "location":"Online","seats":34,"instructor","Cox,S"},
+	{"courseUID":2,"courseID":"ACC-121","courseDescription":"Prin of Managerial Accounting", "courseSection":"0001"  "creditHours":4, "term":"Spring 2019", "location":"Online","seats":20, "instructor","Best,T}
+    ],
+
+
+    "assets":
+    [   
+        {"type": "Order", "id": "001", "buyer": "yes@softwaresolutionsinc.com", "seller": "bob@pchardwareinc.com", "items": [{"itemNo": 1, "quantity": 5}, {"itemNo": 2, "quantity": 2}, {"itemNo": 6, "quantity": 2}] },
+        {"type": "Order", "id": "002", "buyer": "yes@softwaresolutionsinc.com", "seller": "jojo@innovativesolutionsinc.com", "items": [{"itemNo": 2, "quantity": 5}, {"itemNo": 8, "quantity": 2}] },
+        {"type": "Order", "id": "003", "buyer": "yes@softwaresolutionsinc.com", "seller": "Erin@2ndlifesystemsinc.com", "items": [{"itemNo": 3, "quantity": 15}, {"itemNo": 4, "quantity": 20}] },
+        {"type": "Order", "id": "004", "buyer": "yes@softwaresolutionsinc.com", "seller": "aiesha@cloudninesoftwareinc.com", "items": [{"itemNo": 1, "quantity": 5}, {"itemNo": 2, "quantity": 2}, {"itemNo": 6, "quantity": 2}] },
+        {"type": "Order", "id": "005", "buyer": "yes@softwaresolutionsinc.com", "seller": "joshua@officeexpertsinc.com", "items": [{"itemNo": 2, "quantity": 5}, {"itemNo": 8, "quantity": 2}] },
+        {"type": "Order", "id": "006", "buyer": "eric@bornonthecloudinc.com", "seller": "Erin@2ndlifesystemsinc.com", "items": [{"itemNo": 3, "quantity": 15}, {"itemNo": 4, "quantity": 20}] },
+        {"type": "Order", "id": "007", "buyer": "eric@bornonthecloudinc.com", "seller": "bob@pchardwareinc.com", "items": [{"itemNo": 1, "quantity": 5}, {"itemNo": 2, "quantity": 2}, {"itemNo": 6, "quantity": 2}] },
+        {"type": "Order", "id": "008", "buyer": "eric@bornonthecloudinc.com", "seller": "jojo@innovativesolutionsinc.com", "items": [{"itemNo": 2, "quantity": 5}, {"itemNo": 8, "quantity": 2}] },
+        {"type": "Order", "id": "009", "buyer": "eric@bornonthecloudinc.com", "seller": "Erin@2ndlifesystemsinc.com", "items": [{"itemNo": 3, "quantity": 15}, {"itemNo": 4, "quantity": 20}] }
+    ]
+member list
+
+{ "members":
+    [
+        {"type": "Seller", "pw": "bob", "companyName": "PC Hardware, Inc", "id": "bob@pchardwareinc.com"},
+        {"type": "Seller", "pw": "jojo", "companyName": "Inovative Solutions, Inc", "id": "jojo@innovativesolutionsinc.com"},
+        {"type": "Seller", "pw": "mary", "companyName": "The i-Series Experts, Inc", "id": "mary@iseriesexpertsinc.com"},
+        {"type": "Seller", "pw": "wilber", "companyName": "Cooling Systems R Us, Inc", "id": "wilber@coolingsystemsrusinc.com"},
+        {"type": "Seller", "pw": "erin", "companyName": "2nd Life Systems, Inc", "id": "Erin@2ndlifesystemsinc.com"},
+        {"type": "Seller", "pw": "abdul", "companyName": "The Cognitive Advantage, Inc", "id": "abdul@cognitiveadvantageinc.com"},
+        {"type": "Seller", "pw": "aiesha", "companyName": "Cloud Nine Software, Inc", "id": "aiesha@cloudninesoftwareinc.com"},
+        {"type": "Seller", "pw": "joshua", "companyName": "Office Experts, Inc", "id": "joshua@officeexpertsinc.com"},
+        {"type": "Seller", "pw": "alwayson", "companyName": "NonStop, Inc", "id": "alwayson@nonstopinc.com"},
+        {"type": "Seller", "pw": "anytime", "companyName": "Virtual Paper, Inc", "id": "anytime@virtualpaperinc.com"},
+        {"type": "Buyer", "pw": "yes", "companyName": "Software Solutions, Inc", "id": "yes@softwaresolutionsinc.com"},
+        {"type": "Buyer", "pw": "buyer1", "companyName": "Hybrid Cloud Designs, Inc", "id": "buyer1@hybridclouddesignsinc.com"},
+        {"type": "Buyer", "pw": "eric", "companyName": "Born On The Cloud, Inc", "id": "eric@bornonthecloudinc.com"},
+        {"type": "Buyer", "pw": "abby", "companyName": "Kid Friendly Learning, Inc", "id": "abby@kidfriendlyinc.com"},
+        {"type": "Buyer", "pw": "kristen", "companyName": "The Education Game, Inc", "id": "kristen@gameify.com"},
+        {"type": "Shipper", "pw": "speedmatters", "companyName": "Fast Eddy, Inc", "id": "speedmatters@fasteddyinc.com"},
+        {"type": "Shipper", "pw": "wantitnow", "companyName": "The Overnight Experts, Inc", "id": "wantitnow@overnightexpressinc.com"},
+        {"type": "Provider", "pw": "info", "companyName": "PC Hardware Now, Inc", "id": "info@pchardwarenowinc.com"},
+        {"type": "Shipper", "pw": "dummyShipper", "companyName": "dummy shipper", "id": "noop@dummy"},
+        {"type": "Provider", "pw": "dummyProvider", "companyName": "dummy provider", "id": "noop@dummy"},
+        {"type": "Provider", "pw": "power", "companyName": "UPS Systems, Inc", "id": "power@upssystemsinc.com"},
+        {"type": "Provider", "pw": "online", "companyName": "The App Store, Inc", "id": "online@theappstoreinc.com"},
+        {"type": "FinanceCo", "pw": "easymoney", "companyName": "The Global Financier", "id": "easymoney@easymoneyinc.com"}
+    ],
+
+
+    "courses":
+    [
+	{"courseUID":1,"courseID":"ACC-120","courseDescription":"Prin of Financial Accounting", "courseSection":"0001"  "creditHours":4, "term":"Spring 2019", "location":"Online","seats":34,"instructor","Cox,S"},
+	{"courseUID":2,"courseID":"ACC-121","courseDescription":"Prin of Managerial Accounting", "courseSection":"0001"  "creditHours":4, "term":"Spring 2019", "location":"Online","seats":20, "instructor","Best,T}
+    ],
+
+
+    "assets":
+    [   
+        {"type": "Order", "id": "001", "buyer": "yes@softwaresolutionsinc.com", "seller": "bob@pchardwareinc.com", "items": [{"itemNo": 1, "quantity": 5}, {"itemNo": 2, "quantity": 2}, {"itemNo": 6, "quantity": 2}] },
+        {"type": "Order", "id": "002", "buyer": "yes@softwaresolutionsinc.com", "seller": "jojo@innovativesolutionsinc.com", "items": [{"itemNo": 2, "quantity": 5}, {"itemNo": 8, "quantity": 2}] },
+        {"type": "Order", "id": "003", "buyer": "yes@softwaresolutionsinc.com", "seller": "Erin@2ndlifesystemsinc.com", "items": [{"itemNo": 3, "quantity": 15}, {"itemNo": 4, "quantity": 20}] },
+        {"type": "Order", "id": "004", "buyer": "yes@softwaresolutionsinc.com", "seller": "aiesha@cloudninesoftwareinc.com", "items": [{"itemNo": 1, "quantity": 5}, {"itemNo": 2, "quantity": 2}, {"itemNo": 6, "quantity": 2}] },
+        {"type": "Order", "id": "005", "buyer": "yes@softwaresolutionsinc.com", "seller": "joshua@officeexpertsinc.com", "items": [{"itemNo": 2, "quantity": 5}, {"itemNo": 8, "quantity": 2}] },
+        {"type": "Order", "id": "006", "buyer": "eric@bornonthecloudinc.com", "seller": "Erin@2ndlifesystemsinc.com", "items": [{"itemNo": 3, "quantity": 15}, {"itemNo": 4, "quantity": 20}] },
+        {"type": "Order", "id": "007", "buyer": "eric@bornonthecloudinc.com", "seller": "bob@pchardwareinc.com", "items": [{"itemNo": 1, "quantity": 5}, {"itemNo": 2, "quantity": 2}, {"itemNo": 6, "quantity": 2}] },
+        {"type": "Order", "id": "008", "buyer": "eric@bornonthecloudinc.com", "seller": "jojo@innovativesolutionsinc.com", "items": [{"itemNo": 2, "quantity": 5}, {"itemNo": 8, "quantity": 2}] },
+        {"type": "Order", "id": "009", "buyer": "eric@bornonthecloudinc.com", "seller": "Erin@2ndlifesystemsinc.com", "items": [{"itemNo": 3, "quantity": 15}, {"itemNo": 4, "quantity": 20}] }
+    ]
+member list
+
+{ "members":
+    [
+        {"type": "Seller", "pw": "bob", "companyName": "PC Hardware, Inc", "id": "bob@pchardwareinc.com"},
+        {"type": "Seller", "pw": "jojo", "companyName": "Inovative Solutions, Inc", "id": "jojo@innovativesolutionsinc.com"},
+        {"type": "Seller", "pw": "mary", "companyName": "The i-Series Experts, Inc", "id": "mary@iseriesexpertsinc.com"},
+        {"type": "Seller", "pw": "wilber", "companyName": "Cooling Systems R Us, Inc", "id": "wilber@coolingsystemsrusinc.com"},
+        {"type": "Seller", "pw": "erin", "companyName": "2nd Life Systems, Inc", "id": "Erin@2ndlifesystemsinc.com"},
+        {"type": "Seller", "pw": "abdul", "companyName": "The Cognitive Advantage, Inc", "id": "abdul@cognitiveadvantageinc.com"},
+        {"type": "Seller", "pw": "aiesha", "companyName": "Cloud Nine Software, Inc", "id": "aiesha@cloudninesoftwareinc.com"},
+        {"type": "Seller", "pw": "joshua", "companyName": "Office Experts, Inc", "id": "joshua@officeexpertsinc.com"},
+        {"type": "Seller", "pw": "alwayson", "companyName": "NonStop, Inc", "id": "alwayson@nonstopinc.com"},
+        {"type": "Seller", "pw": "anytime", "companyName": "Virtual Paper, Inc", "id": "anytime@virtualpaperinc.com"},
+        {"type": "Buyer", "pw": "yes", "companyName": "Software Solutions, Inc", "id": "yes@softwaresolutionsinc.com"},
+        {"type": "Buyer", "pw": "buyer1", "companyName": "Hybrid Cloud Designs, Inc", "id": "buyer1@hybridclouddesignsinc.com"},
+        {"type": "Buyer", "pw": "eric", "companyName": "Born On The Cloud, Inc", "id": "eric@bornonthecloudinc.com"},
+        {"type": "Buyer", "pw": "abby", "companyName": "Kid Friendly Learning, Inc", "id": "abby@kidfriendlyinc.com"},
+        {"type": "Buyer", "pw": "kristen", "companyName": "The Education Game, Inc", "id": "kristen@gameify.com"},
+        {"type": "Shipper", "pw": "speedmatters", "companyName": "Fast Eddy, Inc", "id": "speedmatters@fasteddyinc.com"},
+        {"type": "Shipper", "pw": "wantitnow", "companyName": "The Overnight Experts, Inc", "id": "wantitnow@overnightexpressinc.com"},
+        {"type": "Provider", "pw": "info", "companyName": "PC Hardware Now, Inc", "id": "info@pchardwarenowinc.com"},
+        {"type": "Shipper", "pw": "dummyShipper", "companyName": "dummy shipper", "id": "noop@dummy"},
+        {"type": "Provider", "pw": "dummyProvider", "companyName": "dummy provider", "id": "noop@dummy"},
+        {"type": "Provider", "pw": "power", "companyName": "UPS Systems, Inc", "id": "power@upssystemsinc.com"},
+        {"type": "Provider", "pw": "online", "companyName": "The App Store, Inc", "id": "online@theappstoreinc.com"},
+        {"type": "FinanceCo", "pw": "easymoney", "companyName": "The Global Financier", "id": "easymoney@easymoneyinc.com"}
+    ],
+
+
+    "courses":
+    [
+	{"courseUID":1,"courseID":"ACC-120","courseDescription":"Prin of Financial Accounting", "courseSection":"0001"  "creditHours":4, "term":"Spring 2019", "location":"Online","seats":34,"instructor","Cox,S"},
+	{"courseUID":2,"courseID":"ACC-121","courseDescription":"Prin of Managerial Accounting", "courseSection":"0001"  "creditHours":4, "term":"Spring 2019", "location":"Online","seats":20, "instructor","Best,T}
+    ],
+
+
+    "assets":
+    [   
+        {"type": "Order", "id": "001", "buyer": "yes@softwaresolutionsinc.com", "seller": "bob@pchardwareinc.com", "items": [{"itemNo": 1, "quantity": 5}, {"itemNo": 2, "quantity": 2}, {"itemNo": 6, "quantity": 2}] },
+        {"type": "Order", "id": "002", "buyer": "yes@softwaresolutionsinc.com", "seller": "jojo@innovativesolutionsinc.com", "items": [{"itemNo": 2, "quantity": 5}, {"itemNo": 8, "quantity": 2}] },
+        {"type": "Order", "id": "003", "buyer": "yes@softwaresolutionsinc.com", "seller": "Erin@2ndlifesystemsinc.com", "items": [{"itemNo": 3, "quantity": 15}, {"itemNo": 4, "quantity": 20}] },
+        {"type": "Order", "id": "004", "buyer": "yes@softwaresolutionsinc.com", "seller": "aiesha@cloudninesoftwareinc.com", "items": [{"itemNo": 1, "quantity": 5}, {"itemNo": 2, "quantity": 2}, {"itemNo": 6, "quantity": 2}] },
+        {"type": "Order", "id": "005", "buyer": "yes@softwaresolutionsinc.com", "seller": "joshua@officeexpertsinc.com", "items": [{"itemNo": 2, "quantity": 5}, {"itemNo": 8, "quantity": 2}] },
+        {"type": "Order", "id": "006", "buyer": "eric@bornonthecloudinc.com", "seller": "Erin@2ndlifesystemsinc.com", "items": [{"itemNo": 3, "quantity": 15}, {"itemNo": 4, "quantity": 20}] },
+        {"type": "Order", "id": "007", "buyer": "eric@bornonthecloudinc.com", "seller": "bob@pchardwareinc.com", "items": [{"itemNo": 1, "quantity": 5}, {"itemNo": 2, "quantity": 2}, {"itemNo": 6, "quantity": 2}] },
+        {"type": "Order", "id": "008", "buyer": "eric@bornonthecloudinc.com", "seller": "jojo@innovativesolutionsinc.com", "items": [{"itemNo": 2, "quantity": 5}, {"itemNo": 8, "quantity": 2}] },
+        {"type": "Order", "id": "009", "buyer": "eric@bornonthecloudinc.com", "seller": "Erin@2ndlifesystemsinc.com", "items": [{"itemNo": 3, "quantity": 15}, {"itemNo": 4, "quantity": 20}] }
+    ]
+member list
+
+{ "members":
+    [
+        {"type": "Seller", "pw": "bob", "companyName": "PC Hardware, Inc", "id": "bob@pchardwareinc.com"},
+        {"type": "Seller", "pw": "jojo", "companyName": "Inovative Solutions, Inc", "id": "jojo@innovativesolutionsinc.com"},
+        {"type": "Seller", "pw": "mary", "companyName": "The i-Series Experts, Inc", "id": "mary@iseriesexpertsinc.com"},
+        {"type": "Seller", "pw": "wilber", "companyName": "Cooling Systems R Us, Inc", "id": "wilber@coolingsystemsrusinc.com"},
+        {"type": "Seller", "pw": "erin", "companyName": "2nd Life Systems, Inc", "id": "Erin@2ndlifesystemsinc.com"},
+        {"type": "Seller", "pw": "abdul", "companyName": "The Cognitive Advantage, Inc", "id": "abdul@cognitiveadvantageinc.com"},
+        {"type": "Seller", "pw": "aiesha", "companyName": "Cloud Nine Software, Inc", "id": "aiesha@cloudninesoftwareinc.com"},
+        {"type": "Seller", "pw": "joshua", "companyName": "Office Experts, Inc", "id": "joshua@officeexpertsinc.com"},
+        {"type": "Seller", "pw": "alwayson", "companyName": "NonStop, Inc", "id": "alwayson@nonstopinc.com"},
+        {"type": "Seller", "pw": "anytime", "companyName": "Virtual Paper, Inc", "id": "anytime@virtualpaperinc.com"},
+        {"type": "Buyer", "pw": "yes", "companyName": "Software Solutions, Inc", "id": "yes@softwaresolutionsinc.com"},
+        {"type": "Buyer", "pw": "buyer1", "companyName": "Hybrid Cloud Designs, Inc", "id": "buyer1@hybridclouddesignsinc.com"},
+        {"type": "Buyer", "pw": "eric", "companyName": "Born On The Cloud, Inc", "id": "eric@bornonthecloudinc.com"},
+        {"type": "Buyer", "pw": "abby", "companyName": "Kid Friendly Learning, Inc", "id": "abby@kidfriendlyinc.com"},
+        {"type": "Buyer", "pw": "kristen", "companyName": "The Education Game, Inc", "id": "kristen@gameify.com"},
+        {"type": "Shipper", "pw": "speedmatters", "companyName": "Fast Eddy, Inc", "id": "speedmatters@fasteddyinc.com"},
+        {"type": "Shipper", "pw": "wantitnow", "companyName": "The Overnight Experts, Inc", "id": "wantitnow@overnightexpressinc.com"},
+        {"type": "Provider", "pw": "info", "companyName": "PC Hardware Now, Inc", "id": "info@pchardwarenowinc.com"},
+        {"type": "Shipper", "pw": "dummyShipper", "companyName": "dummy shipper", "id": "noop@dummy"},
+        {"type": "Provider", "pw": "dummyProvider", "companyName": "dummy provider", "id": "noop@dummy"},
+        {"type": "Provider", "pw": "power", "companyName": "UPS Systems, Inc", "id": "power@upssystemsinc.com"},
+        {"type": "Provider", "pw": "online", "companyName": "The App Store, Inc", "id": "online@theappstoreinc.com"},
+        {"type": "FinanceCo", "pw": "easymoney", "companyName": "The Global Financier", "id": "easymoney@easymoneyinc.com"}
+    ],
+
+
+    "courses":
+    [
+	{"courseUID":1,"courseID":"ACC-120","courseDescription":"Prin of Financial Accounting", "courseSection":"0001"  "creditHours":4, "term":"Spring 2019", "location":"Online","seats":34,"instructor","Cox,S"},
+	{"courseUID":2,"courseID":"ACC-121","courseDescription":"Prin of Managerial Accounting", "courseSection":"0001"  "creditHours":4, "term":"Spring 2019", "location":"Online","seats":20, "instructor","Best,T}
+    ],
+
+
+    "assets":
+    [   
+        {"type": "Order", "id": "001", "buyer": "yes@softwaresolutionsinc.com", "seller": "bob@pchardwareinc.com", "items": [{"itemNo": 1, "quantity": 5}, {"itemNo": 2, "quantity": 2}, {"itemNo": 6, "quantity": 2}] },
+        {"type": "Order", "id": "002", "buyer": "yes@softwaresolutionsinc.com", "seller": "jojo@innovativesolutionsinc.com", "items": [{"itemNo": 2, "quantity": 5}, {"itemNo": 8, "quantity": 2}] },
+        {"type": "Order", "id": "003", "buyer": "yes@softwaresolutionsinc.com", "seller": "Erin@2ndlifesystemsinc.com", "items": [{"itemNo": 3, "quantity": 15}, {"itemNo": 4, "quantity": 20}] },
+        {"type": "Order", "id": "004", "buyer": "yes@softwaresolutionsinc.com", "seller": "aiesha@cloudninesoftwareinc.com", "items": [{"itemNo": 1, "quantity": 5}, {"itemNo": 2, "quantity": 2}, {"itemNo": 6, "quantity": 2}] },
+        {"type": "Order", "id": "005", "buyer": "yes@softwaresolutionsinc.com", "seller": "joshua@officeexpertsinc.com", "items": [{"itemNo": 2, "quantity": 5}, {"itemNo": 8, "quantity": 2}] },
+        {"type": "Order", "id": "006", "buyer": "eric@bornonthecloudinc.com", "seller": "Erin@2ndlifesystemsinc.com", "items": [{"itemNo": 3, "quantity": 15}, {"itemNo": 4, "quantity": 20}] },
+        {"type": "Order", "id": "007", "buyer": "eric@bornonthecloudinc.com", "seller": "bob@pchardwareinc.com", "items": [{"itemNo": 1, "quantity": 5}, {"itemNo": 2, "quantity": 2}, {"itemNo": 6, "quantity": 2}] },
+        {"type": "Order", "id": "008", "buyer": "eric@bornonthecloudinc.com", "seller": "jojo@innovativesolutionsinc.com", "items": [{"itemNo": 2, "quantity": 5}, {"itemNo": 8, "quantity": 2}] },
+        {"type": "Order", "id": "009", "buyer": "eric@bornonthecloudinc.com", "seller": "Erin@2ndlifesystemsinc.com", "items": [{"itemNo": 3, "quantity": 15}, {"itemNo": 4, "quantity": 20}] }
+    ]
