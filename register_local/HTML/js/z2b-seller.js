@@ -23,27 +23,36 @@ let s_id;
 /**
  * load the administration Seller Experience
  */
-function loadSellerUX ()
+function loadSellerUX (nested)
 {
+    console.log ("in loadSellerUX");
+
     let toLoad = 'seller.html';
     if (buyers.length === 0) 
     { $.when($.get(toLoad), deferredMemberLoad()).done(function (page, res)
-    {setupSeller(page[0]);});
+    {setupSeller(page[0],nested);});
     }
     else{
         $.when($.get(toLoad)).done(function (page)
-        {setupSeller(page);});
+        {setupSeller(page,nested);});
     }
 }
 
 /**
  * load the administration User Experience
  * @param {String} page - page to load
+ * @param int nested - flag if page nested in table
  */
-function setupSeller(page)
+function setupSeller(page, nested)
 {
-    $('#sellerbody').empty();
-    $('#sellerbody').append(page);
+    var tag ='#body';
+    if (nested)
+        tag = '#sellerbody';
+
+    // empty the html element that will hold this page
+    $(tag).empty();
+    $(tag).append(page);
+
     if (s_alerts.length == 0) 
     {$(s_notify).removeClass('on'); $(s_notify).addClass('off'); }
     else {$(s_notify).removeClass('off'); $(s_notify).addClass('on'); }

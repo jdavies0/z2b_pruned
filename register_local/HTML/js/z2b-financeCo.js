@@ -28,25 +28,31 @@ let f_alerts;
 /**
  * load the finance company User Experience
  */
-function loadFinanceCoUX ()
+function loadFinanceCoUX (nested)
 {
+    console.log ("in LoadFinanceUX");
+
     let toLoad = 'financeCo.html';
     if (buyers.length === 0)
         { $.when($.get(toLoad), deferredMemberLoad()).done(function (page, res)
-        {setupFinanceCo(page[0]);});
+        {setupFinanceCo(page[0], nested);});
     }
     else{
         $.when($.get(toLoad)).done(function (page)
-        {setupFinanceCo(page);});
+        {setupFinanceCo(page,nested);});
     }
 }
 /**
  * @param {String} page HTML page to load
  */
-function setupFinanceCo(page)
+function setupFinanceCo(page, nested)
 {
-    $('#body').empty();
-    $('#body').append(page);
+    var tag ='#body';
+    if (nested)
+        tag = '#financebody';
+
+    $(tag).empty();
+    $(tag).append(page);
     f_alerts = [];
     if (f_alerts.length === 0)
       {$(f_notify).removeClass('on'); $(f_notify).addClass('off'); }

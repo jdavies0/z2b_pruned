@@ -50,7 +50,7 @@ let memberTable = new Array();
  * @param {express.req} req - the inbound request object from the client
  * @param {express.res} res - the outbound response object for communicating back to client
  * @param {express.next} next - an express service to enable post processing prior to responding to the client
- * saves a table of members and a table of items
+ * saves a table of members and a table of courses
  * @function
  */
 exports.autoLoad = function(req, res, next) {
@@ -165,7 +165,7 @@ let adminConnection = new AdminConnection();
                             let order = factory.newResource(config.composer.NS, _arr[_idx].type, _arr[_idx].id);
                             order = svc.createOrderTemplate(order);
                             let _tmp = svc.addItems(_arr[_idx], itemTable);
-                            order.items = _tmp.items;
+                            order.courses = _tmp.courses;
                             order.amount = _tmp.amount;
                             order.orderNumber = _arr[_idx].id;
                             // then the buy transaction is created

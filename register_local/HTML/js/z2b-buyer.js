@@ -28,28 +28,43 @@ let totalAmount = 0;
 /**
  * load the Buyer User Experience
  */
-function loadBuyerUX ()
+function loadBuyerUX (nested)
 {
     // get the html page to load
+    console.log ("in LoadBuyerUX");
     let toLoad = 'buyer.html';
     // if (buyers.length === 0) then autoLoad() was not successfully run before this web app starts, so the sie of the buyer list is zero
     // assume user has run autoLoad and rebuild member list
     // if autoLoad not yet run, then member list length will still be zero
     if ((typeof(buyers) === 'undefined') || (buyers === null) || (buyers.length === 0))
     { $.when($.get(toLoad), deferredMemberLoad()).done(function (page, res)
-        {setupBuyer(page);});
+        {setupBuyer(page,nested);});
         }
         else{
             $.when($.get(toLoad)).done(function (page)
-            {setupBuyer(page);});
+            {setupBuyer(page,nested);});
     }
 }
 
-function setupBuyer(page)
+/**
+* @param int nested - flag if page nested in table
+ */
+
+function setupBuyer(page, nested)
 {
-    // empty the hetml element that will hold this page
-    $('#buyerbody').empty();
-    $('#buyerbody').append(page);
+    var tag ='#body';
+    if (nested)
+        tag = '#buyerbody';
+
+    // empty the html element that will hold this page
+    $(tag).empty();
+    $(tag).append(page);
+
+//    $('#buyerbody').empty();
+//   $('#buyerbody').append(page);
+// edit here
+//    $('#body').empty();
+//    $('#body').append(page);
     // empty the buyer alerts array
     b_alerts = [];
     // if there are no alerts, then remove the 'on' class and add the 'off' class
@@ -291,8 +306,10 @@ function formatOrders(_target, _orders)
         {
             (function(_idx2, _arr2)
                 { let _item = JSON.parse(_arr2[_idx2]);
-                _str += '<tr><td align="center" width="20%">'+_item.itemNo+'</td><td width="50%">'+_item.description+'</td><td align="center">'+_item.quantity+'</td><td align="right">$'+_item.extendedPrice+'.00</td><tr>';
-            })(every, _arr[_idx].items);
+//                    _str += '<tr><td align="center" width="20%">'+_item.itemNo+'</td><td width="50%">'+_item.description+'</td><td align="center">'+_item.quantity+'</td><td align="right">$'+_item.extendedPrice+'.00</td><tr>'; 
+// edit here - html for displaying a course
+            _str += '<tr><td align="center" width="20%">'+_item.courseDept+"-"+_item.courseID+'</td><td width="50%">'+_item.courseDescription+'</td><td align="center">'+_item.creditHours+'</td><td align="right">$'+_item.extendedPrice+'.00</td><tr>';
+                })(every, _arr[_idx].items);
         }
         _str += '</table>';
     })(each, _orders);

@@ -29,10 +29,11 @@ function singleUX ()
         {
         $('#body').empty();
         $('#body').append(_page);
-        loadBuyerUX();
-        loadSellerUX();
-        loadProviderUX();
-        loadShipperUX();
+        loadBuyerUX(1);
+        loadSellerUX(1);
+//        loadProviderUX(1);
+//        loadShipperUX(1);
+        loadFinanceCoUX(1);
         // Initialize Registration for all Z2B Business Events
         goEventInitialize();
     });
@@ -42,10 +43,11 @@ function singleUX ()
         {
             $('#body').empty();
             $('#body').append(_page);
-            loadBuyerUX();
-            loadSellerUX();
-            loadProviderUX();
-            loadShipperUX();
+            loadBuyerUX(1);
+            loadSellerUX(1);
+//            loadProviderUX(1);
+//            loadShipperUX(1);
+            loadFinanceCoUX(1);
             // Initialize Registration for all Z2B Business Events
             goEventInitialize();
         });

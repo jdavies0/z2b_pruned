@@ -1,21 +1,21 @@
 {
   "index": {"language": "US English",
-    "title": "Z2B Chapter 12",
-    "header": "Chapter 12: Integrating the User Experiences",
-    "titleBar": "Zero to Blockchain Tutorial",
+    "title": "WakeTech ZeroToBlockchain - Registration",
+    "header": "Z2B_Registration: User Experience",
+    "titleBar": "WakeTech Blockchain Registration",
     "idx_unified": "load Unified User Experience",
     "idx_buyer": "load Student User Experience",
-    "idx_seller": "load Seller User Experience",
-    "idx_provider": "load Provider User Experience",
+    "idx_seller": "load Registrar User Experience",
+    "idx_provider": "load Cashier User Experience",
     "idx_shipper": "load Shipper User Experience",
-    "idx_financeco": "load Finance Company User Experience",
+    "idx_financeco": "load Cashier User Experience",
     "idx_roles": "Roles",
     "idx_admin": "Admin",
     "idx_adminUX": "load Admin User Experience",
     "idx_preload": "Preload Network"
   },
   "admin": {
-    "title": "Zero To Blockchain Chapter 12",
+    "title": "WakeTech Course Registration",
     "npm": "Network Profile Management",
     "npm_API": "API",
     "npm_param": "Parameters",
@@ -69,7 +69,7 @@
   },
   "buyer": {
     "title": "Student Chapter 12. Select Student to see their view: ",
-    "newOrder": "Create New Scheudle",
+    "newOrder": "Create New Schedule",
     "orderStatus": "Display Schedule Status"
   },
   "createConnectionProfile": {
@@ -92,8 +92,8 @@
   },
   "createMember": {
     "cd_type": "Type",
-    "cd_buyer": "Buyer",
-    "cd_seller": "Seller",
+    "cd_buyer": "Student",
+    "cd_seller": "Registrar",
     "cd_shipper": "Shipper",
     "cd_provider": "Provider",
     "cd_financeco": "FinanceCo",
@@ -135,9 +135,9 @@
     "submit": "Submit"
   },
   "provider": {
-    "title": "Provider Chapter 12, Select Provider to see their view: ",
+    "title": "Department Select Department to see their view: ",
     "provider_clear": "Clear Window",
-    "providerOrderStatus": "Display Order Status"
+    "providerOrderStatus": "Display Schedule Status"
   },
   "removeMember": {
     "rm_type": "Type",
@@ -150,14 +150,14 @@
     "submit": "Submit"
   },
   "seller": {
-    "title": "Seller Chapter 12, Select Seller to see their view: ",
+    "title": "Registrar, Select Registrar to see their view: ",
     "seller_clear": "Clear Window",
-    "sellerOrderStatus": "Display Order Status"
+    "sellerOrderStatus": "Display Schedule Status"
   },
   "shipper": {
     "title": "Shipper Chapter 12, Select Shipper to see their view: ",
     "shipper_clear": "Clear Window",
-    "shipperOrderStatus": "Display Order Status    "
+    "shipperOrderStatus": "Display Schedule Status    "
   },
   "singleUX": {},
   "orderProcess": {
@@ -183,15 +183,15 @@
     "seller": "Seller: ",
     "itemno": "Item Number",
     "description": "Description",
-    "qty": "Quantity",
+    "qty": "Credits",
     "price": "Price",
-    "processing_msg": "Processing {0} request for order number: {1}",
+    "processing_msg": "Processing {0} request for schedule number: {1}",
     "b_no_order_msg": "No schedule for this student: ",
     "s_no_order_msg": "No schedules for this registrar: ",
     "p_no_order_msg": "No schedules for this cashier: ",
-    "sh_no_order_msg": "No orders for this shipper: ",
-    "create_msg": "Processing Create Order request",
-    "buyer": "Buyer: "
+    "sh_no_order_msg": "No schedules for this shipper: ",
+    "create_msg": "Processing Create Schedule request",
+    "buyer": "Student: "
   },
   "financeCoOrder": {
     "status": "Current Status: ",

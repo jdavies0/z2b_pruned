@@ -26,6 +26,9 @@ coverage
 
 # Compiled binary addons (http://nodejs.org/api/addons.html)
 build/Release
+register_local/controller/restapi/features/composer/creds/*priv
+register_local/controller/restapi/features/composer/creds/*pub
+register_local/.vscode/launch.json
 
 # Dependency directories
 node_modules
@@ -54,3 +57,5 @@ npm-debug.log*
 out
 
 *.swp
+*.card
+register_local/startup/*.txt
