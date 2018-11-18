@@ -25,26 +25,36 @@ let sh_id;
 /**
  * load the shipper User Experience
  */
-function loadShipperUX ()
+function loadShipperUX (nested)
 {
+    console.log ("in loadShipperUX");
+
     let toLoad = 'shipper.html';
     if (buyers.length === 0)
     { $.when($.get(toLoad), deferredMemberLoad()).done(function (page, res)
-    {setupShipper(page[0]);});
+    {setupShipper(page[0], nested);});
     }
     else{
         $.when($.get(toLoad)).done(function (page)
-        {setupShipper(page);});
+        {setupShipper(page,nested);});
     }
 }
 /**
  *
  * @param {String} page - the page to load
+ * @param int nested - flag if page nested in table
  */
-function setupShipper(page)
+function setupShipper(page, nested)
 {
-    $('#shipperbody').empty();
-    $('#shipperbody').append(page);
+    var tag ='#body';
+    if (nested)
+        tag = '#shipperbody';
+
+    console.log ('in setupShipper, nested ='+nested);
+    console.log ('tag ='+tag);
+    // empty the html element that will hold this page
+    $(tag).empty();
+    $(tag).append(page);
     if (sh_alerts.length === 0)
     {$(sh_notify).removeClass('on'); $(sh_notify).addClass('off'); }
     else {$(sh_notify).removeClass('off'); $(sh_notify).addClass('on'); }

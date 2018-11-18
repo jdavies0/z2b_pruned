@@ -25,6 +25,8 @@ let _blctr = 0;
  */
 function loadAdminUX ()
 {
+    console.log ("in LoadAdminUX");
+
     let toLoad = 'admin.html';
     $.when($.get(toLoad)).done(function (page)
         {$('#body').empty();
