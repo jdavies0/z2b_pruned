@@ -130,7 +130,7 @@ function displayOrderForm()
         $('#amount').append('$'+totalAmount+'.00');
         // build a select list for the items
         let _str = '';
-        for (let each in itemTable){(function(_idx, _arr){_str+='<option value="'+_idx+'">'+_arr[_idx].itemDescription+'</option>';})(each, itemTable);}
+        for (let each in itemTable){(function(_idx, _arr){_str+='<option value="'+_idx+'">'+_arr[_idx].courseDescription+'</option>';})(each, itemTable);}
         $('#items').empty();
         $('#items').append(_str);
         $('#cancelNewOrder').on('click', function (){_orderDiv.empty();});
@@ -154,12 +154,12 @@ function displayOrderForm()
             // build a new item detail row in the display window
             let _item = itemTable[_ptr];
             let len = newItems.length;
-            _str = '<tr><td>'+_item.itemNo+'</td><td>'+_item.itemDescription+'</td><td><input type="number" id="count'+len+'"</td><td id="price'+len+'"></td></tr>';
+            _str = '<tr><td>'+_item.courseDept+"."+_item.courseID+"."+_item.courseSection+'</td><td>'+_item.courseDescription+'</td><td id="count'+len+'"></td><td id="price'+len+'"></td></tr>';
             $('#itemTable').append(_str);
             // set the initial item count to 1
             $('#count'+len).val(1);
             // set the initial price to the price of one item
-            $('#price'+len).append('$'+_item.unitPrice+'.00');
+            $('#price'+len).append('$'+_item.creditHours*76); // $76 (resident) 268 (non-resident)
             // add an entry into an array for this newly added item
             let _newItem = _item;
             _newItem.extendedPrice = _item.unitPrice;
