@@ -52,6 +52,7 @@ function loadBuyerUX (nested)
 
 function setupBuyer(page, nested)
 {
+    console.log ("setup buyer")
     var tag ='#body';
     if (nested)
         tag = '#buyerbody';
@@ -81,12 +82,16 @@ function setupBuyer(page, nested)
     _list.on('click', function(){listOrders();});
     $('#buyer').empty();
     // build the buer select HTML element
+    console.log ("buyers:"+buyers);
     for (let each in buyers)
     {(function(_idx, _arr)
         {$('#buyer').append('<option value="'+_arr[_idx].id+'">' +_arr[_idx].id+'</option>');})(each, buyers);
     }
     // display the name of the current buyer
-    $('#company')[0].innerText = buyers[0].companyName;
+//    {"type": "Buyer",  "pw": "", "studentID":1999124, "firstName":"Joshua", "lastName": "Moore", "dob":"07/11/1985", "address":"7421 Spyglass Way","city":"Raleigh", "state":"NC", "zipcode":"27615", "phoneNumber":"919-560-0300", "email":"joshuamoore@my.waketech.edu", "advisor":"Keith Babuszczak", "academic program":"Information Technology: Data Science and Prog Support Serv", "status": "in state"},
+
+    $('#company')[0].innerText = buyers[0].firstName+" "+buyers[0].lastName;
+    console.log(buyers);
     // save the current buyer id as b_id
     b_id = buyers[0].id;
     // subscribe to events
@@ -94,7 +99,7 @@ function setupBuyer(page, nested)
       // create a function to execute when the user selects a different buyer
     $('#buyer').on('change', function() 
     { _orderDiv.empty(); $('#buyer_messages').empty(); 
-        $('#company')[0].innerText = findMember($('#buyer').find(':selected').text(),buyers).companyName; 
+        $('#company')[0].innerText = findMember($('#buyer').find(':selected').text(),buyers).email; 
         // unsubscribe the current buyer
         z2bUnSubscribe(b_id);
         // get the new buyer id
