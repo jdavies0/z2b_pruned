@@ -21,7 +21,7 @@ body {height: 100%}
 		width: 15%;
 		color: blue;
 		font-size: 1em;
-		text-align: left;	/* was center */
+		text-align: center;	/* used for buyer */
 	}	
 	.scrollingBuyerPaneLeft{
 		height: calc(80vh - 5em);
