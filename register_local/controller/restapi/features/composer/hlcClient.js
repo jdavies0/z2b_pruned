@@ -161,7 +161,7 @@ exports.orderAction = function (req, res, next) {
                     updateOrder.seller = factory.newRelationship(NS, 'Seller', order.seller.$identifier);
                     updateOrder.dispute = req.body.reason;
                     break;
-                case 'Purchase':
+                case 'Register':            // edit here 'Purchase':
                     console.log('Purchase entered');
                     updateOrder = factory.newTransaction(NS, 'Buy');
                     updateOrder.buyer = factory.newRelationship(NS, 'Buyer', order.buyer.$identifier);
