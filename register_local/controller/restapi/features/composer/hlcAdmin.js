@@ -512,7 +512,8 @@ exports.getMembers = function(req, res, next) {
                             switch (req.body.registry)
                             {
                             case 'Buyer':
-                                _jsn.id = _arr[_idx].email;
+                                _jsn.id = _arr[_idx].buyerID;
+                                _jsn.resident = _arr[_idx].resident;    // edit here
                                 break;
                             case 'Seller':
                                 _jsn.id = _arr[_idx].sellerID;
