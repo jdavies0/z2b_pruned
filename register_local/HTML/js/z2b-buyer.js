@@ -19,11 +19,13 @@ let b_notify = '#buyer_notify';
 let b_count = '#buyer_count';
 let b_id = '';
 let b_alerts;
+let b_resident = 0;
 
 let orderDiv = 'orderDiv';
 let itemTable = {};
 let newItems = [];
 let totalAmount = 0;
+let courseCost = 0;
 
 /**
  * load the Buyer User Experience
@@ -84,6 +86,7 @@ function setupBuyer(page, nested)
     $('#company')[0].innerText = buyers[0].companyName;
     // save the current buyer id as b_id
     b_id = buyers[0].id;
+    b_resident = buyers[0].residency;
     // subscribe to events
     z2bSubscribe('Buyer', b_id);
       // create a function to execute when the user selects a different buyer
@@ -94,6 +97,8 @@ function setupBuyer(page, nested)
         z2bUnSubscribe(b_id);
         // get the new buyer id
         b_id = findMember($('#buyer').find(':selected').text(),buyers).id;
+        b_resident = findMember($('#buyer').find(':selected').text(),buyers).resident; // edit here
+//        console.log ("New Student: "+findMember($('#buyer').find(':selected').text(),buyers).id + "residency: "+findMember($('#buyer').find(':selected').text(),buyers).resident);
         // subscribe the new buyer
         z2bSubscribe('Buyer', b_id);
     });
@@ -154,10 +159,16 @@ function displayOrderForm()
             // set the initial item count to 1
             $('#count'+len).val(1);
             // set the initial price to the price of one item
-            $('#price'+len).append('$'+_item.creditHours*76); // $76 (resident) 268 (non-resident)
+            
+            if (b_resident == 1)
+                courseCost = 76*_item.creditHours;
+            else
+                courseCost=268*_item.creditHours;
+
+            $('#price'+len).append('$'+courseCost); // $76 (resident) 268 (non-resident)
             // add an entry into an array for this newly added item
             let _newItem = _item;
-            _newItem.extendedPrice = _item.unitPrice;
+            _newItem.extendedPrice = courseCost;
             newItems[len] = _newItem;
             newItems[len].quantity=1;
             totalAmount += _newItem.extendedPrice;
@@ -165,7 +176,7 @@ function displayOrderForm()
             $('#amount').empty();
             $('#amount').append('$'+totalAmount+'.00');
             // function to update item detail row and total amount if itemm count is changed
-            $('#count'+len).on('change', function ()
+/*            $('#count'+len).on('change', function ()
             {let len = this.id.substring(5);
                 let qty = $('#count'+len).val();
                 let price = newItems[len].unitPrice*qty;
@@ -177,6 +188,7 @@ function displayOrderForm()
                 newItems[len].quantity=qty;
                 $('#price'+len).empty(); $('#price'+len).append('$'+price+'.00');
             });
+*/
             $('#submitNewOrder').show();
         });
     });

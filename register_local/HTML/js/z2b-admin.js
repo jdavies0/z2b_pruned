@@ -383,6 +383,7 @@ function listMemRegistries()
  */
 function listRegistry()
 {
+    console.log ("listRegistry");
     let options = {};
     options.registry = $('#registryName').find(':selected').text();
     $.when($.post('/composer/admin/getMembers', options)).done(function (_results)
@@ -393,6 +394,7 @@ function listRegistry()
         _str += '<table width="100%"><tr><th>Type</th><th>Company</th><th>email</th></tr>';
         for (let each in _results.members)
         {(function(_idx, _arr){
+            console.log (_arr[_idx]);
             _str += '<tr><td>'+_arr[_idx].type+'</td><td>'+_arr[_idx].companyName+'</td><td>'+_arr[_idx].id+'</td></tr>';
         })(each, _results.members);}
         _str += '</ul>';

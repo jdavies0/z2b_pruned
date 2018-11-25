@@ -95,8 +95,15 @@ let adminConnection = new AdminConnection();
                             svc.send(req.app.locals, 'Message', '['+_idx+'] member with id: '+_arr[_idx].id+' already exists in Registry '+config.composer.NS+'.'+_arr[_idx].type);
                         })
                         .catch((error) => {
+//                            console.log('C: adding type: '+_arr[_idx].type +" id: " + _arr[_idx],id);
                             participant = factory.newResource(config.composer.NS, _arr[_idx].type, _arr[_idx].id);
                             participant.companyName = _arr[_idx].companyName;
+                            if (_arr[_idx].type == "Buyer")                     // edit here
+                            {
+                                console.log ("adding: " +_arr[_idx].type +"  "+_arr[_idx].id+" "+_arr[_idx].resident);
+                                participant.resident = _arr[_idx].resident;     // edit here
+                                console.log ("adding: " +participant.companyName +"  "+participant.id+" "+participant.resident);
+                            }
                             participantRegistry.add(participant)
                             .then(() => {
                                 console.log('['+_idx+'] '+_arr[_idx].companyName+' successfully added');
@@ -161,11 +168,13 @@ let adminConnection = new AdminConnection();
                             svc.send(req.app.locals, 'Message', '['+_idx+'] order with id: '+_arr[_idx].id+' already exists in Registry '+config.composer.NS+'.'+_arr[_idx].type);
                         })
                         .catch((error) => {
+                            //edit here vvv
+                            console.log('Creating ORder: '+config.composer.NS+ _arr[_idx].type+ _arr[_idx].id);
                             // first, an Order Object is created
                             let order = factory.newResource(config.composer.NS, _arr[_idx].type, _arr[_idx].id);
                             order = svc.createOrderTemplate(order);
                             let _tmp = svc.addItems(_arr[_idx], itemTable);
-                            order.courses = _tmp.courses;
+                            order.items = _tmp.items;
                             order.amount = _tmp.amount;
                             order.orderNumber = _arr[_idx].id;
                             // then the buy transaction is created

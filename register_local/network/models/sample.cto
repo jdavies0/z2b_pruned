@@ -6,6 +6,7 @@ import composer.base.*
 
 participant Buyer identified by buyerID extends Member{
     o String buyerID
+    o Integer resident
 }
 participant Seller identified by sellerID extends Member{
     o String sellerID
