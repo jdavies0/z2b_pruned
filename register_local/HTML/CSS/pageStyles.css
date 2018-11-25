@@ -21,8 +21,14 @@ body {height: 100%}
 		width: 15%;
 		color: blue;
 		font-size: 1em;
-		text-align: center;
+		text-align: center;	/* used for buyer */
 	}	
+	.scrollingBuyerPaneLeft{
+		height: calc(80vh - 5em);
+		margin-left: 0px;
+		width: 100%;
+		overflow: scroll;
+	}
 	.scrollingPaneLeft{
 		position: fixed;
 		height: calc(80vh - 5em);
@@ -222,6 +228,13 @@ p.message{
 	word-wrap: break-word;
 	white-space: normal;
 	font-size: .75em;
+}
+.bottom-hold-upper-buyer{
+	position: relative;
+	height: 10%;
+	margin-left: 1%;
+	width: 90%;
+	bottom: 12%;
 }
 .bottom-hold-upper{
 	position: fixed;

@@ -1,7 +1,7 @@
 {
   "index": {"language": "US English",
     "title": "WakeTech ZeroToBlockchain - Registration",
-    "header": "Z2B_Registration: User Experience",
+    "header": "WakeTech Online Registration",
     "titleBar": "WakeTech Blockchain Registration",
     "idx_unified": "load Unified User Experience",
     "idx_buyer": "load Student User Experience",
@@ -103,12 +103,12 @@
     "submit": "Submit"
   },
   "createOrder": {
-    "title": "Create New Order",
-    "selectVendor": "Select Department: ",
-    "cn_on": "Order Number",
+    "title": "Create New Schedule",
+    "selectVendor": "Select School: ",
+    "cn_on": "Schedule Number",
     "cn_status": "Status",
     "cn_date": "Date",
-    "cn_total": "Total",
+    "cn_total": "Tuition",
     "cn_selectItem": "Select Course",
     "addItem": "Add Course",
     "cancelNewOrder": "Cancel",
@@ -120,7 +120,7 @@
     "submit": "Submit"
   },
   "financeCo": {
-    "title": "Zero To Blockchain Chapter 12: The Global Financier",
+    "title": "School Cashier",    
     "financeCOclear": "Clear Window",
     "financeCOorderStatus": "Display Order Status"
   },
@@ -164,7 +164,7 @@
     "AuthorizePayment": {"select": "AuthorizePayment", "message": "Authorize Payment"},
     "Dispute": {"select": "Dispute", "message": "Dispute", "prompt": "Reason for Dispute: "},
     "Resolve": {"select": "Resolve", "message": "Resolve", "prompt": "Reason for Resolution: "},
-    "Purchase": {"select": "Purchase", "message": "Purchase"},
+    "Purchase": {"select": "Purchase", "message": "Register"},
     "Cancel": {"select": "Cancel", "message": "Cancel"},
     "Pay": {"select": "Pay", "message": "Pay"},
     "RequestShipping": {"select": "Request Shipping", "message": "Request Shipping"},

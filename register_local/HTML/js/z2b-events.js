@@ -108,9 +108,13 @@ function deferredMemberLoad()
     $.when($.post('/composer/admin/getMembers', options), $.post('/composer/admin/getMembers', options2),
         $.post('/composer/admin/getMembers', options3), $.post('/composer/admin/getMembers', options4)).done(function (_sellers, _buyers, _providers, _shippers)
         {
+            console.log("buyers:"+_buyers[0].members);
             buyers = dropDummy(_buyers[0].members);
+            console.log("sellers:"+_sellers[0]);
             sellers = dropDummy(_sellers[0].members);
+            console.log("providers:"+_providers[0]);
             providers = dropDummy(_providers[0].members);
+            console.log("shippers:"+_shippers[0]);
             shippers = dropDummy(_shippers[0].members);
             s_string = _getMembers(sellers);
             p_string = _getMembers(providers);

@@ -26,7 +26,7 @@ let s_id;
 function loadSellerUX (nested)
 {
     console.log ("in loadSellerUX");
-
+    console.log ("buyer.length = "+ buyers.length +" seller.length = "+sellers.length); 
     let toLoad = 'seller.html';
     if (buyers.length === 0) 
     { $.when($.get(toLoad), deferredMemberLoad()).done(function (page, res)

@@ -19,11 +19,13 @@ let b_notify = '#buyer_notify';
 let b_count = '#buyer_count';
 let b_id = '';
 let b_alerts;
+let b_resident = 0;
 
 let orderDiv = 'orderDiv';
 let itemTable = {};
 let newItems = [];
 let totalAmount = 0;
+let courseCost = 0;
 
 /**
  * load the Buyer User Experience
@@ -52,6 +54,7 @@ function loadBuyerUX (nested)
 
 function setupBuyer(page, nested)
 {
+    console.log ("setup buyer")
     var tag ='#body';
     if (nested)
         tag = '#buyerbody';
@@ -59,12 +62,6 @@ function setupBuyer(page, nested)
     // empty the html element that will hold this page
     $(tag).empty();
     $(tag).append(page);
-
-//    $('#buyerbody').empty();
-//   $('#buyerbody').append(page);
-// edit here
-//    $('#body').empty();
-//    $('#body').append(page);
     // empty the buyer alerts array
     b_alerts = [];
     // if there are no alerts, then remove the 'on' class and add the 'off' class
@@ -89,6 +86,7 @@ function setupBuyer(page, nested)
     $('#company')[0].innerText = buyers[0].companyName;
     // save the current buyer id as b_id
     b_id = buyers[0].id;
+    b_resident = buyers[0].residency;
     // subscribe to events
     z2bSubscribe('Buyer', b_id);
       // create a function to execute when the user selects a different buyer
@@ -99,6 +97,8 @@ function setupBuyer(page, nested)
         z2bUnSubscribe(b_id);
         // get the new buyer id
         b_id = findMember($('#buyer').find(':selected').text(),buyers).id;
+        b_resident = findMember($('#buyer').find(':selected').text(),buyers).resident; // edit here
+//        console.log ("New Student: "+findMember($('#buyer').find(':selected').text(),buyers).id + "residency: "+findMember($('#buyer').find(':selected').text(),buyers).resident);
         // subscribe the new buyer
         z2bSubscribe('Buyer', b_id);
     });
@@ -130,7 +130,7 @@ function displayOrderForm()
         $('#amount').append('$'+totalAmount+'.00');
         // build a select list for the items
         let _str = '';
-        for (let each in itemTable){(function(_idx, _arr){_str+='<option value="'+_idx+'">'+_arr[_idx].itemDescription+'</option>';})(each, itemTable);}
+        for (let each in itemTable){(function(_idx, _arr){_str+='<option value="'+_idx+'">'+_arr[_idx].courseDescription+'</option>';})(each, itemTable);}
         $('#items').empty();
         $('#items').append(_str);
         $('#cancelNewOrder').on('click', function (){_orderDiv.empty();});
@@ -154,15 +154,21 @@ function displayOrderForm()
             // build a new item detail row in the display window
             let _item = itemTable[_ptr];
             let len = newItems.length;
-            _str = '<tr><td>'+_item.itemNo+'</td><td>'+_item.itemDescription+'</td><td><input type="number" id="count'+len+'"</td><td id="price'+len+'"></td></tr>';
+            _str = '<tr><td>'+_item.courseDept+"."+_item.courseID+"."+_item.courseSection+'</td><td>'+_item.courseDescription+'</td><td id="count'+len+'"></td><td id="price'+len+'"></td></tr>';
             $('#itemTable').append(_str);
             // set the initial item count to 1
             $('#count'+len).val(1);
             // set the initial price to the price of one item
-            $('#price'+len).append('$'+_item.unitPrice+'.00');
+            
+            if (b_resident == 1)
+                courseCost = 76*_item.creditHours;
+            else
+                courseCost=268*_item.creditHours;
+
+            $('#price'+len).append('$'+courseCost); // $76 (resident) 268 (non-resident)
             // add an entry into an array for this newly added item
             let _newItem = _item;
-            _newItem.extendedPrice = _item.unitPrice;
+            _newItem.extendedPrice = courseCost;
             newItems[len] = _newItem;
             newItems[len].quantity=1;
             totalAmount += _newItem.extendedPrice;
@@ -170,7 +176,7 @@ function displayOrderForm()
             $('#amount').empty();
             $('#amount').append('$'+totalAmount+'.00');
             // function to update item detail row and total amount if itemm count is changed
-            $('#count'+len).on('change', function ()
+/*            $('#count'+len).on('change', function ()
             {let len = this.id.substring(5);
                 let qty = $('#count'+len).val();
                 let price = newItems[len].unitPrice*qty;
@@ -182,6 +188,7 @@ function displayOrderForm()
                 newItems[len].quantity=qty;
                 $('#price'+len).empty(); $('#price'+len).append('$'+price+'.00');
             });
+*/
             $('#submitNewOrder').show();
         });
     });
