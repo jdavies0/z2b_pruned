@@ -164,7 +164,7 @@
     "AuthorizePayment": {"select": "AuthorizePayment", "message": "Authorize Payment"},
     "Dispute": {"select": "Dispute", "message": "Dispute", "prompt": "Reason for Dispute: "},
     "Resolve": {"select": "Resolve", "message": "Resolve", "prompt": "Reason for Resolution: "},
-    "Purchase": {"select": "Purchase", "message": "Register"},
+    "Purchase": {"select": "Register", "message": "Register"},
     "Cancel": {"select": "Cancel", "message": "Cancel"},
     "Pay": {"select": "Pay", "message": "Pay"},
     "RequestShipping": {"select": "Request Shipping", "message": "Request Shipping"},
