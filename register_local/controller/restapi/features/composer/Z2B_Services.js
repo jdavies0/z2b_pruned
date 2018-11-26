@@ -289,8 +289,8 @@ getOrderData: function (_order)
  * server side code to correctly update order status with identical codes and text.
  */
     orderStatus: {
-        Created: {code: 1, text: 'Order Created'},
-        Bought: {code: 2, text: 'Order Purchased'},
+        Created: {code: 1, text: 'Schedule Created'},
+        Bought: {code: 2, text: 'Schedule Registered'},
         Cancelled: {code: 3, text: 'Order Cancelled'},
         Ordered: {code: 4, text: 'Order Submitted to Provider'},
         ShipRequest: {code: 5, text: 'Shipping Requested'},
