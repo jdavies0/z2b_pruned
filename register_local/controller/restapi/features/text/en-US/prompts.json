@@ -173,7 +173,7 @@
     "Refund": {"select": "Refund", "message": "Refund", "prompt": "Reason to Resolve or Refund: "},
     "Delivered": {"select": "Delivered", "message": "Delivered"},
     "Delivering": {"select": "Delivering", "message": "Update Delivery Status", "prompt": "Delivery Status: "},
-    "Order": {"select": "Order", "message": "Order From Supplier"},
+    "Order": {"select": "Order", "message": "Submit to Cashier"},
     "NoAction": {"select": "NoAction", "message": "Take No Action"},
     "ex_button": "Execute",
     "ca_button": "Cancel",

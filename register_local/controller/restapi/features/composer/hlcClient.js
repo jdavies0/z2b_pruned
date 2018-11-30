@@ -169,9 +169,11 @@ exports.orderAction = function (req, res, next) {
                     updateOrder.seller = factory.newRelationship(NS, 'Seller', order.seller.$identifier);
                     break;
                 case 'Order From Supplier':
+                case 'Submit to Cashier': // edit here Chris
                     console.log('Order from Supplier entered for '+order.orderNumber+ ' inbound id: '+ req.body.participant+' with order.seller as: '+order.seller.$identifier);
                     updateOrder = factory.newTransaction(NS, 'OrderFromSupplier');
-                    updateOrder.provider = factory.newRelationship(NS, 'Provider', req.body.provider);
+                    updateOrder.financeCo = factory.newRelationship(NS, 'FinanceCo', financeCoID);
+                    //updateOrder.provider = factory.newRelationship(NS, 'Provider', req.body.provider);
                     updateOrder.seller = factory.newRelationship(NS, 'Seller', order.seller.$identifier);
                     break;
                 case 'Request Payment':

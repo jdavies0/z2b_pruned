@@ -65,3 +65,7 @@ out
 *.swp
 *.card
 register_local/startup/*.txt
+register_local/controller/restapi/features/composer/creds/*
+register_local/network/dist/networkadmin.card
+register_local/startup/courseList.txt
+register_local/startup/itemList.txt

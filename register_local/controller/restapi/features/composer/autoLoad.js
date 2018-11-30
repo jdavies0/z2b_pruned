@@ -100,9 +100,7 @@ let adminConnection = new AdminConnection();
                             participant.companyName = _arr[_idx].companyName;
                             if (_arr[_idx].type == "Buyer")                     // edit here
                             {
-                                console.log ("adding: " +_arr[_idx].type +"  "+_arr[_idx].id+" "+_arr[_idx].resident);
                                 participant.resident = _arr[_idx].resident;     // edit here
-                                console.log ("adding: " +participant.companyName +"  "+participant.id+" "+participant.resident);
                             }
                             participantRegistry.add(participant)
                             .then(() => {
@@ -153,8 +151,7 @@ let adminConnection = new AdminConnection();
             // iterate through the order objects in the memberList.json file.
             for (let each in startupFile.items){(function(_idx, _arr){itemTable.push(_arr[_idx]);})(each, startupFile.items);}
             svc.saveItemTable(itemTable);
-            for (let each in startupFile.courses){(function(_idx, _arr){courseTable.push(_arr[_idx]);})(each, startupFile.courses);}
-            svc.saveCourseTable(courseTable);
+
             for (let each in startupFile.assets)
                 {(function(_idx, _arr)
                     {
@@ -173,7 +170,7 @@ let adminConnection = new AdminConnection();
                             // first, an Order Object is created
                             let order = factory.newResource(config.composer.NS, _arr[_idx].type, _arr[_idx].id);
                             order = svc.createOrderTemplate(order);
-                            let _tmp = svc.addItems(_arr[_idx], itemTable);
+                            let _tmp = svc.addItems(_arr[_idx], itemTable); //addItems updated
                             order.items = _tmp.items;
                             order.amount = _tmp.amount;
                             order.orderNumber = _arr[_idx].id;
@@ -187,7 +184,8 @@ let adminConnection = new AdminConnection();
                             createNew.financeCo = factory.newRelationship(config.composer.NS, 'FinanceCo', financeCoID);
                             createNew.order = factory.newRelationship(config.composer.NS, 'Order', order.$identifier);
                             createNew.buyer = factory.newRelationship(config.composer.NS, 'Buyer', _arr[_idx].buyer);
-                            createNew.seller = factory.newRelationship(config.composer.NS, 'Seller', _arr[_idx].seller);
+                            createNew.seller = factory.newRelationship(config.composer.NS, 'Seller', _arr[_idx].seller);                    
+                            order.amount = _tmp.amount * 268; // hard coded cost per credit hr for now
                             createNew.amount = order.amount;
                             // then the order is added to the asset registry.
                             return assetRegistry.add(order)
