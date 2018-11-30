@@ -254,6 +254,7 @@ saveCourseTable: function (_table)
                     // edit here
                     console.log('addItems');
                     let _item = _this.getItem(_arr[_idx].itemNo, _itemTable);
+                    let courseCost;
                     _this.setItem(_arr[_idx].itemNo, _arr[_idx].quantity, _itemTable);
                     _arr[_idx].courseDept = _item.courseDept;
                     _arr[_idx].courseID = _item.courseID;
@@ -264,7 +265,7 @@ saveCourseTable: function (_table)
                     _arr[_idx].location = _item.location;
                     _arr[_idx].seats = _item.seats;
                     _arr[_idx].instructor = _item.instructor;
-                    _arr[_idx].extendedPrice = _item.creditHours*268; // assuming out of state tution for preload
+                    _arr[_idx].extendedPrice = _item.creditHours; // return the credit hours, do cost calc in autoload.js
                     _amount += _arr[_idx].extendedPrice;
                     _items.push(JSON.stringify(_arr[_idx]));
                 })(each, _inbound.items);}

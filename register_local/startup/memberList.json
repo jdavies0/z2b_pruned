@@ -20,7 +20,7 @@
     "assets":
     [   
         {"type": "Order", "id": "001", "buyer": "adrodrigues@my.waketech.edu", "seller": "registrar@waketech.edu", "items": [{"itemNo": 1, "quantity": 1}, {"itemNo": 2, "quantity": 1}, {"itemNo": 3, "quantity": 1}] },
-        {"type": "Order", "id": "002", "buyer": "peterchen@my.waketech.edu", "seller": "registrar@waketech.edu", "items": [{"itemNo": 4, "quantity": 1}, {"itemNo": 5, "quantity": 1}, {"itemNo": 6, "quantity": 1}] },
+        {"type": "Order", "id": "002", "buyer": "joshuamoore@my.waketech.edu", "seller": "registrar@waketech.edu", "items": [{"itemNo": 1, "quantity": 1}, {"itemNo": 2, "quantity": 1}, {"itemNo": 3, "quantity": 1}] },
         {"type": "Order", "id": "003", "buyer": "ciarawalsh@my.waketech.ed", "seller": "registrar@waketech.edu", "items": [{"itemNo": 8, "quantity": 1}, {"itemNo": 10, "quantity": 1}, {"itemNo": 11, "quantity": 1}] },
         {"type": "Order", "id": "004", "buyer": "deborahmiller@my.waketech.edu", "seller": "registrar@duke.edu", "items": [{"itemNo": 7, "quantity": 1}]}
     ],
