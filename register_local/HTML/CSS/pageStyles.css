@@ -4,7 +4,7 @@
 
 body {height: 100%}
 
-/*div {clear: both}*/
+div {clear: both}
 
 @media screen and ( max-height: 799px ) {
 	.scrollingPane{

@@ -251,11 +251,20 @@ saveCourseTable: function (_table)
         for (let each in _inbound.items)
             {(function(_idx, _arr)
                 {
+                    // edit here
+                    console.log('addItems');
                     let _item = _this.getItem(_arr[_idx].itemNo, _itemTable);
                     _this.setItem(_arr[_idx].itemNo, _arr[_idx].quantity, _itemTable);
-                    _arr[_idx].description = _item.itemDescription;
-                    _arr[_idx].unitPrice = _item.unitPrice;
-                    _arr[_idx].extendedPrice = _item.unitPrice*_arr[_idx].quantity;
+                    _arr[_idx].courseDept = _item.courseDept;
+                    _arr[_idx].courseID = _item.courseID;
+                    _arr[_idx].courseSection = _item.courseSection;
+                    _arr[_idx].courseDescription = _item.courseDescription;
+                    _arr[_idx].creditHours = _item.creditHours;
+                    _arr[_idx].term = _item.term;
+                    _arr[_idx].location = _item.location;
+                    _arr[_idx].seats = _item.seats;
+                    _arr[_idx].instructor = _item.instructor;
+                    _arr[_idx].extendedPrice = _item.creditHours*268; // assuming out of state tution for preload
                     _amount += _arr[_idx].extendedPrice;
                     _items.push(JSON.stringify(_arr[_idx]));
                 })(each, _inbound.items);}
@@ -292,7 +301,7 @@ getOrderData: function (_order)
         Created: {code: 1, text: 'Order Created'},
         Bought: {code: 2, text: 'Order Purchased'},
         Cancelled: {code: 3, text: 'Order Cancelled'},
-        Ordered: {code: 4, text: 'Order Submitted to Provider'},
+        Ordered: {code: 4, text: 'Order Submitted to Cashier'},
         ShipRequest: {code: 5, text: 'Shipping Requested'},
         Delivered: {code: 6, text: 'Order Delivered'},
         Delivering: {code: 15, text: 'Order being Delivered'},

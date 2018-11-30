@@ -15,7 +15,7 @@ var orderStatus = {
     Created: {code: 1, text: 'Order Created'},
     Bought: {code: 2, text: 'Order Purchased'},
     Cancelled: {code: 3, text: 'Order Cancelled'},
-    Ordered: {code: 4, text: 'Order Submitted to Provider'},
+    Ordered: {code: 4, text: 'Order Submitted to Cashier'},
     ShipRequest: {code: 5, text: 'Shipping Requested'},
     Delivered: {code: 6, text: 'Order Delivered'},
     Delivering: {code: 15, text: 'Order being Delivered'},
@@ -366,7 +366,7 @@ function z2bEmit(_event, _order)
         case 'Cancelled':
         case 'Backordered':
             z2bEvent.sellerID = _order.seller.$identifier;
-            z2bEvent.providerID = _order.provider.$identifier;
+            z2bEvent.financeCoID = _order.financeCo.$identifier;
         break;
         case 'ShipRequest':
         case 'DeliveryStarted':
