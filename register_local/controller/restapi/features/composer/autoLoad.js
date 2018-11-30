@@ -100,9 +100,7 @@ let adminConnection = new AdminConnection();
                             participant.companyName = _arr[_idx].companyName;
                             if (_arr[_idx].type == "Buyer")                     // edit here
                             {
-                                console.log ("adding buyer a: " +_arr[_idx].type +"  "+_arr[_idx].id+" "+_arr[_idx].resident);
                                 participant.resident = _arr[_idx].resident;     // edit here
-                                console.log ("adding buyer b: " +participant.companyName +"  "+participant.id+" "+participant.resident);
                             }
                             participantRegistry.add(participant)
                             .then(() => {
@@ -153,8 +151,7 @@ let adminConnection = new AdminConnection();
             // iterate through the order objects in the memberList.json file.
             for (let each in startupFile.items){(function(_idx, _arr){itemTable.push(_arr[_idx]);})(each, startupFile.items);}
             svc.saveItemTable(itemTable);
-            for (let each in startupFile.courses){(function(_idx, _arr){courseTable.push(_arr[_idx]);})(each, startupFile.courses);}
-            svc.saveCourseTable(courseTable);
+
             for (let each in startupFile.assets)
                 {(function(_idx, _arr)
                     {

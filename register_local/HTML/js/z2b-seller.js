@@ -20,6 +20,9 @@ let s_alerts = [];
 let s_notify = '#seller_notify';
 let s_count = '#seller_count';
 let s_id;
+let total_creditHours =0;
+let total_tuition=0;
+
 /**
  * load the administration Seller Experience
  */
@@ -108,8 +111,12 @@ function formatSellerOrders(_target, _orders)
 {
     _target.empty();
     let _str = ''; let _date = '';
+
     for (let each in _orders)
-    {(function(_idx, _arr)
+    {        
+        total_creditHours = 0;
+        total_tuition = 0;
+            (function(_idx, _arr)
         { let _action = '<th><select id=s_action'+_idx+'><option value="'+textPrompts.orderProcess.NoAction.select+'">'+textPrompts.orderProcess.NoAction.message+'</option>';
         //
         // each order can have different states and the action that a buyer can take is directly dependent on the state of the order. 
@@ -168,16 +175,18 @@ function formatSellerOrders(_target, _orders)
         _action += '</select>';
         if (_idx > 0) {_str += '<div class="spacer"></div>';}
         _str += '<table class="wide"><tr><th>'+textPrompts.orderProcess.orderno+'</th><th>'+textPrompts.orderProcess.status+'</th><th class="right">'+textPrompts.orderProcess.total+'</th><th colspan="3" class="right message">'+textPrompts.orderProcess.buyer+findMember(_arr[_idx].buyer.split('#')[1],buyers).companyName+'</th></tr>';
-        //_str += '<tr><th id ="s_order'+_idx+'" width="20%">'+_arr[_idx].id+'</th><th width="50%" id="s_status'+_idx+'">'+JSON.parse(_arr[_idx].status).text+': '+_date+'</th><th class="right">$'+_arr[_idx].amount+'.00</th>'+_action+'<br/><select id="providers'+_idx+'">'+p_string+'</th>'+_button+'</tr></table>';
-        // edit here 
-        _str += '<tr><th id ="s_order'+_idx+'" width="20%">'+_arr[_idx].id+'</th><th width="50%" id="s_status'+_idx+'">'+JSON.parse(_arr[_idx].status).text+': '+_date+'</th><th class="right">$'+_arr[_idx].amount+'.00</th>'+_action+'<br/><intput type="hidden" id="providers" value="dummy"></th>'+_button+'</tr></table>';
+        _str += '<tr><th id ="s_order'+_idx+'" width="20%">'+_arr[_idx].id+'</th><th width="50%" id="s_status'+_idx+'">'+JSON.parse(_arr[_idx].status).text+': '+_date+'</th><th class="right">$'+_arr[_idx].amount+'.00</th>'+_action+'<br/>'+_button+'</tr></table>';
         _str+= '<table class="wide"><tr align="center"><th>'+textPrompts.orderProcess.itemno+'</th><th>'+textPrompts.orderProcess.description+'</th><th>'+textPrompts.orderProcess.qty+'</th><th>'+textPrompts.orderProcess.price+'</th></tr>'
         for (let every in _arr[_idx].items)
         {(function(_idx2, _arr2)
         { let _item = JSON.parse(_arr2[_idx2]);
-            _str += '<tr><td align="center">'+_item.courseDept+'-'+_item.courseID+'</td><td>'+_item.courseDescription+'</td><td align="center">'+_item.creditHours+'</td><td align="right">$'+_item.extendedPrice+'.00</td><tr>';
+//            _str += '<tr><td align="center">'+_item.itemNo+'</td><td>'+_item.description+'</td><td align="center">'+_item.quantity+'</td><td align="right">$'+_item.extendedPrice+'.00</td><tr>';
+            _str += '<tr><td align="center">'+_item.courseDept+"."+_item.courseID+"."+_item.courseSection+'</td><td>'+_item.courseDescription+'</td><td align="center">'+_item.creditHours+'</td><td align="right">$'+_item.extendedPrice+'</td></tr>';
+            total_creditHours += _item.creditHours*1;
+            total_tuition += _item.extendedPrice*1;
         })(every, _arr[_idx].items);
         }
+        _str += '<tr><th align="center"><b>Total</td><td></td><td align="center"><b>'+total_creditHours+'</td><td align="right"><b>$'+total_tuition+'.00</td></tr>';
         _str += '</table>';
     })(each, _orders);
     }
@@ -191,7 +200,7 @@ function formatSellerOrders(_target, _orders)
           options.action = $('#s_action'+_idx).find(':selected').text();
           options.orderNo = $('#s_order'+_idx).text();
           options.participant = $('#seller').val();
-          options.provider = $('#providers'+_idx).find(':selected').val();  
+          options.provider = $('#providers'+_idx).find(':selected').val();
           if ((options.action === 'Resolve') || (options.action === 'Refund')) {options.reason = $('#s_reason'+_idx).val();}
           $('#seller_messages').prepend(formatMessage(options.action+textPrompts.orderProcess.processing_msg.format(options.action, options.orderNo)+options.orderNo));
           $.when($.post('/composer/client/orderAction', options)).done(function (_results)
