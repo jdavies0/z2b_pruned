@@ -12,8 +12,8 @@
  * limitations under the License.
  */
 var orderStatus = {
-    Created: {code: 1, text: 'Schedule Created'},
-    Bought: {code: 2, text: 'Schedule Submitted'},
+    Created: {code: 1, text: 'Order Created'},
+    Bought: {code: 2, text: 'Order Purchased'},
     Cancelled: {code: 3, text: 'Order Cancelled'},
     Ordered: {code: 4, text: 'Order Submitted to Provider'},
     ShipRequest: {code: 5, text: 'Shipping Requested'},
