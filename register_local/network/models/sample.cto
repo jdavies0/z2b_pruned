@@ -70,8 +70,8 @@ asset Order identified by orderNumber {
 }
   transaction OrderFromSupplier {
     --> Order order
-    --> Provider provider
     --> Seller seller
+    --> FinanceCo financeCo 
 }
   transaction RequestShipping {
     --> Order order

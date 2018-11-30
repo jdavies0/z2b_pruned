@@ -15,26 +15,12 @@
         {"type": "Buyer",  "pw": "", "companyName":"Luis Garcia",       "dob":"07/08/1999", "address":"5212 Henslowe Dr",           "city":"Raleigh",   "state":"NC",       "zipcode":"27607", "phoneNumber":"919-647-0187", "id":"garcialuis@my.waketech.edu",         "email":"garcialuis@my.waketech.edu",         "advisor":"Joseph K. Parks",    "academic program":"Web Developer",                                                 "resident": 0},
         {"type": "Buyer",  "pw": "", "companyName":"Jefferson Jones",   "dob":"07/08/2000", "address":"405 Martin Luther King Jr Blvd.","city":"Chapel Hill", "state":"NC", "zipcode":"27514", "phoneNumber":"911-968-2743", "id":"jeffjones@my.waketech.edu",          "email":"jeffjones@my.waketech.edu",          "advisor":"Sharon F. Welker",   "academic program":"Associate in Engineering",                                      "resident": 1},
         {"type": "Buyer",  "pw": "", "companyName":"Raj Acharya",       "dob":"02/09/1980", "address":"200 E Main Street",          "city":"Durham",    "state":"NC",       "zipcode":"27701", "phoneNumber":"512-555-7854", "id":"rajacharya@my.waketech.edu",         "email":"rajacharya@my.waketech.edu",         "advisor":"Ms. Karen Gibbons",  "academic program":"Computer Programming & Development",                            "resident": 0},
-        {"type": "Shipper", "pw": "speedmatters", "companyName": "Fast Eddy, Inc", "id": "speedmatters@fasteddyinc.com"},
-        {"type": "Shipper", "pw": "wantitnow", "companyName": "The Overnight Experts, Inc", "id": "wantitnow@overnightexpressinc.com"},
-        {"type": "Provider", "pw": "info", "companyName": "PC Hardware Now, Inc", "id": "info@pchardwarenowinc.com"},
-        {"type": "Shipper", "pw": "dummyShipper", "companyName": "dummy shipper", "id": "noop@dummy"},
-        {"type": "Provider", "pw": "dummyProvider", "companyName": "dummy provider", "id": "noop@dummy"},
-        {"type": "Provider", "pw": "power", "companyName": "UPS Systems, Inc", "id": "power@upssystemsinc.com"},
-        {"type": "Provider", "pw": "online", "companyName": "The App Store, Inc", "id": "online@theappstoreinc.com"},
         {"type": "FinanceCo", "pw": "easymoney", "companyName": "The Global Financier", "id": "easymoney@easymoneyinc.com"}
     ],
     "assets":
     [   
-        {"type": "Order", "id": "001", "buyer": "peterchen@my.waketech.edu", "seller": "bob@pchardwareinc.com", "items": [{"itemNo": 1, "quantity": 5}, {"itemNo": 2, "quantity": 2}, {"itemNo": 6, "quantity": 2}] },
-        {"type": "Order", "id": "002", "buyer": "peterchen@my.waketech.edu", "seller": "jojo@innovativesolutionsinc.com", "items": [{"itemNo": 2, "quantity": 5}, {"itemNo": 8, "quantity": 2}] },
-        {"type": "Order", "id": "003", "buyer": "peterchen@my.waketech.edu", "seller": "Erin@2ndlifesystemsinc.com", "items": [{"itemNo": 3, "quantity": 15}, {"itemNo": 4, "quantity": 20}] },
-        {"type": "Order", "id": "004", "buyer": "peterchen@my.waketech.edu", "seller": "aiesha@cloudninesoftwareinc.com", "items": [{"itemNo": 1, "quantity": 5}, {"itemNo": 2, "quantity": 2}, {"itemNo": 6, "quantity": 2}] },
-        {"type": "Order", "id": "005", "buyer": "peterchen@my.waketech.edu", "seller": "joshua@officeexpertsinc.com", "items": [{"itemNo": 2, "quantity": 5}, {"itemNo": 8, "quantity": 2}] },
-        {"type": "Order", "id": "006", "buyer": "jeffjones@my.waketech.edu", "seller": "Erin@2ndlifesystemsinc.com", "items": [{"itemNo": 3, "quantity": 15}, {"itemNo": 4, "quantity": 20}] },
-        {"type": "Order", "id": "007", "buyer": "jeffjones@my.waketech.edu", "seller": "bob@pchardwareinc.com", "items": [{"itemNo": 1, "quantity": 5}, {"itemNo": 2, "quantity": 2}, {"itemNo": 6, "quantity": 2}] },
-        {"type": "Order", "id": "008", "buyer": "jeffjones@my.waketech.edu", "seller": "jojo@innovativesolutionsinc.com", "items": [{"itemNo": 2, "quantity": 5}, {"itemNo": 8, "quantity": 2}] },
-        {"type": "Order", "id": "009", "buyer": "jeffjones@my.waketech.edu", "seller": "Erin@2ndlifesystemsinc.com", "items": [{"itemNo": 3, "quantity": 15}, {"itemNo": 4, "quantity": 20}] }
+        {"type": "Order", "id": "001", "buyer": "peterchen@my.waketech.edu", "seller": "registrar@waketech.edu", "items": [{"itemNo": 1, "quantity": 5}, {"itemNo": 2, "quantity": 2}, {"itemNo": 6, "quantity": 2}] },
+        {"type": "Order", "id": "002", "buyer": "nataliacarmelengo@my.waketech.edu", "seller": "registrar@durhamtech.edu", "items": [{}]}
     ],
     "items":
     [

@@ -104,9 +104,10 @@ function OrderCancel(purchase) {
  * @transaction
  */
 function OrderFromSupplier(purchase) {
+    console.log('In OrderFromSupplier');
     if (purchase.order.status == JSON.stringify(orderStatus.Bought))
     {
-        purchase.order.provider = purchase.provider;
+        purchase.order.financeCo = purchase.financeCo;
         purchase.order.ordered = new Date().toISOString();
         purchase.order.status = JSON.stringify(orderStatus.Ordered);
         return getAssetRegistry('org.acme.Z2BTestNetwork.Order')
