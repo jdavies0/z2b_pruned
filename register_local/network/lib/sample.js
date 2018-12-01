@@ -193,7 +193,7 @@ function Deliver(purchase) {
  * @transaction
  */
 function RequestPayment(purchase) {
-    if ((JSON.parse(purchase.order.status).text == orderStatus.Order.text) || (JSON.parse(purchase.order.status).text == orderStatus.Resolve.text))
+    if ((JSON.parse(purchase.order.status).text == orderStatus.Ordered.text) || (JSON.parse(purchase.order.status).text == orderStatus.Resolve.text))
         {purchase.order.status = JSON.stringify(orderStatus.PayRequest);
         purchase.order.financeCo = purchase.financeCo;
         purchase.order.paymentRequested = new Date().toISOString();

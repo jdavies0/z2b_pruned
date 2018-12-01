@@ -111,6 +111,7 @@ asset Order identified by orderNumber {
   transaction RequestPayment {
     --> Order order
     --> Seller seller
+    --> Buyer buyer
     --> FinanceCo financeCo
 }
   transaction AuthorizePayment {

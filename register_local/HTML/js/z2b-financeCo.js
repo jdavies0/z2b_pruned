@@ -142,8 +142,9 @@ function formatFinanceOrders(_target, _orders)
         case orderStatus.Delivering.code:
             _date = _arr[_idx].delivering;
             break;
-        case orderStatus.Ordered.code:
+        case orderStatus.Ordered.code: // now sets up request payment 
             _date = _arr[_idx].ordered;
+            _action += '<option value="PayRequest">Request Payment</option>';
             break;
         case orderStatus.Refund.code:
             _date = _arr[_idx].orderRefunded + '<br/>'+_arr[_idx].refund;
