@@ -180,6 +180,7 @@ exports.orderAction = function (req, res, next) {
                     console.log('Request Payment entered');
                     updateOrder = factory.newTransaction(NS, 'RequestPayment');
                     updateOrder.seller = factory.newRelationship(NS, 'Seller', order.seller.$identifier);
+                    updateOrder.buyer = factory.newRelationship(NS, 'Buyer', order.buyer.$identifier);
                     updateOrder.financeCo = factory.newRelationship(NS, 'FinanceCo', financeCoID);
                     break;
                 case 'Refund':
