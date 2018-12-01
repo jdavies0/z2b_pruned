@@ -299,23 +299,23 @@ getOrderData: function (_order)
  * JSON object of available order status types and codes. This is used by nodejs 
  * server side code to correctly update order status with identical codes and text.
  */
-    orderStatus: {
-        Created: {code: 1, text: 'Order Created'},
-        Bought: {code: 2, text: 'Order Purchased'},
-        Cancelled: {code: 3, text: 'Order Cancelled'},
-        Ordered: {code: 4, text: 'Order Submitted to Cashier'},
-        ShipRequest: {code: 5, text: 'Shipping Requested'},
-        Delivered: {code: 6, text: 'Order Delivered'},
-        Delivering: {code: 15, text: 'Order being Delivered'},
-        Backordered: {code: 7, text: 'Order Backordered'},
-        Dispute: {code: 8, text: 'Order Disputed'},
-        Resolve: {code: 9, text: 'Order Dispute Resolved'},
-        PayRequest: {code: 10, text: 'Payment Requested'},
-        Authorize: {code: 11, text: 'Payment Approved'},
-        Paid: {code: 14, text: 'Payment Processed'},
-        Refund: {code: 12, text: 'Order Refund Requested'},
-        Refunded: {code: 13, text: 'Order Refunded'}
-    },
+orderStatus: {
+    Created: {code: 1, text: 'Schedule Created'},
+    Bought: {code: 2, text: 'Schedule Registered'},
+    Cancelled: {code: 3, text: 'Schedule Cancelled'},
+    Ordered: {code: 4, text: 'Schedule Submitted to Cashier'},
+    ShipRequest: {code: 5, text: 'Shipping Requested'},
+    Delivered: {code: 6, text: 'Schedule Delivered'},
+    Delivering: {code: 15, text: 'Schedule being Delivered'},
+    Backordered: {code: 7, text: 'Schedule Backordered'},
+    Dispute: {code: 8, text: 'Schedule Disputed'},
+    Resolve: {code: 9, text: 'Schedule Dispute Resolved'},
+    PayRequest: {code: 10, text: 'Payment Requested'},
+    Authorize: {code: 11, text: 'Payment Approved'},
+    Paid: {code: 14, text: 'Payment Processed'},
+    Refund: {code: 12, text: 'Schedule Refund Requested'},
+    Refunded: {code: 13, text: 'Schedule Refunded'}
+},
 /**
  * New code to support sending messages to socket clients
  * @param {Object} _locals - shared variables and functions from index.js
