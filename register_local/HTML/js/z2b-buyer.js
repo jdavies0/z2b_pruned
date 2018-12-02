@@ -26,6 +26,10 @@ let itemTable = {};
 let newItems = [];
 let totalAmount = 0;
 let courseCost = 0;
+let scheduleCount = 0;
+ 
+//<li id="US_English"><a onclick="goMultiLingual('US_English', 'index')">US English</a></li>
+
 
 /**
  * load the Buyer User Experience
@@ -34,11 +38,44 @@ function loadBuyerUX (nested)
 {
     // get the html page to load
     console.log ("in LoadBuyerUX");
+
+    var tag ='#body';
+    if (nested)
+        tag = '#buyerbody';
+
+    let toLoad = 'buyer_login.html';
+
+    $.when($.get(toLoad)).done(function (page, res)
+    {
+     
+        // empty the html element that will hold this page
+        $(tag).empty();
+        $(tag).append(page);
+
+        updatePage('buyer_login');
+        updatePage('skins');
+
+        let _list = $('#orderStatus');
+    
+        let _login = $('#loginButton');
+        _login.on('click', function()
+        { 
+            let _username =  document.getElementById("username").value;
+            _username = "peterchen@my.waketech.edu" ;
+            loadLoggedinBuyerUX(_username, nested);
+        });
+    });
+}
+
+function loadLoggedinBuyerUX (user, nested)
+{
+    // get the html page to load
+    console.log ("in loadLoggedinBuyerUX user="+user);
     let toLoad = 'buyer.html';
     // if (buyers.length === 0) then autoLoad() was not successfully run before this web app starts, so the sie of the buyer list is zero
     // assume user has run autoLoad and rebuild member list
     // if autoLoad not yet run, then member list length will still be zero
-    if ((typeof(buyers) === 'undefined') || (buyers === null) || (buyers.length === 0))
+/*    if ((typeof(buyers) === 'undefined') || (buyers === null) || (buyers.length === 0))
     { $.when($.get(toLoad), deferredMemberLoad()).done(function (page, res)
         {setupBuyer(page,nested);});
         }
@@ -46,14 +83,27 @@ function loadBuyerUX (nested)
             $.when($.get(toLoad)).done(function (page)
             {setupBuyer(page,nested);});
     }
+*/
+
+    if ((typeof(user) === 'undefined') || (user === null) )
+    { $.when($.get(toLoad), deferredMemberLoad()).done(function (page, res)
+        {setupBuyer(page,nested, user);});
+    }
+    else
+    {
+            $.when($.get(toLoad)).done(function (page)
+            {setupBuyer(page,nested,user);});
+    }
 }
 
 /**
 * @param int nested - flag if page nested in table
  */
 
-function setupBuyer(page, nested)
+function setupBuyer(page, nested, user)
 {
+    let options = {};
+
     console.log ("setup buyer")
     var tag ='#body';
     if (nested)
@@ -75,34 +125,104 @@ function setupBuyer(page, nested)
     let _list = $('#orderStatus');
     let _orderDiv = $('#'+orderDiv);
     _create.on('click', function(){displayOrderForm();});
-    _list.on('click', function(){listOrders();});
+//    _list.on('click', function(){listOrders();});
+    _list.on('click', function(){listOrdersByBuyerID(buyer.id);});
     $('#buyer').empty();
     // build the buer select HTML element
-    for (let each in buyers)
+   for (let each in buyers)
     {(function(_idx, _arr)
         {$('#buyer').append('<option value="'+_arr[_idx].id+'">' +_arr[_idx].id+'</option>');})(each, buyers);
     }
     // display the name of the current buyer
-    $('#company')[0].innerText = buyers[0].companyName;
+    let buyer=  findMember(user,buyers);
+    $('#company')[0].innerText =     buyer.companyName; 
+//    $('#company')[0].innerText = buyers[0].companyName;
     // save the current buyer id as b_id
-    b_id = buyers[0].id;
-    b_resident = buyers[0].residency;
+//    b_id = buyers[0].id;
+//    b_resident = buyers[0].resident;
+    b_resident = buyer.resident;
     // subscribe to events
     z2bSubscribe('Buyer', b_id);
-      // create a function to execute when the user selects a different buyer
+
+//    scheduleCount = getBuyerScheduleCount (buyers[0].id); // edit here
+    scheduleCount = getBuyerScheduleCount (buyer.id); // edit here
+    console.log ("schedule count = "+scheduleCount);
+    if (scheduleCount > 0) 
+    { 
+     //   listOrders();
+         $('#orderStatus').show();
+         _create = $('#updateOrder');
+        _create.on('click', function(){displayModifyOrderForm();});
+    }
+    else
+    {
+        $('#orderStatus').hide();
+        _create = $('#newOrder');
+        _create.on('click', function(){displayOrderForm();});
+    }
+
+
+    // create a function to execute when the user selects a different buyer
     $('#buyer').on('change', function() 
     { _orderDiv.empty(); $('#buyer_messages').empty(); 
         $('#company')[0].innerText = findMember($('#buyer').find(':selected').text(),buyers).companyName; 
         // unsubscribe the current buyer
         z2bUnSubscribe(b_id);
+
+        // edit here
         // get the new buyer id
         b_id = findMember($('#buyer').find(':selected').text(),buyers).id;
         b_resident = findMember($('#buyer').find(':selected').text(),buyers).resident; // edit here
 //        console.log ("New Student: "+findMember($('#buyer').find(':selected').text(),buyers).id + "residency: "+findMember($('#buyer').find(':selected').text(),buyers).resident);
+        scheduleCount = getBuyerScheduleCount (b_id); // edit here
+        console.log ("schedule count = "+scheduleCount);
+        if (scheduleCount > 0) 
+        { 
+            listOrders();
+            _create = $('#updateOrder');
+            _create.on('click', function(){displayModifyOrderForm();});
+        }
+        else
+        {
+            _create = $('#newOrder');
+            _create.on('click', function(){displayOrderForm();});
+        }
+    
+
         // subscribe the new buyer
         z2bSubscribe('Buyer', b_id);
     });
 
+}
+/**
+ * 
+ * @param {*} buyer_id 
+ */
+function getBuyerScheduleCount (buyer_id)
+{
+    let options = {};
+    let _scheduleCount = 0;
+
+    options.userID = buyer_id;
+    options.id = buyer_id;
+
+    // Check if buyer already has schedule
+    $.when($.post('/composer/client/getMyOrders', options)).done(function(_results)
+    {
+        console.log("got resuts: "+_results);
+        if ((typeof(_results.orders) === 'undefined') || (_results.orders === null))
+        {console.log('error getting orders: ', _results);}
+        else
+        {   _scheduleCount = _results.orders.length;}
+    });
+    
+    if (_schdeuleCount > 0 )
+        $('#orderStatus').show();
+    else
+        $('#orderStatus').hide();
+
+
+    return _scheduleCount;
 }
 /**
  * Displays the create order form for the selected buyer
@@ -126,6 +246,104 @@ function displayOrderForm()
         $('#seller').val($('#seller option:first').val());
         $('#orderNo').append('xxx');
         $('#status').append('New Order');
+        $('#today').append(new Date().toISOString());
+        $('#amount').append('$'+totalAmount+'.00');
+        // build a select list for the items
+        let _str = '';
+        for (let each in itemTable){(function(_idx, _arr){_str+='<option value="'+_idx+'">'+_arr[_idx].courseDescription+'</option>';})(each, itemTable);}
+        $('#items').empty();
+        $('#items').append(_str);
+        $('#cancelNewOrder').on('click', function (){_orderDiv.empty();});
+        // hide the submit new order function until an item has been selected
+        $('#submitNewOrder').hide();
+        $('#submitNewOrder').on('click', function ()
+            { let options = {};
+            options.buyer = $('#buyer').find(':selected').val();
+            options.seller = $('#seller').find(':selected').val();
+            options.items = newItems;
+            console.log(options);
+            _orderDiv.empty(); _orderDiv.append(formatMessage(textPrompts.orderProcess.create_msg));
+            $.when($.post('/composer/client/addOrder', options)).done(function(_res)
+            {    _orderDiv.empty(); _orderDiv.append(formatMessage(_res.result)); console.log(_res);});
+        });
+        // function to call when an item has been selected
+        $('#addItem').on('click', function ()
+        { let _ptr = $('#items').find(':selected').val();
+            // remove the just selected item so that it cannot be added twice.
+            $('#items').find(':selected').remove();
+            // build a new item detail row in the display window
+            let _item = itemTable[_ptr];
+            let len = newItems.length;
+            _str = '<tr><td>'+_item.courseDept+"."+_item.courseID+"."+_item.courseSection+'</td><td>'+_item.courseDescription+'</td><td id="count'+len+'"></td><td id="price'+len+'"></td></tr>';
+            $('#itemTable').append(_str);
+            // set the initial item count to 1
+            $('#count'+len).val(1);
+            // set the initial price to the price of one item
+            
+            if (b_resident == 1)
+            {
+                courseCost = 76*_item.creditHours;
+                
+                courseCost = $('#residentCreditCost')*_item.creditHours;
+            }
+            else
+            {
+                courseCost=268*_item.creditHours;
+                courseCost=$('#nonResidentCreditCost')*_item.creditHours;
+            }
+            
+            console.log("credit cost: $"+courseCost);
+
+            $('#price'+len).append('$'+courseCost); // $76 (resident) 268 (non-resident)
+            // add an entry into an array for this newly added item
+            let _newItem = _item;
+            _newItem.extendedPrice = courseCost;
+            newItems[len] = _newItem;
+            newItems[len].quantity=1;
+            totalAmount += _newItem.extendedPrice;
+            // update the order amount with this new item
+            $('#amount').empty();
+            $('#amount').append('$'+totalAmount+'.00');
+            // function to update item detail row and total amount if itemm count is changed
+/*            $('#count'+len).on('change', function ()
+            {let len = this.id.substring(5);
+                let qty = $('#count'+len).val();
+                let price = newItems[len].unitPrice*qty;
+                let delta = price - newItems[len].extendedPrice;
+                totalAmount += delta;
+                $('#amount').empty();
+                $('#amount').append('$'+totalAmount+'.00');
+                newItems[len].extendedPrice = price;
+                newItems[len].quantity=qty;
+                $('#price'+len).empty(); $('#price'+len).append('$'+price+'.00');
+            });
+*/
+            $('#submitNewOrder').show();
+        });
+    });
+}
+/**
+ * Displays the create order form for the selected buyer
+ */
+function displayModifyOrderForm()
+{  let toLoad = 'modifyOrder.html';
+    totalAmount = 0;
+    newItems = [];
+    // get the order creation web page and also get all of the items that a user can select
+    $.when($.get(toLoad), $.get('/composer/client/getItemTable')).done(function (page, _items)
+    {
+        itemTable = _items[0].items;
+        let _orderDiv = $('#'+orderDiv);
+        _orderDiv.empty();
+        _orderDiv.append(page[0]);
+        // update the page with the appropriate text for the selected language
+        updatePage('modifyOrder');
+        $('#seller').empty();
+        // populate the seller HTML select object. This string was built during the memberLoad or deferredMemberLoad function call
+        $('#seller').append(s_string);
+        $('#seller').val($('#seller option:first').val());
+        $('#orderNo').append('xxx');
+        $('#status').append('Modify Order');
         $('#today').append(new Date().toISOString());
         $('#amount').append('$'+totalAmount+'.00');
         // build a select list for the items
@@ -196,16 +414,16 @@ function displayOrderForm()
 /**
  * lists all orders for the selected buyer
  */
-function listOrders()
+function listOrdersByBuyerID(b_id)
 {
     let options = {};
     // get the users email address
-    options.id = $('#buyer').find(':selected').text();
+    options.id = b_id;
     // get their password from the server. This is clearly not something we would do in production, but enables us to demo more easily
     // $.when($.post('/composer/admin/getSecret', options)).done(function(_mem)
     // {
     // get their orders
-    options.userID = options.id;
+    options.userID = b_id;
     // options.userID = _mem.userID; options.secret = _mem.secret;
     $.when($.post('/composer/client/getMyOrders', options)).done(function(_results)
     {
@@ -219,6 +437,16 @@ function listOrders()
         }
     });
     // });
+}
+/**
+ * lists all orders for the selected buyer
+ */
+function listOrders()
+{
+    let options = {};
+    // get the users email address
+    let b_id = $('#buyer').find(':selected').text();
+    listOrdersByBuyerID(b_id);
 }
 
 /**

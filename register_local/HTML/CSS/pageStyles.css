@@ -133,7 +133,7 @@ div {clear: both}
     right: 0;
     top: 50%;
 }
-.buyer { background-color: #CBCFD0; }
+.buyer { background-color: #FFFFFF; }
 .seller { background-color: rgb(173, 242, 173);}
 .provider { background-color: rgb(192, 221, 252);}
 .shipper { background-color: rgb(242, 232, 156);}
@@ -255,11 +255,12 @@ p.message{
 .container{
 	width: 100%;
 }
-table {border: 1px solid #0000ff;}
+ table {border: 1px solid #0000ff;}
  th {text-align: center; font-style: bold; font-size: 1em; padding: .25em;}
  td { border: 1px solid #0000ff; padding-left: .25em; padding-right: .25em}
  th.right {text-align: right; font-style: bold; font-size: 1em; padding: .25em;}
  th.left {text-align: left; font-style: bold; font-size: 1em; padding: .25em;}
+ .border-none { border: 0px }
  
 .imageLabel {
 	color: black; text-align: center; font-style: bold; font-size: 1.5em; padding: .5em;}
@@ -448,6 +449,18 @@ table {border: 1px solid #0000ff;}
 	color: #008571;
 	font-size: 1.15em
 }
+.login-text-only {
+	wrap: soft;
+	background-color: transparent;
+	color: #000000;
+	font-size: 1em;
+	height:30;
+	width:500px;
+}
+input {	height: 15px;
+	width: 800px;
+}
+
 tr.hideRow {display: none;}
 .app_container{
 	height: 100%;
@@ -500,3 +513,11 @@ tr.hideRow {display: none;}
 .glyphicon-thumbs-up, .ok {background: #00FF00; font-size: 1.5em;}
 .glyphicon-thumbs-down, .fail {background: #FF0000; font-size: 1.5em;}
 .glyphicon-warning-sign, .warn {background: #FFFF00; font-size: 1.5em;}
+
+.school-logo {
+	float: left;
+	background-repeat: no-repeat;
+	margin-left: 3px;
+	height: 72px;
+	width: 700px;
+}

@@ -1,6 +1,6 @@
 {
-  "index": {"language": "US English",
-    "title": "WakeTech ZeroToBlockchain - Registration",
+  "index": {"language": "Wake Technical Community College",
+    "title": "Wake Tech Blockchain Registration for:",
     "header": "WakeTech Online Registration",
     "titleBar": "WakeTech Blockchain Registration",
     "idx_unified": "load Unified User Experience",
@@ -70,7 +70,24 @@
   "buyer": {
     "title": "Student Chapter 12. Select Student to see their view: ",
     "newOrder": "Create New Schedule",
-    "orderStatus": "Display Schedule Status"
+    "updateOrder": "Update Schedule",
+    "orderStatus": "Display Schedule Status",
+    "residentCreditCost": 76,
+    "nonResidentCreditCost":268
+  },
+  "buyer_login": {
+    "loginImage":"blah.jpg",
+    "title": "Student Login ",
+    "loginPrompt": "Login:",
+    "loginHint": "Note: Use your full school email address as your login",
+    "loginPasswordPrompt": "Password:",
+    "loginPasswordHint": "Reset my password",
+    "loginDefault": "",
+    "loginPasswordDefault": "",
+    "loginButton":"Login",
+    "loginButtonColor":"#0577b1",
+    "residentCreditCost": 76,
+    "nonResidentCreditCost":268
   },
   "createConnectionProfile": {
     "title": "type the name of the new profile here: ",
@@ -114,6 +131,19 @@
     "cancelNewOrder": "Cancel",
     "submitNewOrder": "Submit"
   },
+  "modifyOrder": {
+        "title": "Modify Schedule",
+        "selectVendor": "Select School: ",
+        "cn_on": "Schedule Number",
+        "cn_status": "Status",
+        "cn_date": "Date",
+        "cn_total": "Tuition",
+        "cn_selectItem": "Select Course",
+        "addItem": "Add Course",
+        "dropItem": "Drop Course",
+        "cancelModifyOrder": "Cancel",
+        "submitModifyOrder": "Update Schedule"
+  },    
   "deleteConnectionProfile": {
     "title": "Select Profile to delete: ",
     "cancel": "Cancel",
@@ -218,5 +248,8 @@
     "noRequest": "(no request for payment)",
     "disputed": "Dispute Raised",
     "noDispute": "(not in Dispute)"
+  },
+  "skins": {
+    "school_logo":"<img src=\"http://www.movingstuff.com/z2b_assets/wtcc_my_header.jpg\">"
   }
 }
