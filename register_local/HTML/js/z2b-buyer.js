@@ -26,7 +26,7 @@ let itemTable = {};
 let newItems = [];
 let totalAmount = 0;
 let courseCost = 0;
-let scheduleCount = 0;
+let scheduleCount;
  
 //<li id="US_English"><a onclick="goMultiLingual('US_English', 'index')">US English</a></li>
 
@@ -61,16 +61,18 @@ function loadBuyerUX (nested)
         _login.on('click', function()
         { 
             let _username =  document.getElementById("username").value;
-            _username = "peterchen@my.waketech.edu" ;
-            loadLoggedinBuyerUX(_username, nested);
+
+            if ((typeof(_username) === 'undefined') || (_username === null)|| (_username === "") )
+              _username = "adrodrigues@my.waketech.edu";
+            loadLoggedinBuyerUX(nested, _username);
         });
     });
 }
 
-function loadLoggedinBuyerUX (user, nested)
+function loadLoggedinBuyerUX (nested, username)
 {
     // get the html page to load
-    console.log ("in loadLoggedinBuyerUX user="+user);
+    console.log ("in loadLoggedinBuyerUX username="+username);
     let toLoad = 'buyer.html';
     // if (buyers.length === 0) then autoLoad() was not successfully run before this web app starts, so the sie of the buyer list is zero
     // assume user has run autoLoad and rebuild member list
@@ -85,14 +87,14 @@ function loadLoggedinBuyerUX (user, nested)
     }
 */
 
-    if ((typeof(user) === 'undefined') || (user === null) )
+    if ((typeof(buyers) === 'undefined') || (buyers === null) || (buyers.legth === 0) )
     { $.when($.get(toLoad), deferredMemberLoad()).done(function (page, res)
-        {setupBuyer(page,nested, user);});
+        {setupBuyer(page,nested, username);});
     }
     else
     {
             $.when($.get(toLoad)).done(function (page)
-            {setupBuyer(page,nested,user);});
+            {setupBuyer(page,nested,username);});
     }
 }
 
@@ -100,7 +102,7 @@ function loadLoggedinBuyerUX (user, nested)
 * @param int nested - flag if page nested in table
  */
 
-function setupBuyer(page, nested, user)
+function setupBuyer(page, nested, username)
 {
     let options = {};
 
@@ -124,45 +126,33 @@ function setupBuyer(page, nested, user)
     let _create = $('#newOrder');
     let _list = $('#orderStatus');
     let _orderDiv = $('#'+orderDiv);
-    _create.on('click', function(){displayOrderForm();});
+
+    _create.on('click', function(){console.log("got click: New Order 1"); displayOrderForm();});
 //    _list.on('click', function(){listOrders();});
-    _list.on('click', function(){listOrdersByBuyerID(buyer.id);});
+
+    _list.on('click', function(){ console.log("got click: List Order"); listOrdersByBuyerID(buyer.id);});
     $('#buyer').empty();
     // build the buer select HTML element
    for (let each in buyers)
     {(function(_idx, _arr)
         {$('#buyer').append('<option value="'+_arr[_idx].id+'">' +_arr[_idx].id+'</option>');})(each, buyers);
     }
-    // display the name of the current buyer
-    let buyer=  findMember(user,buyers);
-    $('#company')[0].innerText =     buyer.companyName; 
-//    $('#company')[0].innerText = buyers[0].companyName;
+    let buyer=  findMember(username,buyers);
     // save the current buyer id as b_id
-//    b_id = buyers[0].id;
-//    b_resident = buyers[0].resident;
+    b_id = buyer.id;
+    // save the current buyer id as b_resident
     b_resident = buyer.resident;
+
+    // display the name of the current buyer
+    $('#company')[0].innerText =     buyer.companyName; 
     // subscribe to events
     z2bSubscribe('Buyer', b_id);
 
-//    scheduleCount = getBuyerScheduleCount (buyers[0].id); // edit here
-    scheduleCount = getBuyerScheduleCount (buyer.id); // edit here
+    // Check if there's a current schedule
+    let _scheduleCount = listOrdersByBuyerID (b_id); // edit here
     console.log ("schedule count = "+scheduleCount);
-    if (scheduleCount > 0) 
-    { 
-     //   listOrders();
-         $('#orderStatus').show();
-         _create = $('#updateOrder');
-        _create.on('click', function(){displayModifyOrderForm();});
-    }
-    else
-    {
-        $('#orderStatus').hide();
-        _create = $('#newOrder');
-        _create.on('click', function(){displayOrderForm();});
-    }
 
-
-    // create a function to execute when the user selects a different buyer
+/*    // create a function to execute when the user selects a different buyer
     $('#buyer').on('change', function() 
     { _orderDiv.empty(); $('#buyer_messages').empty(); 
         $('#company')[0].innerText = findMember($('#buyer').find(':selected').text(),buyers).companyName; 
@@ -192,37 +182,43 @@ function setupBuyer(page, nested, user)
         // subscribe the new buyer
         z2bSubscribe('Buyer', b_id);
     });
-
+*/
 }
 /**
  * 
  * @param {*} buyer_id 
  */
-function getBuyerScheduleCount (buyer_id)
+function getBuyerScheduleCount (b_id)
 {
+    let _count = 0;
     let options = {};
-    let _scheduleCount = 0;
 
-    options.userID = buyer_id;
-    options.id = buyer_id;
 
-    // Check if buyer already has schedule
+    // get the users email address
+    options.id = b_id;
+    // get their password from the server. This is clearly not something we would do in production, but enables us to demo more easily
+    // $.when($.post('/composer/admin/getSecret', options)).done(function(_mem)
+    // {
+    // get their orders
+    options.userID = b_id;
+    // options.userID = _mem.userID; options.secret = _mem.secret;
     $.when($.post('/composer/client/getMyOrders', options)).done(function(_results)
     {
-        console.log("got resuts: "+_results);
         if ((typeof(_results.orders) === 'undefined') || (_results.orders === null))
         {console.log('error getting orders: ', _results);}
         else
-        {   _scheduleCount = _results.orders.length;}
+        {_count = _results.orders.length;}
     });
-    
-    if (_schdeuleCount > 0 )
+
+ 
+//    Error: Participant 'org.acme.Z2BTestNetwork.Buyer#adrodrigues@my.waketech.edu' does not have 'READ' access to resource 'org.acme.Z2BTestNetwork.Order#004' 
+
+/*    if (_scheduleCount > 0 )
         $('#orderStatus').show();
     else
         $('#orderStatus').hide();
-
-
-    return _scheduleCount;
+*/
+    return _count;
 }
 /**
  * Displays the create order form for the selected buyer
@@ -430,10 +426,28 @@ function listOrdersByBuyerID(b_id)
         if ((typeof(_results.orders) === 'undefined') || (_results.orders === null))
         {console.log('error getting orders: ', _results);}
         else
-        {// if they have no orders, then display a message to that effect
-            if (_results.orders.length < 1) {$('#orderDiv').empty(); $('#orderDiv').append(formatMessage(textPrompts.orderProcess.b_no_order_msg+options.id));}
+        {
+            // if they have no orders, then display a message to that effect
+            scheduleCount = _results.orders.length; 
+            if (_results.orders.length < 1) 
+            {
+                $('#orderDiv').empty(); 
+                $('#orderDiv').append(formatMessage(textPrompts.orderProcess.b_no_order_msg+options.id));
+                listOrdersByBuyerID(b_id);
+                $('#orderStatus').hide();
+                $('#newOrder').show();
+               // _create = $('#updateOrder');
+                //_create.on('click', function(){console.log("got click: Update Order");displayModifyOrderForm();});
+            }
         // if they have orders, format and display the orders.
-            else{formatOrders($('#orderDiv'), _results.orders);}
+            else
+            {
+                formatOrders($('#orderDiv'), _results.orders);
+                $('#orderStatus').show();
+                $('#newOrder').hide();
+               // _create = $('#newOrder');
+               // _create.on('click', function(){console.log("got click: New Order 2"); displayOrderForm();});
+            }
         }
     });
     // });
