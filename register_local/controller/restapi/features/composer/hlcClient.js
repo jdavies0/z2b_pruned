@@ -148,6 +148,7 @@ exports.orderAction = function (req, res, next) {
                 switch (req.body.action)
                 {
                 case 'Pay':
+                case 'Accept Payment':
                     console.log('Pay entered');
                     updateOrder = factory.newTransaction(NS, 'Pay');
                     updateOrder.financeCo = factory.newRelationship(NS, 'FinanceCo', financeCoID);
@@ -184,11 +185,19 @@ exports.orderAction = function (req, res, next) {
                     updateOrder.financeCo = factory.newRelationship(NS, 'FinanceCo', financeCoID);
                     break;
                 case 'Refund':
+                case 'Approve Refund':
                     console.log('Refund Payment entered');
                     updateOrder = factory.newTransaction(NS, 'Refund');
                     updateOrder.seller = factory.newRelationship(NS, 'Seller', order.seller.$identifier);
                     updateOrder.financeCo = factory.newRelationship(NS, 'FinanceCo', financeCoID);
-                    updateOrder.refund = req.body.reason;
+                    updateOrder.buyer = factory.newRelationship(NS, 'Buyer', order.buyer.$identifier);
+                    //updateOrder.refund = req.body.reason;
+                    break;
+                case 'Request Refund': // edit here
+                    console.log('Request Refund entered');
+                    updateOrder = factory.newTransaction(NS, 'RequestRefund');
+                    updateOrder.buyer = factory.newRelationship(NS, 'Buyer', order.buyer.$identifier);
+                    updateOrder.financeCo = factory.newRelationship(NS, 'FinanceCo', financeCoID);
                     break;
                 case 'Resolve':
                     console.log('Resolve entered');
@@ -225,16 +234,19 @@ exports.orderAction = function (req, res, next) {
                     updateOrder.backorder = req.body.reason;
                     break;
                 case 'Authorize Payment':
+                case 'Pay Tuition':
                     console.log('Authorize Payment entered');
                     updateOrder = factory.newTransaction(NS, 'AuthorizePayment');
                     updateOrder.buyer = factory.newRelationship(NS, 'Buyer', order.buyer.$identifier);
                     updateOrder.financeCo = factory.newRelationship(NS, 'FinanceCo', financeCoID);
                     break;
                 case 'Cancel':
+                case 'Cancel Schedule':
                     console.log('Cancel entered');
                     updateOrder = factory.newTransaction(NS, 'OrderCancel');
                     updateOrder.buyer = factory.newRelationship(NS, 'Buyer', order.buyer.$identifier);
                     updateOrder.seller = factory.newRelationship(NS, 'Seller', order.seller.$identifier);
+                    updateOrder.financeCo = factory.newRelationship(NS, 'FinanceCo', financeCoID);
                     break;
                 default :
                     console.log('default entered for action: '+req.body.action);
@@ -393,9 +405,11 @@ function _monitor(locals, _event)
     case 'Created':
         break;
     case 'Bought':
-    case 'PaymentRequested':
         event.ID = _event.sellerID;
         svc.send(locals, 'Alert',JSON.stringify(event));
+        break;
+    case 'PaymentRequested':
+    case 'RefundRequested':
         event.ID = _event.financeCoID;
         svc.send(locals, 'Alert',JSON.stringify(event));
         break;
@@ -404,7 +418,7 @@ function _monitor(locals, _event)
     case 'Backordered':
         event.ID = _event.sellerID;
         svc.send(locals, 'Alert',JSON.stringify(event));
-        event.ID = _event.providerID;
+        event.ID = _event.financeCoID;
         svc.send(locals, 'Alert',JSON.stringify(event));
         break;
     case 'ShipRequest':
@@ -412,27 +426,20 @@ function _monitor(locals, _event)
     case 'DeliveryCompleted':
         event.ID = _event.sellerID;
         svc.send(locals, 'Alert',JSON.stringify(event));
-        event.ID = _event.providerID;
-        svc.send(locals, 'Alert',JSON.stringify(event));
-        event.ID = _event.shipperID;
-        svc.send(locals, 'Alert',JSON.stringify(event));
         break;
     case 'DisputeOpened':
     case 'Resolved':
-    case 'Refunded':
     case 'Paid':
         event.ID = _event.sellerID;
-        svc.send(locals, 'Alert',JSON.stringify(event));
-        event.ID = _event.providerID;
-        svc.send(locals, 'Alert',JSON.stringify(event));
-        event.ID = _event.shipperID;
         svc.send(locals, 'Alert',JSON.stringify(event));
         event.ID = _event.financeCoID;
         svc.send(locals, 'Alert',JSON.stringify(event));
         break;
     case 'PaymentAuthorized':
-        event.ID = _event.sellerID;
+        event.ID = _event.financeCoID;
         svc.send(locals, 'Alert',JSON.stringify(event));
+        break;
+    case 'Refunded':
         event.ID = _event.financeCoID;
         svc.send(locals, 'Alert',JSON.stringify(event));
         break;

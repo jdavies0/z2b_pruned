@@ -168,6 +168,15 @@ function formatSellerOrders(_target, _orders)
         case orderStatus.Paid.code:
             _date = _arr[_idx].paid;
             break;
+        case orderStatus.Authorize.code:
+            _date = _arr[_idx].approved;
+            break;
+        case orderStatus.RefundRequested.code:
+            _date = _arr[_idx].refundRequested;
+            break;
+        case orderStatus.Refunded.code:
+            _date = _arr[_idx].orderRefunded;
+            break;
         default:
             break;
         }

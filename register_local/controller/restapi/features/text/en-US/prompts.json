@@ -161,16 +161,16 @@
   },
   "singleUX": {},
   "orderProcess": {
-    "AuthorizePayment": {"select": "AuthorizePayment", "message": "Authorize Payment"},
+    "AuthorizePayment": {"select": "AuthorizePayment", "message": "Pay Tuition"},
     "Dispute": {"select": "Dispute", "message": "Dispute", "prompt": "Reason for Dispute: "},
     "Resolve": {"select": "Resolve", "message": "Resolve", "prompt": "Reason for Resolution: "},
     "Purchase": {"select": "Register", "message": "Register"},
-    "Cancel": {"select": "Cancel", "message": "Cancel"},
-    "Pay": {"select": "Pay", "message": "Pay"},
+    "Cancel": {"select": "Cancel", "message": "Cancel Schedule"},
+    "Pay": {"select": "Pay", "message": "Accept Payment"},
     "RequestShipping": {"select": "Request Shipping", "message": "Request Shipping"},
     "BackOrder": {"select": "BackOrder", "message": "BackOrder", "prompt": "Reason for Backorder: "},
     "PayRequest": {"select": "PayRequest", "message": "Request Payment"},
-    "Refund": {"select": "Refund", "message": "Refund", "prompt": "Reason to Resolve or Refund: "},
+    "Refund": {"select": "Refund", "message": "Approve Refund", "prompt": "Reason to Resolve or Refund: "},
     "Delivered": {"select": "Delivered", "message": "Delivered"},
     "Delivering": {"select": "Delivering", "message": "Update Delivery Status", "prompt": "Delivery Status: "},
     "Order": {"select": "Order", "message": "Submit to Cashier"},
@@ -217,6 +217,8 @@
     "payRequested": "Payment Requested",
     "noRequest": "(no request for payment)",
     "disputed": "Dispute Raised",
-    "noDispute": "(not in Dispute)"
+    "noDispute": "(not in Dispute)",
+    "refundRequested": "Refund Requested",
+    "noRefundRequested": "(no request for refund)"
   }
 }
