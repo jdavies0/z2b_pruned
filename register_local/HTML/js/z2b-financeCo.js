@@ -134,7 +134,7 @@ function formatFinanceOrders(_target, _orders)
             break;
         case orderStatus.Authorize.code:
             _date = _arr[_idx].approved;
-            _action += '<option value="Pay">Pay</option>';
+            _action += '<option value="Pay">Accept Payment</option>';
             break;
         case orderStatus.Bought.code:
             _date = _arr[_idx].bought;
@@ -146,11 +146,15 @@ function formatFinanceOrders(_target, _orders)
             _date = _arr[_idx].ordered;
             _action += '<option value="PayRequest">Request Payment</option>';
             break;
-        case orderStatus.Refund.code:
-            _date = _arr[_idx].orderRefunded + '<br/>'+_arr[_idx].refund;
+        case orderStatus.RefundRequested.code:
+            _date = _arr[_idx].refundRequested;
+            _action += '<option value="Refund">Approve Refund</option>';
             break;
         case orderStatus.Paid.code:
             _date = _arr[_idx].paid;
+            break;
+        case orderStatus.Refunded.code:
+            _date = _arr[_idx].orderRefunded;
             break;
         default:
             break;
@@ -206,22 +210,14 @@ function formatDetail(_cur, _order)
     _out += (_order.cancelled === '') ?  '<tr><td id="cancelled">'+textPrompts.financeCoOrder.cancelled+'?</td><td></td><td id="notCancel">'+textPrompts.financeCoOrder.notCancel+'</td><td></td></tr>' : '<tr><td id="cancelled">'+textPrompts.financeCoOrder.cancelled+'</td><td>'+_order.buyer+'</td><td>'+_order.cancelled+'</td><td></td></tr>';
     _out += (_order.bought === '') ?  '<tr><td id="purchased">'+textPrompts.financeCoOrder.purchased+'</td><td></td><td id="noPurchase">'+textPrompts.financeCoOrder.noPurchase+'</td><td></td></tr>' : '<tr><td id="purchased">'+textPrompts.financeCoOrder.purchased+'</td><td>'+_order.buyer+'</td><td>'+_order.bought+'</td><td></td></tr>';
     _out += (_order.ordered === '') ?  '<tr><td id="thirdParty">'+textPrompts.financeCoOrder.thirdParty+'</td><td></td><td id="nothirdParty">'+textPrompts.financeCoOrder.nothirdParty+'</td><td></td></tr>' : '<tr><td id="thirdParty">'+textPrompts.financeCoOrder.thirdParty+'</td><td>'+_order.seller+'</td><td>'+_order.ordered+'</td><td></td></tr>';
-    _out += (_order.dateBackordered === '') ?  '<tr><td id="backordered">'+textPrompts.financeCoOrder.backordered+'?</td><td></td><td id="notBackordered">'+textPrompts.financeCoOrder.notBackordered+'</td><td></td></tr>' : '<tr><td id="backordered">'+textPrompts.financeCoOrder.backordered+'</td><td>'+_order.provider+'</td><td>'+_order.dateBackordered+'</td><td>'+_order.backorder+'</td></tr>';
-    _out += (_order.requestShipment === '') ?  '<tr><td id="shippingRequested">'+textPrompts.financeCoOrder.shippingRequested+'</td><td></td><td id="noRequestShip">'+textPrompts.financeCoOrder.noRequestShip+'</td><td></td></tr>' : '<tr><td id="shippingRequested">'+textPrompts.financeCoOrder.shippingRequested+'</td><td>'+_order.provider+'</td><td>'+_order.requestShipment+'</td><td></td></tr>';
-    _out += (_order.delivering === '') ?  '<tr><td id="shippingStarted">'+textPrompts.financeCoOrder.shippingRequested+'</td><td></td><td id="noDeliveryStart">'+textPrompts.financeCoOrder.noDeliveryStart+'</td><td></td></tr>' : '<tr><td id="shippingStarted">'+textPrompts.financeCoOrder.shippingStarted+'</td><td>'+_order.shipper+'</td><td>'+_order.delivering+'</td><td></td></tr>';
-    _out += (_order.delivered === '') ?  '<tr><td id="delivered">'+textPrompts.financeCoOrder.delivered+'</td><td></td><td id="notDelivered">'+textPrompts.financeCoOrder.notDelivered+'</td><td></td></tr>' : '<tr><td id="delivered">'+textPrompts.financeCoOrder.delivered+'</td><td>'+_order.shipper+'</td><td>'+_order.delivered+'</td><td></td></tr>';
-    _out += (_order.paymentRequested === '') ?  '<tr><td id="payRequested">'+textPrompts.financeCoOrder.payRequested+'</td><td></td><td id="noRequest">'+textPrompts.financeCoOrder.noRequest+'</td><td></td></tr>' : '<tr><td id="payRequested">'+textPrompts.financeCoOrder.payRequested+'</td><td></td><td>'+_order.paymentRequested+'</td><td></td></tr>';
-    _out += (_order.disputeOpened === '') ?  '<tr><td id="disputed">'+textPrompts.financeCoOrder.disputed+'</td><td></td><td id="noDispute">'+textPrompts.financeCoOrder.noDispute+'</td><td></td></tr>' : '<tr><td id="disputed">'+textPrompts.financeCoOrder.disputed+'</td><td>'+_order.buyer+'</td><td>'+_order.disputeOpened+'</td><td>'+_order.dispute+'</td></tr>';
-    if (_order.disputeResolved === '')
-    {
-        if (_order.disputeOpened === '')
-        {_out += '<tr><td>Dispute Resolved</td><td></td><td>not in dispute</td><td></td></tr>';}
-        else
-        {_out += '<tr><td>Dispute Resolved</td><td></td><td>Dispute is Unresolved</td><td></td></tr>';}
-    }
-    else
-    {_out +='<tr><td>Dispute Resolved</td><td></td><td>'+_order.disputeResolved+'</td><td>'+_order.resolve+'</td></tr>';}
-    _out += (_order.orderRefunded === '') ?  '<tr><td>Refund?</td><td></td><td>(No Refund in Process)</td><td></td></tr>' : '<tr><td>Refund?</td><td></td><td>'+_order.orderRefunded+'</td><td>'+_order.refund+'</td></tr>';
+    //_out += (_order.dateBackordered === '') ?  '<tr><td id="backordered">'+textPrompts.financeCoOrder.backordered+'?</td><td></td><td id="notBackordered">'+textPrompts.financeCoOrder.notBackordered+'</td><td></td></tr>' : '<tr><td id="backordered">'+textPrompts.financeCoOrder.backordered+'</td><td>'+_order.provider+'</td><td>'+_order.dateBackordered+'</td><td>'+_order.backorder+'</td></tr>';
+    //_out += (_order.requestShipment === '') ?  '<tr><td id="shippingRequested">'+textPrompts.financeCoOrder.shippingRequested+'</td><td></td><td id="noRequestShip">'+textPrompts.financeCoOrder.noRequestShip+'</td><td></td></tr>' : '<tr><td id="shippingRequested">'+textPrompts.financeCoOrder.shippingRequested+'</td><td>'+_order.provider+'</td><td>'+_order.requestShipment+'</td><td></td></tr>';
+    //_out += (_order.delivering === '') ?  '<tr><td id="shippingStarted">'+textPrompts.financeCoOrder.shippingRequested+'</td><td></td><td id="noDeliveryStart">'+textPrompts.financeCoOrder.noDeliveryStart+'</td><td></td></tr>' : '<tr><td id="shippingStarted">'+textPrompts.financeCoOrder.shippingStarted+'</td><td>'+_order.shipper+'</td><td>'+_order.delivering+'</td><td></td></tr>';
+    //_out += (_order.delivered === '') ?  '<tr><td id="delivered">'+textPrompts.financeCoOrder.delivered+'</td><td></td><td id="notDelivered">'+textPrompts.financeCoOrder.notDelivered+'</td><td></td></tr>' : '<tr><td id="delivered">'+textPrompts.financeCoOrder.delivered+'</td><td>'+_order.shipper+'</td><td>'+_order.delivered+'</td><td></td></tr>';
+    _out += (_order.paymentRequested === '') ?  '<tr><td id="payRequested">'+textPrompts.financeCoOrder.payRequested+'</td><td></td><td id="noRequest">'+textPrompts.financeCoOrder.noRequest+'</td><td></td></tr>' : '<tr><td id="payRequested">'+textPrompts.financeCoOrder.payRequested+'</td><td>'+_order.financeCo+'</td><td>'+_order.paymentRequested+'</td><td></td></tr>';
+    //_out += (_order.disputeOpened === '') ?  '<tr><td id="disputed">'+textPrompts.financeCoOrder.disputed+'</td><td></td><td id="noDispute">'+textPrompts.financeCoOrder.noDispute+'</td><td></td></tr>' : '<tr><td id="disputed">'+textPrompts.financeCoOrder.disputed+'</td><td>'+_order.buyer+'</td><td>'+_order.disputeOpened+'</td><td>'+_order.dispute+'</td></tr>';
+    _out += (_order.refundRequested === '') ?  '<tr><td id="RefundRequested">'+textPrompts.financeCoOrder.refundRequested+'</td><td></td><td id="noRefundRequested">'+textPrompts.financeCoOrder.noRefundRequested+'</td><td></td></tr>' : '<tr><td id="RefundRequested">'+textPrompts.financeCoOrder.refundRequested+'</td><td>'+_order.buyer+'</td><td>'+_order.refundRequested+'</td><td>'+_order.refund+'</td></tr>';
+    _out += (_order.orderRefunded === '') ?  '<tr><td>Refund?</td><td></td><td>(No Refund in Process)</td><td></td></tr>' : '<tr><td>Refund?</td><td>'+_order.financeCo+'</td><td>'+_order.orderRefunded+'</td><td>'+_order.refund+'</td></tr>';
     _out += (_order.approved === '') ?  '<tr><td>Payment Approved</td><td></td><td>(No Approval from Buyer)</td><td></td></tr>' : '<tr><td>Payment Approved</td><td>'+_order.buyer+'</td><td>'+_order.approved+'</td><td></td></tr>';
     _out += (_order.paid === '') ?  '<tr><td>Paid</td><td></td><td>(UnPaid)</td><td></td></tr></table></div>' : '<tr><td>Paid</td><td>'+_order.financeCo+'</td><td>'+_order.paid+'</td><td></td></tr></table></div>';
     return _out;
