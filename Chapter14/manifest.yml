@@ -1,8 +1,0 @@
-applications:
-- path: .
-  memory: 128M
-  instances: 1
-  domain: mybluemix.net
-  name: Z2B on Kubernetes
-  host: Z2B
-  disk_quota: 1024M
