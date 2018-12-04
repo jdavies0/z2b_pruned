@@ -493,8 +493,7 @@ function formatOrders(_target, _orders)
         case orderStatus.PayRequest.code:
             _date = _arr[_idx].paymentRequested;
             _action += '<option value="'+textPrompts.orderProcess.AuthorizePayment.select+'">'+textPrompts.orderProcess.AuthorizePayment.message+'</option>';
-            _action += '<option value="'+textPrompts.orderProcess.Dispute.select+'">'+textPrompts.orderProcess.Dispute.message+'</option>';
-            r_string = '<br/>'+textPrompts.orderProcess.Dispute.prompt+'<input id="b_reason'+_idx+'" type="text"></input></th>';
+            _action += '<option value="'+textPrompts.orderProcess.Cancel.select+'">'+textPrompts.orderProcess.Cancel.message+'</option>';
             break;
         case orderStatus.Delivered.code:
             _date = _arr[_idx].delivered;
@@ -509,38 +508,48 @@ function formatOrders(_target, _orders)
         case orderStatus.Resolve.code:
             _date = _arr[_idx].disputeResolved + '<br/>'+_arr[_idx].resolve;
             _action += '<option value="'+textPrompts.orderProcess.AuthorizePayment.select+'">'+textPrompts.orderProcess.AuthorizePayment.message+'</option>';
+            _action += '<option value="'+textPrompts.orderProcess.Cancel.select+'">'+textPrompts.orderProcess.Cancel.message+'</option>';
             break;
         case orderStatus.Created.code:
             _date = _arr[_idx].created;
             _action += '<option value="'+textPrompts.orderProcess.Purchase.select+'">'+textPrompts.orderProcess.Purchase.message+'</option>'
-            _action += '<option value="'+textPrompts.orderProcess.Cancel.select+'">'+textPrompts.orderProcess.Cancel.message+'</option>'
+            _action += '<option value="'+textPrompts.orderProcess.Cancel.select+'">'+textPrompts.orderProcess.Cancel.message+'</option>';
             break;
         case orderStatus.Backordered.code:
             _date = _arr[_idx].dateBackordered + '<br/>'+_arr[_idx].backorder;
-            _action += '<option value="'+textPrompts.orderProcess.Cancel.select+'">'+textPrompts.orderProcess.Cancel.message+'</option>'
+            _action += '<option value="'+textPrompts.orderProcess.Cancel.select+'">'+textPrompts.orderProcess.Cancel.message+'</option>';
             break;
         case orderStatus.ShipRequest.code:
             _date = _arr[_idx].requestShipment;
             break;
         case orderStatus.Authorize.code:
             _date = _arr[_idx].approved;
+            _action += '<option value="'+textPrompts.orderProcess.Cancel.select+'">'+textPrompts.orderProcess.Cancel.message+'</option>';
             break;
         case orderStatus.Bought.code:
             _date = _arr[_idx].bought;
-            _action += '<option value="'+textPrompts.orderProcess.Cancel.select+'">'+textPrompts.orderProcess.Cancel.message+'</option>'
+            _action += '<option value="'+textPrompts.orderProcess.Cancel.select+'">'+textPrompts.orderProcess.Cancel.message+'</option>';
             break;
         case orderStatus.Delivering.code:
             _date = _arr[_idx].delivering;
             break;
         case orderStatus.Ordered.code:
             _date = _arr[_idx].ordered;
-            _action += '<option value="'+textPrompts.orderProcess.Cancel.select+'">'+textPrompts.orderProcess.Cancel.message+'</option>'
+            _action += '<option value="'+textPrompts.orderProcess.Cancel.select+'">'+textPrompts.orderProcess.Cancel.message+'</option>';
             break;
         case orderStatus.Cancelled.code:
             _date = _arr[_idx].cancelled;
+            if (_arr[_idx].paid != '') {_action += '<option value="RequestRefund">Request Refund</option>'};
             break;
         case orderStatus.Paid.code:
             _date = _arr[_idx].paid;
+            _action += '<option value="'+textPrompts.orderProcess.Cancel.select+'">'+textPrompts.orderProcess.Cancel.message+'</option>';
+            break;
+        case orderStatus.RefundRequested.code:
+            _date = _arr[_idx].refundRequested;
+            break;
+        case orderStatus.Refunded.code:
+            _date = _arr[_idx].orderRefunded;
             break;
         default:
             break;
