@@ -41,6 +41,7 @@ asset Order identified by orderNumber {
     o String disputeOpened
     o String disputeResolved
     o String paymentRequested
+    o String refundRequested
     o String orderRefunded
     o String approved
     o String paid
@@ -62,6 +63,7 @@ asset Order identified by orderNumber {
     --> Order order
     --> Buyer buyer
     --> Seller seller
+    --> FinanceCo financeCo
 }
   transaction Buy {
     --> Order order
@@ -111,6 +113,7 @@ asset Order identified by orderNumber {
   transaction RequestPayment {
     --> Order order
     --> Seller seller
+    --> Buyer buyer
     --> FinanceCo financeCo
 }
   transaction AuthorizePayment {
@@ -124,11 +127,16 @@ asset Order identified by orderNumber {
     --> FinanceCo financeCo
 }
   transaction Refund {
-    o String refund
     --> Order order
+    --> Buyer buyer
     --> Seller seller
     --> FinanceCo financeCo
 }
+  transaction RequestRefund {
+    --> Order order
+    --> Buyer buyer
+    --> FinanceCo financeCo
+  }
 
 
 abstract event BasicEvent {
@@ -145,21 +153,20 @@ event Created extends Z2BEvent {
 event Bought extends Z2BEvent {
   o String sellerID
   o String buyerID
-  o String financeCoID
 }
 
 // notification that a fulfillment request has been placed
 event Ordered extends Z2BEvent {
   o String sellerID
   o String buyerID
-  o String providerID
+  o String financeCoID
 }
 
 // notification that an order has been cancelled
 event Cancelled extends Z2BEvent {
   o String sellerID
   o String buyerID
-  o String providerID
+  o String financeCoID
 }
 
 // notification that items are on backorder 
@@ -213,23 +220,18 @@ event Resolved extends Z2BEvent {
 
 // notification that an order has been refunded 
 event Refunded extends Z2BEvent {
-  o String sellerID
   o String buyerID
-  o String providerID
-  o String shipperID
   o String financeCoID
 }
 
 // notification that a request for payment has been issued 
 event PaymentRequested extends Z2BEvent {
-  o String sellerID
   o String buyerID
   o String financeCoID
 }
 
 // notification that a request for payment has been approved by the buyer 
 event PaymentAuthorized extends Z2BEvent {
-  o String sellerID
   o String buyerID
   o String financeCoID
 }
@@ -238,7 +240,10 @@ event PaymentAuthorized extends Z2BEvent {
 event Paid extends Z2BEvent {
   o String sellerID
   o String buyerID
-  o String providerID
-  o String shipperID
+  o String financeCoID
+}
+
+event RefundRequested extends Z2BEvent {
+  o String buyerID
   o String financeCoID
 }

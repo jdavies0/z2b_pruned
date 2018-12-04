@@ -47,7 +47,7 @@ let orderStatus = {
     PayRequest: {code: 10, text: 'Payment Requested'},
     Authorize: {code: 11, text: 'Payment Approved'},
     Paid: {code: 14, text: 'Payment Processed'},
-    Refund: {code: 12, text: 'Schedule Refund Requested'},
+    RefundRequested: {code: 12, text: 'Schedule Refund Requested'},
     Refunded: {code: 13, text: 'Schedule Refunded'}
 };
 
