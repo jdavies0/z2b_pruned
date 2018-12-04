@@ -280,12 +280,12 @@ function displayOrderForm()
             {
                 courseCost = 76*_item.creditHours;
                 
-                courseCost = $('#residentCreditCost')*_item.creditHours;
+                //courseCost = $('#residentCreditCost')*_item.creditHours;
             }
             else
             {
                 courseCost=268*_item.creditHours;
-                courseCost=$('#nonResidentCreditCost')*_item.creditHours;
+                //courseCost=$('#nonResidentCreditCost')*_item.creditHours;
             }
             
             console.log("credit cost: $"+courseCost);
@@ -373,8 +373,8 @@ function displayModifyOrderForm()
             // set the initial item count to 1
             $('#count'+len).val(1);
             // set the initial price to the price of one item
-            
-            if (b_resident == 1)
+        console.log('_item.creditHours: '+_item.creditHours);
+            if (b_resident === 1)
                 courseCost = 76*_item.creditHours;
             else
                 courseCost=268*_item.creditHours;
@@ -390,7 +390,7 @@ function displayModifyOrderForm()
             $('#amount').empty();
             $('#amount').append('$'+totalAmount+'.00');
             // function to update item detail row and total amount if itemm count is changed
-/*            $('#count'+len).on('change', function ()
+/*           $('#count'+len).on('change', function ()
             {let len = this.id.substring(5);
                 let qty = $('#count'+len).val();
                 let price = newItems[len].unitPrice*qty;
@@ -419,7 +419,7 @@ function listOrdersByBuyerID(b_id)
     // $.when($.post('/composer/admin/getSecret', options)).done(function(_mem)
     // {
     // get their orders
-    options.userID = b_id;
+    options.userID = options.id;
     // options.userID = _mem.userID; options.secret = _mem.secret;
     $.when($.post('/composer/client/getMyOrders', options)).done(function(_results)
     {
@@ -433,9 +433,6 @@ function listOrdersByBuyerID(b_id)
             {
                 $('#orderDiv').empty(); 
                 $('#orderDiv').append(formatMessage(textPrompts.orderProcess.b_no_order_msg+options.id));
-                listOrdersByBuyerID(b_id);
-                $('#orderStatus').hide();
-                $('#newOrder').show();
                // _create = $('#updateOrder');
                 //_create.on('click', function(){console.log("got click: Update Order");displayModifyOrderForm();});
             }
@@ -443,14 +440,11 @@ function listOrdersByBuyerID(b_id)
             else
             {
                 formatOrders($('#orderDiv'), _results.orders);
-                $('#orderStatus').show();
-                $('#newOrder').hide();
                // _create = $('#newOrder');
                // _create.on('click', function(){console.log("got click: New Order 2"); displayOrderForm();});
             }
         }
     });
-    // });
 }
 /**
  * lists all orders for the selected buyer
@@ -462,6 +456,7 @@ function listOrders()
     let b_id = $('#buyer').find(':selected').text();
     listOrdersByBuyerID(b_id);
 }
+
 
 /**
  * used by the listOrders() function
