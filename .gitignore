@@ -28,7 +28,7 @@ coverage
 register_local/startup/*.txt
 
 #code configuration files
-register_local/*.code-workspace
+**/*.code-workspace
 
 # Compiled binary addons (http://nodejs.org/api/addons.html)
 build/Release
