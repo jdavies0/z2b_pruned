@@ -124,6 +124,19 @@ rule BuyerACL {
 
 /**
 *
+**/
+rule BuyerACLRequestRefund {
+    description: "Allow Buyer to request a refund for a paid and canceled order"
+    participant(m): "org.acme.Z2BTestNetwork.Buyer"
+    operation: READ, CREATE, UPDATE
+    resource(v): "org.acme.Z2BTestNetwork.**"
+    transaction(tx): "org.acme.Z2BTestNetwork.RequestRefund"
+    condition: ((v.buyer.buyerID == m.getIdentifier()) && (v.paid != ''))
+    action: ALLOW
+}
+
+/**
+*
 */
 rule netAccessBuyer {
   description: "Allow Buyers access to the network"
