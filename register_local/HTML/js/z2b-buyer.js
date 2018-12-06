@@ -56,15 +56,43 @@ function loadBuyerUX (nested)
         updatePage('skins');
 
         let _list = $('#orderStatus');
-    
+        $('#students').hide();
+        console.log ("domain: "+$('#school_domain').text());
+        displayRegisteredStudents($("#school_domain").text(), buyers);
+
+        $('.hint').on('click', function()
+        {
+            if ($('#students').is(':visible'))
+                $('#students').hide();
+            else
+                $('#students').show();
+        });
+
         let _login = $('#loginButton');
         _login.on('click', function()
         { 
-            let _username =  document.getElementById("username").value;
+            var _username =  document.getElementById("username").value;
 
             if ((typeof(_username) === 'undefined') || (_username === null)|| (_username === "") )
               _username = "adrodrigues@my.waketech.edu";
-            loadLoggedinBuyerUX(nested, _username);
+
+            if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(_username))
+            {
+                let u =  findMember(_username,buyers);
+                if ((typeof(u) === 'undefined') || (u === null) || (u.legth === 0) || u.companyName == 'not found')
+                {
+                    alert("The information entered does not match a registered student in our system.\nPlease check and try again.")
+                }
+                else
+                {
+                    $('#students').hide();
+                    loadLoggedinBuyerUX(nested, _username);
+                }
+            }
+            else
+            {
+                alert("You have entered an invalid email address!")
+            }
         });
     });
 }
@@ -149,8 +177,8 @@ function setupBuyer(page, nested, username)
     z2bSubscribe('Buyer', b_id);
 
     // Check if there's a current schedule
-    let _scheduleCount = listOrdersByBuyerID (b_id); // edit here
-    console.log ("schedule count = "+scheduleCount);
+    let _scheduleCount = getBuyerScheduleCount (b_id); // edit here
+    console.log ("schedule count = "+_scheduleCount);
 
 /*    // create a function to execute when the user selects a different buyer
     $('#buyer').on('change', function() 
@@ -433,7 +461,7 @@ function listOrdersByBuyerID(b_id)
             {
                 $('#orderDiv').empty(); 
                 $('#orderDiv').append(formatMessage(textPrompts.orderProcess.b_no_order_msg+options.id));
-                listOrdersByBuyerID(b_id);
+//                listOrdersByBuyerID(b_id);
                 $('#orderStatus').hide();
                 $('#newOrder').show();
                // _create = $('#updateOrder');

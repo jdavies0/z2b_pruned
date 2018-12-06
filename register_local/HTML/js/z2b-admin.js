@@ -697,6 +697,27 @@ function findMember(_id, _list)
 }
 
 /**
+ * find the member identified by _id in the array of JSON objects identified by _list
+ * @param {String} _id - string with domain name
+ * @param {JSON} _list - array of JSON member objects
+ * @returns {JSON} - {'id': Member ID, 'companyName': 'not found ... or company name if found'}
+ */
+function displayRegisteredStudents(_id, _list)
+{
+    $('#students').empty();
+    $('#students').append("Registered Students:<br>");
+    for (let each in _list){(function(_idx, _arr)
+    {
+        if (_arr[_idx].id.search (_id) != -1)
+        {
+            $('#students').append("<br>");
+            $('#students').append(_arr[_idx].id);
+        }
+    })(each, _list);}
+}
+
+
+/**
  * get blockchain info
  */
 function getChainInfo()
