@@ -252,6 +252,7 @@
     "noRefundRequested": "(no request for refund)"
   },
   "skins": {
-    "school_logo":"<img src=\"http://www.movingstuff.com/z2b_assets/wtcc_my_header.jpg\">"
+    "school_logo":"<img src=\"http://www.movingstuff.com/z2b_assets/wtcc_my_header.jpg\">",
+    "school_domain":"waketech.edu"
   }
 }

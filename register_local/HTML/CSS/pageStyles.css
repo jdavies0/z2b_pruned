@@ -299,6 +299,9 @@ p.message{
 	border-radius: .5em;
 }
 
+button.hint { background:none; border:none;}
+button.link { background:none; border:none;}
+.domain { background:none; border:none;display:none; visibility:hidden}
 
 .showfocus:hover, .acc_header:hover, .acc_body:hover{
 	-webkit-box-shadow: 0px 0px 1em .4em  rgba(81, 203, 238, 1);

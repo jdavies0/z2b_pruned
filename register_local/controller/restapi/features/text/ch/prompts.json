@@ -250,7 +250,8 @@
       "noDispute": "(not in Dispute)"
     },
     "skins": {
-      "school_logo":"<img src=\"http://www.movingstuff.com/z2b_assets/unc_my_header.jpg\">"
+      "school_logo":"<img src=\"http://www.movingstuff.com/z2b_assets/unc_my_header.jpg\">",
+      "school_domain":"unc.edu"
     }
   }
   
