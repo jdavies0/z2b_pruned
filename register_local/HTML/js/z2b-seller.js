@@ -111,13 +111,13 @@ function formatSellerOrders(_target, _orders)
 {
     _target.empty();
     let _str = ''; let _date = '';
-
+    let r_string = '';
     for (let each in _orders)
     {        
         total_creditHours = 0;
         total_tuition = 0;
             (function(_idx, _arr)
-        { let _action = '<th><select id=s_action'+_idx+'><option value="'+textPrompts.orderProcess.NoAction.select+'">'+textPrompts.orderProcess.NoAction.message+'</option>';
+        { let _action = '<th><select id=s_action'+_idx+' onchange="changePromptSeller('+_idx+');"><option value="'+textPrompts.orderProcess.NoAction.select+'">'+textPrompts.orderProcess.NoAction.message+'</option>';
         //
         // each order can have different states and the action that a buyer can take is directly dependent on the state of the order. 
         // this switch/case table displays selected order information based on its current status and displays selected actions, which
@@ -134,7 +134,11 @@ function formatSellerOrders(_target, _orders)
             break;
         case orderStatus.Bought.code:
             _date = _arr[_idx].bought;
+            // approve the registration
             _action += '<option value="'+textPrompts.orderProcess.Order.select+'">'+textPrompts.orderProcess.Order.message+'</option>';
+            // deny the registration
+            _action += '<option value="'+textPrompts.orderProcess.Deny.select+'">'+textPrompts.orderProcess.Deny.message+'</option>';
+            r_string = '<br/><div id="s_DenyPrompt'+_idx+'">'+textPrompts.orderProcess.Deny.prompt+'<input id="s_reason'+_idx+'" type="text"></input></div>';
             break;
         case orderStatus.Delivered.code:
             _date = _arr[_idx].delivered;
@@ -156,7 +160,7 @@ function formatSellerOrders(_target, _orders)
             _date = _arr[_idx].disputeOpened + '<br/>'+_arr[_idx].dispute;
             _action += '<option value="'+textPrompts.orderProcess.Resolve.select+'">'+textPrompts.orderProcess.Resolve.message+'</option>';
             _action += '<option value="'+textPrompts.orderProcess.Refund.select+'">'+textPrompts.orderProcess.Refund.message+'</option>';
-            let _string = '<br/>'+textPrompts.orderProcess.Refund.prompt+'<input id="s_reason'+_idx+'" type="text"></input>';
+            r_string = '<br/><div id="s_RefundPrompt'+_idx+'">'+textPrompts.orderProcess.Refund.prompt+'<input id="s_reason'+_idx+'" type="text"></input></div>';
             break;
         case orderStatus.Resolve.code:
             _date = _arr[_idx].disputeResolved + '<br/>'+_arr[_idx].resolve;
@@ -177,6 +181,9 @@ function formatSellerOrders(_target, _orders)
         case orderStatus.Refunded.code:
             _date = _arr[_idx].orderRefunded;
             break;
+        case orderStatus.Dropped.code:
+            _date = _arr[_idx].dropped;
+            break;
         default:
             break;
         }
@@ -184,7 +191,7 @@ function formatSellerOrders(_target, _orders)
         _action += '</select>';
         if (_idx > 0) {_str += '<div class="spacer"></div>';}
         _str += '<table class="wide"><tr><th>'+textPrompts.orderProcess.orderno+'</th><th>'+textPrompts.orderProcess.status+'</th><th class="right">'+textPrompts.orderProcess.total+'</th><th colspan="3" class="right message">'+textPrompts.orderProcess.buyer+findMember(_arr[_idx].buyer.split('#')[1],buyers).companyName+'</th></tr>';
-        _str += '<tr><th id ="s_order'+_idx+'" width="20%">'+_arr[_idx].id+'</th><th width="50%" id="s_status'+_idx+'">'+JSON.parse(_arr[_idx].status).text+': '+_date+'</th><th class="right">$'+_arr[_idx].amount+'.00</th>'+_action+'<br/>'+_button+'</tr></table>';
+        _str += '<tr><th id ="s_order'+_idx+'" width="20%">'+_arr[_idx].id+'</th><th width="50%" id="s_status'+_idx+'">'+JSON.parse(_arr[_idx].status).text+': '+_date+'</th><th class="right">$'+_arr[_idx].amount+'.00</th>'+_action+r_string+'<br/>'+_button+'</tr></table>';
         _str+= '<table class="wide"><tr align="center"><th>'+textPrompts.orderProcess.itemno+'</th><th>'+textPrompts.orderProcess.description+'</th><th>'+textPrompts.orderProcess.qty+'</th><th>'+textPrompts.orderProcess.price+'</th></tr>'
         for (let every in _arr[_idx].items)
         {(function(_idx2, _arr2)
@@ -201,6 +208,14 @@ function formatSellerOrders(_target, _orders)
     }
 
     _target.append(_str);
+    // Hide all input prompts initially.
+    for (let each in _orders)
+    {(function(_idx)
+        {
+            hidePromptsSeller(_idx);
+        })(each, _orders);
+    }
+
     for (let each in _orders)
     {(function(_idx, _arr)
       { $('#s_btn_'+_idx).on('click', function ()
@@ -210,7 +225,7 @@ function formatSellerOrders(_target, _orders)
           options.orderNo = $('#s_order'+_idx).text();
           options.participant = $('#seller').val();
           options.provider = $('#providers'+_idx).find(':selected').val();
-          if ((options.action === 'Resolve') || (options.action === 'Refund')) {options.reason = $('#s_reason'+_idx).val();}
+          if ((options.action === 'Resolve') || (options.action === 'Refund') || (options.action == 'Deny Registration')) {options.reason = $('#s_reason'+_idx).val();}
           $('#seller_messages').prepend(formatMessage(options.action+textPrompts.orderProcess.processing_msg.format(options.action, options.orderNo)+options.orderNo));
           $.when($.post('/composer/client/orderAction', options)).done(function (_results)
           { $('#seller_messages').prepend(formatMessage(_results.result)); });
@@ -220,4 +235,49 @@ function formatSellerOrders(_target, _orders)
     }
     s_alerts = new Array();
     toggleAlert($('#seller_notify'), s_alerts, s_alerts.length);
+}
+
+/**
+ * Shows the needed input prompts
+ * @param {Index} _index - index of the current order
+ */
+function changePromptSeller(_index) {
+    hidePromptsSeller(_index);
+console.log("in change Prompt");
+    let _tmp = '#s_action' + _index;
+    let _val = $(_tmp).find(':selected').text();
+    switch (_val)
+    {
+        case 'Request Refund':
+            $('#s_RefundPrompt'+_index).show();        
+            break;
+        case 'Pay Tuition':
+            $('#s_PayPrompt'+_index).show();        
+            break;
+        case 'Cancel Schedule':
+            $('#s_CancelPrompt'+_index).show();    
+            break;
+        case 'Drop Schedule':
+            $('#s_DropPrompt'+_index).show();    
+            break;
+        case 'Deny Registration':
+            $('#s_DenyPrompt'+_index).show();
+            break;
+        default:
+            break;
+    }
+}
+
+/**
+ * Hides all of the input prompts
+ * @param {Index} _index - index of the current order
+ */
+function hidePromptsSeller(_idx) {
+    $('#s_PayPrompt'+_idx).hide();
+    $('#s_DisputePrompt'+_idx).hide();
+    $('#s_ResolvePrompt'+_idx).hide();
+    $('#s_CancelPrompt'+_idx).hide();
+    $('#s_DropPrompt'+_idx).hide();
+    $('#s_RefundPrompt'+_idx).hide();
+    $('#s_DenyPrompt'+_idx).hide();
 }

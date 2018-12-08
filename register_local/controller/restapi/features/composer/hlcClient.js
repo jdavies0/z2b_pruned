@@ -122,12 +122,19 @@ exports.getItemTable = function (req, res, next)
 exports.orderAction = function (req, res, next) {
     let method = 'orderAction';
     console.log(method+' req.body.participant is: '+req.body.participant );
-    if ((req.body.action === 'Dispute') && (typeof(req.body.reason) !== 'undefined') && (req.body.reason.length > 0) )
-    {/*let reason = req.body.reason;*/}
-    else {
-        if ((req.body.action === 'Dispute') && ((typeof(req.body.reason) === 'undefined') || (req.body.reason.length <1) ))
+    
+    //if ((req.body.action === 'Dispute') && (typeof(req.body.reason) !== 'undefined') && (req.body.reason.length > 0) )
+    //{*let reason = req.body.reason;*/}
+    /*else if ((req.body.action === 'Dispute') && ((typeof(req.body.reason) === 'undefined') || (req.body.reason.length <1) ))
             {res.send({'result': 'failed', 'error': 'no reason provided for dispute'});}
-    }
+    else if ((req.body.action === 'Drop Schedule') && ((typeof(req.body.readon) === 'undefined') || (req.body.reason.length <1) ))
+            {res.send({'result': 'failed', 'error': 'no reason provided for dropping course'});}
+    else if ((req.body.action === 'Cancel Schedule') && ((typeof(req.body.readon) === 'undefined') || (req.body.reason.length <1) ))
+            {res.send({'result': 'failed', 'error': 'no reason provided for cancelling course'});}
+    else if ((req.body.action === 'Pay Tuition') && ((typeof(req.body.readon) === 'undefined') || (req.body.reason < 0) ))
+            {res.send({'result': 'failed', 'error': 'Amount to pay can\'t be $0.00'});}
+    */
+
     if (svc.m_connection === null) {svc.createMessageSocket();}
     let businessNetworkConnection;
     let updateOrder;
@@ -170,7 +177,7 @@ exports.orderAction = function (req, res, next) {
                     updateOrder.seller = factory.newRelationship(NS, 'Seller', order.seller.$identifier);
                     break;
                 case 'Order From Supplier':
-                case 'Submit to Cashier': // edit here Chris
+                case 'Approve Registration': // edit here Chris
                     console.log('Order from Supplier entered for '+order.orderNumber+ ' inbound id: '+ req.body.participant+' with order.seller as: '+order.seller.$identifier);
                     updateOrder = factory.newTransaction(NS, 'OrderFromSupplier');
                     updateOrder.financeCo = factory.newRelationship(NS, 'FinanceCo', financeCoID);
@@ -191,13 +198,15 @@ exports.orderAction = function (req, res, next) {
                     updateOrder.seller = factory.newRelationship(NS, 'Seller', order.seller.$identifier);
                     updateOrder.financeCo = factory.newRelationship(NS, 'FinanceCo', financeCoID);
                     updateOrder.buyer = factory.newRelationship(NS, 'Buyer', order.buyer.$identifier);
-                    //updateOrder.refund = req.body.reason;
+                    updateOrder.tuitionRefunded = parseInt(req.body.tuitionRefunded, 10);
                     break;
                 case 'Request Refund': // edit here
                     console.log('Request Refund entered');
                     updateOrder = factory.newTransaction(NS, 'RequestRefund');
                     updateOrder.buyer = factory.newRelationship(NS, 'Buyer', order.buyer.$identifier);
                     updateOrder.financeCo = factory.newRelationship(NS, 'FinanceCo', financeCoID);
+                    updateOrder.refundRequest = req.body.reason;
+                    updateOrder.refAmtRequested = parseInt(req.body.refAmtRequested, 10);
                     break;
                 case 'Resolve':
                     console.log('Resolve entered');
@@ -236,9 +245,27 @@ exports.orderAction = function (req, res, next) {
                 case 'Authorize Payment':
                 case 'Pay Tuition':
                     console.log('Authorize Payment entered');
-                    updateOrder = factory.newTransaction(NS, 'AuthorizePayment');
+                    updateOrder = factory.newTransaction(NS, 'AuthorizePayment');   
                     updateOrder.buyer = factory.newRelationship(NS, 'Buyer', order.buyer.$identifier);
                     updateOrder.financeCo = factory.newRelationship(NS, 'FinanceCo', financeCoID);
+                    updateOrder.tuitionPaid = parseInt(req.body.reason, 10);
+                    console.log('I broke things here: '+updateOrder.tuitionPaid);
+                    break;
+                case 'Drop Schedule':
+                case 'Drop Course':
+                    console.log('Drop Schedule entered');
+                    updateOrder = factory.newTransaction(NS, 'DropSchedule');
+                    updateOrder.buyer = factory.newRelationship(NS, 'Buyer', order.buyer.$identifier);
+                    updateOrder.seller = factory.newRelationship(NS, 'Seller', order.seller.$identifier);
+                    updateOrder.financeCo = factory.newRelationship(NS, 'FinanceCo', financeCoID);
+                    updateOrder.drop = req.body.reason;
+                    break;
+                case 'Deny Registration':
+                    console.log('Deny Registration entered');
+                    updateOrder = factory.newTransaction(NS, 'DenySchedule');
+                    updateOrder.buyer = factory.newRelationship(NS, 'Buyer', order.buyer.$identifier);
+                    updateOrder.seller = factory.newRelationship(NS, 'Seller', order.seller.$identifier);
+                    updateOrder.deny = req.body.reason;
                     break;
                 case 'Cancel':
                 case 'Cancel Schedule':
@@ -247,6 +274,14 @@ exports.orderAction = function (req, res, next) {
                     updateOrder.buyer = factory.newRelationship(NS, 'Buyer', order.buyer.$identifier);
                     updateOrder.seller = factory.newRelationship(NS, 'Seller', order.seller.$identifier);
                     updateOrder.financeCo = factory.newRelationship(NS, 'FinanceCo', financeCoID);
+                    updateOrder.cancel = req.body.reason;
+                    break;
+                case 'Deny Refund':
+                    console.log('Refund Denied Entered');
+                    updateOrder = factory.newTransaction(NS, 'DenyRefund');
+                    updateOrder.buyer = factory.newRelationship(NS, 'Buyer', order.buyer.$identifier);
+                    updateOrder.financeCo = factory.newRelationship(NS, 'FinanceCo', financeCoID);
+                    updateOrder.refundDeny = req.body.reason;
                     break;
                 default :
                     console.log('default entered for action: '+req.body.action);
@@ -410,6 +445,7 @@ function _monitor(locals, _event)
         break;
     case 'PaymentRequested':
     case 'RefundRequested':
+    case 'RefundDenied':
         event.ID = _event.financeCoID;
         svc.send(locals, 'Alert',JSON.stringify(event));
         break;

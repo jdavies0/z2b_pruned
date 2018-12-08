@@ -51,31 +51,47 @@ let  Z2Blockchain  = {
     createOrderTemplate: function (_inbound)
     {
         _inbound.orderNumber = '';
-        _inbound.amount = 0;
         _inbound.items = [];
         _inbound.status = JSON.stringify(this.orderStatus.Created);
+        // reasons
+        _inbound.drop = '';
+        _inbound.deny = '';
+        _inbound.dispute = '';
+        _inbound.resolve = '';
+        _inbound.backorder = '';
+        _inbound.cancel = '';
+        _inbound.refundDeny = '';
+        _inbound.refundRequest = '';
+        // amounts
+        _inbound.amount = 0;
+        _inbound.refAmtRequested = 0;
+        _inbound.tuitionRefunded = 0;
+        _inbound.tuitionPaid = 0;
+        // dates
         _inbound.created = new Date().toISOString();
+        _inbound.bought = '';
         _inbound.cancelled = '';
         _inbound.ordered = '';
-        _inbound.bought = '';
         _inbound.dateBackordered = '';
         _inbound.requestShipment = '';
         _inbound.delivered = '';
         _inbound.delivering = '';
         _inbound.disputeOpened = '';
         _inbound.disputeResolved = '';
-        _inbound.orderRefunded = '';
-        _inbound.refundRequested = '';
         _inbound.paymentRequested = '';
-        _inbound.paid = '';
+        _inbound.refundRequested = '';
+        _inbound.orderRefunded = '';
         _inbound.approved = '';
-        _inbound.dispute = '';
-        _inbound.resolve = '';
-        _inbound.backorder = '';
-        _inbound.refund = '';
+        _inbound.paid = '';
+        _inbound.lastPayment = '';
+        _inbound.dropped = '';
+        _inbound.denied = '';
+        _inbound.refundDenied ='';
+
         _inbound.provider = '';
         _inbound.shipper = '';
         _inbound.financeCo = '';
+        
         return(_inbound);
     },
 /**
@@ -307,15 +323,19 @@ orderStatus: {
     Ordered: {code: 4, text: 'Schedule Submitted to Cashier'},
     ShipRequest: {code: 5, text: 'Shipping Requested'},
     Delivered: {code: 6, text: 'Schedule Delivered'},
-    Delivering: {code: 15, text: 'Schedule being Delivered'},
     Backordered: {code: 7, text: 'Schedule Backordered'},
     Dispute: {code: 8, text: 'Schedule Disputed'},
     Resolve: {code: 9, text: 'Schedule Dispute Resolved'},
     PayRequest: {code: 10, text: 'Payment Requested'},
     Authorize: {code: 11, text: 'Payment Approved'},
-    Paid: {code: 14, text: 'Payment Processed'},
     RefundRequested: {code: 12, text: 'Schedule Refund Requested'},
-    Refunded: {code: 13, text: 'Schedule Refunded'}
+    Refunded: {code: 13, text: 'Schedule Refunded'},
+    Paid: {code: 14, text: 'Payment Processed'},
+    Delivering: {code: 15, text: 'Schedule being Delivered'},
+    Dropped: {code: 16, text: 'Course Dropped'},
+    Denied: {code:17, text: 'Schedule Denied'},
+    Partial: {code:18, text: 'Partial Payment Made'},
+    RefundDenied: {code:19, text: 'Refund Denied'}
 },
 /**
  * New code to support sending messages to socket clients

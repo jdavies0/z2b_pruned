@@ -61,6 +61,19 @@ rule BuyerACLBuy {
 /**
 *
 **/
+rule BuyerACLDropSchedule {
+    description: "Enable a Buyer to drop a schedule"
+    participant(m): "org.acme.Z2BTestNetwork.Buyer"
+    operation: READ, CREATE, UPDATE
+    resource(v): "org.acme.Z2BTestNetwork.**"
+    transaction(tx): "org.acme.Z2BTestNetwork.DropSchedule"
+    condition: (v.buyer.buyerID == m.getIdentifier())
+    action: ALLOW
+}
+
+/**
+*
+**/
 rule BuyerACLCancel {
     description: "Enable a Buyer to CANCEL an Order"
     participant(m): "org.acme.Z2BTestNetwork.Buyer"
@@ -195,6 +208,19 @@ rule SellerRefund {
     operation: READ, CREATE, UPDATE
     resource(v): "org.acme.Z2BTestNetwork.**"
     transaction(tx): "org.acme.Z2BTestNetwork.Refund"
+    condition: (v.seller.sellerID == m.getIdentifier())
+    action: ALLOW
+}
+
+/**
+*
+**/
+rule SellerDenyRegistration {
+    description: "Enable a Seller to Deny a registration"
+    participant(m): "org.acme.Z2BTestNetwork.Seller"
+    operation: READ, CREATE, UPDATE
+    resource(v): "org.acme.Z2BTestNetwork.**"
+    transaction(tx): "org.acme.Z2BTestNetwork.DenySchedule"
     condition: (v.seller.sellerID == m.getIdentifier())
     action: ALLOW
 }
