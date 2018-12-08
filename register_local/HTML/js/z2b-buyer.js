@@ -71,12 +71,16 @@ function loadBuyerUX (nested)
         let _login = $('#loginButton');
         _login.on('click', function()
         { 
-            var _username =  document.getElementById("username").value;
-
+            //var _username =  document.getElementById("username").value;
+            let _username =  document.getElementById("username").value;
+        console.log("_username: " + _username);
             if ((typeof(_username) === 'undefined') || (_username === null)|| (_username === "") )
+            {
               _username = "adrodrigues@my.waketech.edu";
+            }
+            loadLoggedinBuyerUX(nested, _username);
 
-            if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(_username))
+/*            if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(_username))
             {
                 let u =  findMember(_username,buyers);
                 if ((typeof(u) === 'undefined') || (u === null) || (u.legth === 0) || u.companyName == 'not found')
@@ -92,7 +96,7 @@ function loadBuyerUX (nested)
             else
             {
                 alert("You have entered an invalid email address!")
-            }
+            }*/
         });
     });
 }
@@ -161,10 +165,12 @@ function setupBuyer(page, nested, username)
     _list.on('click', function(){ console.log("got click: List Order"); listOrdersByBuyerID(buyer.id);});
     $('#buyer').empty();
     // build the buer select HTML element
-   for (let each in buyers)
-    {(function(_idx, _arr)
-        {$('#buyer').append('<option value="'+_arr[_idx].id+'">' +_arr[_idx].id+'</option>');})(each, buyers);
-    }
+    // Removed so as to use the login page
+   //for (let each in buyers)
+    //{(function(_idx, _arr)
+      //  {$('#buyer').append('<option value="'+_arr[_idx].id+'">' +_arr[_idx].id+'</option>');})(each, buyers);
+    //}
+    document.getElementById('buyer').value = username;
     let buyer=  findMember(username,buyers);
     // save the current buyer id as b_id
     b_id = buyer.id;
@@ -177,7 +183,8 @@ function setupBuyer(page, nested, username)
     z2bSubscribe('Buyer', b_id);
 
     // Check if there's a current schedule
-    let _scheduleCount = getBuyerScheduleCount (b_id); // edit here
+    //let _scheduleCount = getBuyerScheduleCount (b_id); // edit here
+    let _scheduleCount = listOrdersByBuyerID (b_id);
     console.log ("schedule count = "+_scheduleCount);
 
 /*    // create a function to execute when the user selects a different buyer
@@ -282,13 +289,19 @@ function displayOrderForm()
         $('#submitNewOrder').hide();
         $('#submitNewOrder').on('click', function ()
             { let options = {};
-            options.buyer = $('#buyer').find(':selected').val();
+            //options.buyer = $('#buyer').find(':selected').val();
+            options.buyer = document.getElementById("buyer").value;
+console.log("line 294: options.buyer; "+options.buyer);
             options.seller = $('#seller').find(':selected').val();
             options.items = newItems;
             console.log(options);
             _orderDiv.empty(); _orderDiv.append(formatMessage(textPrompts.orderProcess.create_msg));
             $.when($.post('/composer/client/addOrder', options)).done(function(_res)
-            {    _orderDiv.empty(); _orderDiv.append(formatMessage(_res.result)); console.log(_res);});
+            {
+                _orderDiv.empty(); _orderDiv.append(formatMessage(_res.result)); console.log(_res);
+                $('#orderStatus').show();
+            
+            });
         });
         // function to call when an item has been selected
         $('#addItem').on('click', function ()
@@ -380,7 +393,9 @@ function displayModifyOrderForm()
         $('#submitNewOrder').hide();
         $('#submitNewOrder').on('click', function ()
             { let options = {};
-            options.buyer = $('#buyer').find(':selected').val();
+            //options.buyer = $('#buyer').find(':selected').val();
+            options.buyer = document.getElementById("buyer").value;
+console.log("line 398: options.buyer; "+options.buyer);
             options.seller = $('#seller').find(':selected').val();
             options.items = newItems;
             console.log(options);
@@ -486,7 +501,8 @@ function listOrders()
 {
     let options = {};
     // get the users email address
-    let b_id = $('#buyer').find(':selected').text();
+    //let b_id = $('#buyer').find(':selected').text();
+    let b_id = $('#buyer').val();
     listOrdersByBuyerID(b_id);
 }
 
