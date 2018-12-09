@@ -1,0 +1,27 @@
+"index_l": {"language":"Eastern Carolina University"
+     },
+    "buyer_l": {
+    "title": "Student Chapter 12. Select Student to see their view: ",
+    "newOrder": "Create New Schedule",
+    "updateOrder": "Update Schedule",
+    "orderStatus": "Display Schedule Status",
+    "residentCreditCost": 163.37,
+    "nonResidentCreditCost":646.95
+  },
+  "buyer_login_l": {
+    "loginImage":"blah.jpg",
+    "title": "Student Login ",
+    "loginPrompt": "Pirate ID:",
+    "loginHint": "Username is required",
+    "loginPasswordPrompt": "Password:",
+    "loginPasswordHint": "",
+    "loginDefault": "",
+    "loginPasswordDefault": "",
+    "loginButton":"LOGIN",
+    "loginButtonColor":"#0577b1"
+  },
+    "skins_l": {
+      "school_assets":"/assets/ecu/",
+      "school_logo":"<img src=\"/assets/ecu/my_header.jpg\">",
+    "school_domain":"ecu.edu"
+  }

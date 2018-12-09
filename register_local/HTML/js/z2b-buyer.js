@@ -30,6 +30,8 @@ let scheduleCount;
  
 //<li id="US_English"><a onclick="goMultiLingual('US_English', 'index')">US English</a></li>
 
+let active_user;
+
 
 /**
  * load the Buyer User Experience
