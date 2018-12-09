@@ -23,5 +23,6 @@
     "skins_l": {
       "school_assets":"/assets/ecu/",
       "school_logo":"<img src=\"/assets/ecu/my_header.jpg\">",
-    "school_domain":"ecu.edu"
+    "school_domain":"ecu.edu",
+    "school_shortName":"ECU"
   }

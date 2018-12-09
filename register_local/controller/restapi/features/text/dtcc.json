@@ -23,6 +23,7 @@
     "skins_l": {
       "school_assets":"/assets/dtcc/",
       "school_logo":"<img src=\"/assets/dtcc/my_header.jpg\">",
-      "school_domain":"durhamtech.edu"
+      "school_domain":"durhamtech.edu",
+      "school_shortName":"Durham Tech"
     }
   

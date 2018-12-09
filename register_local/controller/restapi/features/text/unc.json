@@ -19,5 +19,6 @@
 "skins_l": {
     "school_assets":"/assets/unc/",
     "school_logo":"<img src=\"/assets/unc/my_header.jpg\">",
-    "school_domain":"waketech.edu"
+    "school_domain":"unc.edu",
+    "school_shortName":"UNC"
 }
