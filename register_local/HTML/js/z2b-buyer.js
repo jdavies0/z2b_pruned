@@ -31,6 +31,7 @@ let scheduleCount;
 //<li id="US_English"><a onclick="goMultiLingual('US_English', 'index')">US English</a></li>
 
 let active_user;
+let inActiveOrders = 0;
 
 
 /**
@@ -264,6 +265,7 @@ function displayOrderForm()
 {  let toLoad = 'createOrder.html';
     totalAmount = 0;
     newItems = [];
+    let selTmp = 'registrar@'+textPrompts.skins_l.school_domain;
     // get the order creation web page and also get all of the items that a user can select
     $.when($.get(toLoad), $.get('/composer/client/getItemTable')).done(function (page, _items)
     {
@@ -275,8 +277,11 @@ function displayOrderForm()
         updatePage('createOrder');
         $('#seller').empty();
         // populate the seller HTML select object. This string was built during the memberLoad or deferredMemberLoad function call
-        $('#seller').append(s_string);
-        $('#seller').val($('#seller option:first').val());
+        //$('#seller').append(s_string);
+        //$('#seller').val($('#seller option:first').val());
+        //console.log('selTmp '+selTmp);
+        document.getElementById("seller").value = selTmp;
+    console.log("seller in order "+$('#seller').val());
         $('#orderNo').append('xxx');
         $('#status').append('New Order');
         $('#today').append(new Date().toISOString());
@@ -293,8 +298,8 @@ function displayOrderForm()
             { let options = {};
             //options.buyer = $('#buyer').find(':selected').val();
             options.buyer = document.getElementById("buyer").value;
-console.log("line 294: options.buyer; "+options.buyer);
-            options.seller = $('#seller').find(':selected').val();
+            //options.seller = $('#seller').find(':selected').val();
+            options.seller = document.getElementById("seller").value;
             options.items = newItems;
             console.log(options);
             _orderDiv.empty(); _orderDiv.append(formatMessage(textPrompts.orderProcess.create_msg));
@@ -529,10 +534,11 @@ function formatOrders(_target, _orders)
             if ( _arr[_idx].tuitionPaid == _arr[_idx].tuitionRefunded )
             {
                 active_tag = 'nonActiveOrder';
+                inActiveOrders++;
             }
         }
 
-        _str += '<div id="'+active_tag+'">';
+        _str += '<div id="b_orderType'+_idx+'" class="'+active_tag+'">';
         let r_string;
         r_string = '</th>';
 
@@ -772,19 +778,23 @@ function hidePrompts(_idx) {
  */
 
 function changeBuyerView(){
+    if (inActiveOrders == 0)
+        return;
+        
     // get the value of the selection
     let _val = $('#b_DisplayPreference').val();
+    console.log("_val in changeBuyerView "+_val);
     switch (_val)
     {
         case 'ActiveOnly':
             //$('#nonActiveOrder').hide();
-            document.getElementById('nonActiveOrder').classList.add("hide");
-            document.getElementById('nonActiveOrder').classList.remove("show");
+            $(".nonActiveOrder").addClass("hide");
+            $(".nonActiveOrder").removeClass("show");
             break;
         case 'ShowAll':
             //$('#nonActiveOrder').show();
-            document.getElementById('nonActiveOrder').classList.add("show");
-            document.getElementById('nonActiveOrder').classList.remove("hide");
+            $(".nonActiveOrder").addClass("show");
+            $(".nonActiveOrder").removeClass("hide");
             break;
     }
 }

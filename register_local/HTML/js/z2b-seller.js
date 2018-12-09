@@ -22,6 +22,7 @@ let s_count = '#seller_count';
 let s_id;
 let total_creditHours =0;
 let total_tuition=0;
+let s_inActiveOrders=0;
 
 /**
  * load the administration Seller Experience
@@ -69,10 +70,11 @@ function setupSeller(page, nested)
     //
     _list.on('click', function(){listSellerOrders();});
     $('#seller').empty();
-    $('#seller').append(s_string);
+    //$('#seller').append(s_string);
+    $('#seller').append('registrar@'+textPrompts.skins_l.school_domain);
     $('#sellerCompany').empty();
-    $('#sellerCompany').append(sellers[0].companyName);
-    s_id = sellers[0].id;
+    $('#sellerCompany').append(textPrompts.skins_l.school_shortName);
+    s_id = 'registrar@'+textPrompts.skins_l.school_domain;
     z2bSubscribe('Seller', s_id);
     // create a function to execute when the user selects a different provider
       $('#seller').on('change', function() {
@@ -92,7 +94,7 @@ function listSellerOrders()
     //
     // seller instead of buyer
     //
-    options.id= $('#seller').find(':selected').val();
+    options.id= 'registrar@'+textPrompts.skins_l.school_domain;
     options.userID = options.id;
     $.when($.post('/composer/client/getMyOrders', options)).done(function(_results)
     {
@@ -117,7 +119,18 @@ function formatSellerOrders(_target, _orders)
         total_creditHours = 0;
         total_tuition = 0;
             (function(_idx, _arr)
-        { let _action = '<th><select id=s_action'+_idx+' onchange="changePromptSeller('+_idx+');"><option value="'+textPrompts.orderProcess.NoAction.select+'">'+textPrompts.orderProcess.NoAction.message+'</option>';
+        {
+            let active_tag = 's_ActiveOrder';
+            if ( (_arr[_idx].cancelled != '') || (_arr[_idx].dropped != '') ) {
+                if ( _arr[_idx].tuitionPaid == _arr[_idx].tuitionRefunded )
+                {
+                    active_tag = 's_nonActiveOrder';
+                    s_inActiveOrders++;
+                }
+            }
+            _str += '<div id="s_orderType'+_idx+'" class="'+active_tag+'">';
+
+            let _action = '<th><select id=s_action'+_idx+' onchange="changePromptSeller('+_idx+');"><option value="'+textPrompts.orderProcess.NoAction.select+'">'+textPrompts.orderProcess.NoAction.message+'</option>';
         //
         // each order can have different states and the action that a buyer can take is directly dependent on the state of the order. 
         // this switch/case table displays selected order information based on its current status and displays selected actions, which
@@ -204,10 +217,12 @@ function formatSellerOrders(_target, _orders)
         }
         _str += '<tr><th align="center"><b>Total</td><td></td><td align="center"><b>'+total_creditHours+'</td><td align="right"><b>$'+total_tuition+'.00</td></tr>';
         _str += '</table>';
+        _str += '</div>';
     })(each, _orders);
     }
 
     _target.append(_str);
+    changeSellerView();
     // Hide all input prompts initially.
     for (let each in _orders)
     {(function(_idx)
@@ -223,7 +238,7 @@ function formatSellerOrders(_target, _orders)
           let options = {};
           options.action = $('#s_action'+_idx).find(':selected').text();
           options.orderNo = $('#s_order'+_idx).text();
-          options.participant = $('#seller').val();
+          options.participant = 'registrar@'+textPrompts.skins_l.school_domain;
           options.provider = $('#providers'+_idx).find(':selected').val();
           if ((options.action === 'Resolve') || (options.action === 'Refund') || (options.action == 'Deny Registration')) {options.reason = $('#s_reason'+_idx).val();}
           $('#seller_messages').prepend(formatMessage(options.action+textPrompts.orderProcess.processing_msg.format(options.action, options.orderNo)+options.orderNo));
@@ -280,4 +295,26 @@ function hidePromptsSeller(_idx) {
     $('#s_DropPrompt'+_idx).hide();
     $('#s_RefundPrompt'+_idx).hide();
     $('#s_DenyPrompt'+_idx).hide();
+}
+
+function changeSellerView(){
+    if (s_inActiveOrders == 0)
+        return;
+        
+    // get the value of the selection
+    let _val = $('#s_DisplayPreference').val();
+    console.log("_val in changeSellerView "+_val);
+    switch (_val)
+    {
+        case 'ActiveOnly':
+            //$('#nonActiveOrder').hide();
+            $(".s_nonActiveOrder").addClass("hide");
+            $(".s_nonActiveOrder").removeClass("show");
+            break;
+        case 'ShowAll':
+            //$('#nonActiveOrder').show();
+            $(".s_nonActiveOrder").addClass("show");
+            $(".s_nonActiveOrder").removeClass("hide");
+            break;
+    }
 }
