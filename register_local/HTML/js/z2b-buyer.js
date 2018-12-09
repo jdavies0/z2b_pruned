@@ -276,12 +276,13 @@ function displayOrderForm()
         // update the page with the appropriate text for the selected language
         updatePage('createOrder');
         $('#seller').empty();
+        $('#selectVendor').empty();
         // populate the seller HTML select object. This string was built during the memberLoad or deferredMemberLoad function call
         //$('#seller').append(s_string);
         //$('#seller').val($('#seller option:first').val());
         //console.log('selTmp '+selTmp);
         document.getElementById("seller").value = selTmp;
-    console.log("seller in order "+$('#seller').val());
+        $('#selectVendor').append('School: '+textPrompts.skins_l.school_shortName);
         $('#orderNo').append('xxx');
         $('#status').append('New Order');
         $('#today').append(new Date().toISOString());
@@ -369,7 +370,7 @@ function displayOrderForm()
 /**
  * Displays the create order form for the selected buyer
  */
-function displayModifyOrderForm()
+/* function displayModifyOrderForm()
 {  let toLoad = 'modifyOrder.html';
     totalAmount = 0;
     newItems = [];
@@ -453,10 +454,10 @@ console.log("line 398: options.buyer; "+options.buyer);
                 $('#price'+len).empty(); $('#price'+len).append('$'+price+'.00');
             });
 */
-            $('#submitNewOrder').show();
-        });
-    });
-}
+      //      $('#submitNewOrder').show();
+    //    });
+  //  });
+//}
 /**
  * lists all orders for the selected buyer
  */
