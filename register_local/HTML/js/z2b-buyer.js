@@ -79,7 +79,31 @@ function loadBuyerUX (nested)
         console.log("_username: " + _username);
             if ((typeof(_username) === 'undefined') || (_username === null)|| (_username === "") )
             {
-              _username = "adrodrigues@my.waketech.edu";
+                switch (textPrompts.skins_l.school_domain)
+                {
+                    case 'ncsu.edu':
+                        _username = "jdavies@ncsu.edu";
+                        break;
+                    case 'durhamtech.edu':
+                        _username = "joshuamoore@durhamtech.edu";
+                        break;
+                    case 'duke.edu':
+                        _username = "peterchen@duke.edu";
+                        break;
+                    case 'unc.edu':
+                        _username = "deborahmiller@unc.edu";
+                        break;
+                    case 'ecu.edu':
+                        _username = "jeffjones@ecu.edu";
+                        break;
+                    case 'waketech.edu':
+                        _username = "adrodrigues@my.waketech.edu";
+                        break;
+                    default:
+                        console.log("no school domain");
+                        break;
+                }
+                console.log('setting default username to '+_username);
             }
             loadLoggedinBuyerUX(nested, _username);
 
