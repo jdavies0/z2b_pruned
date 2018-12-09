@@ -27,7 +27,6 @@ let newItems = [];
 let totalAmount = 0;
 let courseCost = 0;
 let scheduleCount;
- 
 //<li id="US_English"><a onclick="goMultiLingual('US_English', 'index')">US English</a></li>
 
 let active_user;
@@ -39,6 +38,7 @@ let inActiveOrders = 0;
  */
 function loadBuyerUX (nested)
 {
+    currentPage = 'buyer.html';
     // get the html page to load
     console.log ("in LoadBuyerUX");
 

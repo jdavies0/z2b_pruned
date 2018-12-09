@@ -36,6 +36,7 @@ function singleUX ()
         loadFinanceCoUX(1);
         // Initialize Registration for all Z2B Business Events
         goEventInitialize();
+        currentPage = 'singleUX.html';
     });
     }
     else{
@@ -50,6 +51,7 @@ function singleUX ()
             loadFinanceCoUX(1);
             // Initialize Registration for all Z2B Business Events
             goEventInitialize();
+            currentPage = 'singleUX.html';
         });
     }
 }

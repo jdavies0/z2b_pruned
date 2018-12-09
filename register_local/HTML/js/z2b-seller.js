@@ -29,6 +29,7 @@ let s_inActiveOrders=0;
  */
 function loadSellerUX (nested)
 {
+    currentPage = 'seller.html';
     console.log ("in loadSellerUX");
     console.log ("buyer.length = "+ buyers.length +" seller.length = "+sellers.length); 
     let toLoad = 'seller.html';

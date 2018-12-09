@@ -30,6 +30,7 @@ let f_alerts;
  */
 function loadFinanceCoUX (nested)
 {
+    currentPage = 'financeCo.html';
     console.log ("in LoadFinanceUX");
 
     let toLoad = 'financeCo.html';
