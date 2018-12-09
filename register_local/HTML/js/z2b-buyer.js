@@ -521,6 +521,16 @@ function formatOrders(_target, _orders)
     for (let each in _orders)
     {(function(_idx, _arr)
       {
+        let active_tag = 'activeOrder';
+
+        if ( (_arr[_idx].cancelled != '') || (_arr[_idx].dropped != '') ) {
+            if ( _arr[_idx].tuitionPaid == _arr[_idx].tuitionRefunded )
+            {
+                active_tag = 'nonActiveOrder';
+            }
+        }
+
+        _str += '<div id="'+active_tag+'">';
         let r_string;
         r_string = '</th>';
 
@@ -640,7 +650,6 @@ function formatOrders(_target, _orders)
         let _button = '<th><button id="b_btn_'+_idx+'">'+textPrompts.orderProcess.ex_button+'</button></th>';
         _action += '</select>';
         
-        if (_idx > 0) {_str += '<div class="spacer"></div>';}
         _str += '<table class="wide"><tr><th>'+textPrompts.orderProcess.orderno+'</th><th>'+textPrompts.orderProcess.status+'</th><th class="right">'+textPrompts.orderProcess.total+'</th><th colspan="3" class="right message">'+textPrompts.orderProcess.seller+findMember(_arr[_idx].seller.split('#')[1],sellers).companyName+'</th></tr>';
         _str += '<tr id="no_r_String"><th id ="b_order'+_idx+'" width="20%">'+_arr[_idx].id+'</th><th width="50%" id="b_status'+_idx+'">'+JSON.parse(_arr[_idx].status).text+': '+_date+'</th><th class="right">$'+_arr[_idx].amount+'.00</th>'+_action+r_string+_button+'</tr></table>';
         _str+= '<table class="wide"><tr align="center"><th>'+textPrompts.orderProcess.itemno+'</th><th>'+textPrompts.orderProcess.description+'</th><th>'+textPrompts.orderProcess.qty+'</th><th>'+textPrompts.orderProcess.price+'</th></tr>'
@@ -654,10 +663,17 @@ function formatOrders(_target, _orders)
                 })(every, _arr[_idx].items);
         }
         _str += '</table>';
+        // insert spacer 
+        if (_idx == 0 || _idx < _arr.length -1 ) {
+            _str += '<div id="spacer'+_idx+'" class="spacer"></div>';
+        }
+        _str += '</div>';
+
     })(each, _orders);
     }
     // append the newly built order table to the web page
     _target.append(_str);
+    changeBuyerView();
     for (let each in _orders)
     {(function(_idx)
         {
@@ -669,7 +685,8 @@ function formatOrders(_target, _orders)
     // iterate through the page and make all of the different parts of the page active.
     //
     for (let each in _orders)
-        {(function(_idx, _arr)
+        {
+            (function(_idx, _arr)
             { $('#b_btn_'+_idx).on('click', function ()
                 {
                 let options = {};
@@ -711,11 +728,8 @@ function formatOrders(_target, _orders)
 
 function changePrompt(_index) {
     hidePrompts(_index);
- console.log("in change Prompt");
     let _tmp = '#b_action' + _index;
- console.log("_tmp: "+_tmp);
     let _val = $(_tmp).find(':selected').text();
- console.log("_val: "+_val);
     switch (_val)
     {
         case 'Request Refund':
@@ -745,4 +759,30 @@ function hidePrompts(_idx) {
     $('#CancelPrompt'+_idx).hide();
     $('#DropPrompt'+_idx).hide();
     $('#RefundPrompt'+_idx).hide();
+}
+
+/**
+ * Hide or show non-active orders
+ * Non-active orders are those that are:
+ *  (dropped || canceled) && 
+ *  refunded amount == paid tuition amount)
+ * non-active orders have tag set for nonActiveOrder
+ */
+
+function changeBuyerView(){
+    // get the value of the selection
+    let _val = $('#b_DisplayPreference').val();
+    switch (_val)
+    {
+        case 'ActiveOnly':
+            //$('#nonActiveOrder').hide();
+            document.getElementById('nonActiveOrder').classList.add("hide");
+            document.getElementById('nonActiveOrder').classList.remove("show");
+            break;
+        case 'ShowAll':
+            //$('#nonActiveOrder').show();
+            document.getElementById('nonActiveOrder').classList.add("show");
+            document.getElementById('nonActiveOrder').classList.remove("hide");
+            break;
+    }
 }

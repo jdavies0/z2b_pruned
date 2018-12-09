@@ -43,15 +43,20 @@ var ns = 'org.acme.Z2BTestNetwork';
 function CreateOrder(purchase) {
     purchase.order.buyer = purchase.buyer;
     purchase.order.amount = purchase.amount;
+    purchase.order.seller = purchase.seller;
     purchase.order.financeCo = purchase.financeCo;
     purchase.order.created = new Date().toISOString();
     purchase.order.status = JSON.stringify(orderStatus.Created);
+    // kicking this to auto-Buy
+    purchase.order.bought = new Date().toISOString();
+    purchase.order.status = JSON.stringify(orderStatus.Bought);
     return getAssetRegistry('org.acme.Z2BTestNetwork.Order')
         .then(function (assetRegistry) {
             return assetRegistry.update(purchase.order)
             .then (function (_res) 
             {
-                z2bEmit('Created', purchase.order);
+                //z2bEmit('Created', purchase.order);
+                z2bEmit('Bought', purchase.order);
                 return (_res);
             }).catch(function(error){return(error);});
         });
@@ -481,6 +486,7 @@ function z2bEmit(_event, _order)
         case 'Bought':
         case 'Denied':
             z2bEvent.sellerID = _order.seller.$identifier;
+            z2bEvent.financeCoID = _order.financeCo.$identifier;
         break;
         case 'PaymentRequested':
         case 'RefundRequested':

@@ -170,7 +170,7 @@ exports.orderAction = function (req, res, next) {
                     updateOrder.dispute = req.body.reason;
                     break;
                 case 'Purchase':
-                case 'Register':            // edit here 'Purchase':
+                case 'Register':            // edit here 'Purchase': // won't be called anymore - direct create->sent to cashier
                     console.log('Purchase/Register entered');
                     updateOrder = factory.newTransaction(NS, 'Buy');
                     updateOrder.buyer = factory.newRelationship(NS, 'Buyer', order.buyer.$identifier);
@@ -441,6 +441,8 @@ function _monitor(locals, _event)
         break;
     case 'Bought':
         event.ID = _event.sellerID;
+        svc.send(locals, 'Alert',JSON.stringify(event));
+        event.ID = _event.financeCoID;
         svc.send(locals, 'Alert',JSON.stringify(event));
         break;
     case 'PaymentRequested':

@@ -194,6 +194,8 @@ event Created extends Z2BEvent {
 event Bought extends Z2BEvent {
   o String sellerID
   o String buyerID
+  // adding financeCo since we now auto-buy from create
+  o String financeCoID
 }
 
 // notification that a fulfillment request has been placed
