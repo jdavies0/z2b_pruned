@@ -105,12 +105,14 @@ function loadBuyerUX (nested)
                 }
                 console.log('setting default username to '+_username);
             }
-            loadLoggedinBuyerUX(nested, _username);
+//            loadLoggedinBuyerUX(nested, _username);
 
-/*            if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(_username))
+           if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(_username))
             {
                 let u =  findMember(_username,buyers);
-                if ((typeof(u) === 'undefined') || (u === null) || (u.legth === 0) || u.companyName == 'not found')
+                let _userDomain = u.id.split('@')[1];
+
+                if ((typeof(u) === 'undefined') || (u === null) || (u.length === 0) || (u.companyName == 'not found') || (_userDomain != textPrompts.skins_l.school_domain))
                 {
                     alert("The information entered does not match a registered student in our system.\nPlease check and try again.")
                 }
@@ -123,7 +125,7 @@ function loadBuyerUX (nested)
             else
             {
                 alert("You have entered an invalid email address!")
-            }*/
+            }
         });
     });
 }
