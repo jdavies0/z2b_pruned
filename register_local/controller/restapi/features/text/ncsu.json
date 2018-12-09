@@ -1,0 +1,29 @@
+    "index_l": {
+      "language":"North Carolina State Univeristy"
+    },
+    "buyer_l": {
+        "title": "Student Chapter 12. Select Student to see their view: ",
+        "newOrder": "Create New Schedule",
+        "updateOrder": "Update Schedule",
+        "orderStatus": "Display Schedule Status",
+        "residentCreditCost": 76,
+        "nonResidentCreditCost":268
+      },
+    "buyer_login_l": {
+      "loginImage":"blah.jpg",
+      "title": "Student Login ",
+      "loginPrompt": "Unity ID:",
+      "loginHint": "",
+      "loginPasswordPrompt": "Password:",
+      "loginPasswordHint": "",
+      "loginDefault": "",
+      "loginPasswordDefault": "",
+      "loginButton":"Log in",
+      "loginButtonColor":"#0577b1"
+    },
+    "skins_l": {
+      "school_assets":"/assets/nscu/",
+      "school_logo":"<img src=\"/assets/ncsu/my_header.jpg\">",
+      "school_domain":"ncsu.edu"
+      }
+    

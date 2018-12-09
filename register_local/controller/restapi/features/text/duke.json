@@ -1,0 +1,27 @@
+"index_l": {"language": "Duke University"
+  },
+  "buyer_l": {
+    "title": "Student Chapter 12. Select Student to see their view: ",
+    "newOrder": "Create New Schedule",
+    "updateOrder": "Update Schedule",
+    "orderStatus": "Display Schedule Status",
+    "residentCreditCost": 76,
+    "nonResidentCreditCost":268
+  },
+  "buyer_login_l": {
+    "loginImage":"blah.jpg",
+    "title": "Student Login ",
+    "loginPrompt": "NetID",
+    "loginDefault": "",
+    "loginHint": "",
+    "loginPasswordPrompt": "Password",
+    "loginPasswordDefault": "",
+    "loginPasswordHint": "Reset my password",
+    "loginButton":"Login",
+    "loginButtonColor":"#0577b1"
+  },
+  "skins_l": {
+    "school_assets":"/assets/duke/",
+    "school_logo":"<img src=\"/assets/duke/my_header.jpg\">",
+    "school_domain":"duke.edu"
+  }

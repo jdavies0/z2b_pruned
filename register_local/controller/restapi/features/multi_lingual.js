@@ -50,7 +50,13 @@ var locations = require('./text/text-locations.json');
  * 
  * @function
  */exports.prompts = function(req, res)
-{res.send(fs.readFileSync(path.resolve(__dirname)+languages[req.body.language].data)); }
+{
+    let f_a = fs.readFileSync(path.resolve(__dirname)+"/text/prompts.json");
+    let f_b = fs.readFileSync(path.resolve(__dirname)+languages[req.body.language].data);
+    let p = '{'+f_a+','+f_b+'}';
+//    console.log("p:"+p);
+    res.send(p);
+}
 
 /**
  * locations is not used in the ZeroToBlockchain tutorial as this information can be automatically extracted from the prompts file

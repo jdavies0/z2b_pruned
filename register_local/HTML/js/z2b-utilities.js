@@ -72,7 +72,9 @@ function updatePage(_page)
 {
     for (let each in textPrompts[_page]){(function(_idx, _array)
         {$('#'+_idx).empty();$('#'+_idx).append(getDisplaytext(_page, _idx));})(each, textPrompts[_page])}
-}
+    for (let each in textPrompts[_page+"_l"]){(function(_idx, _array)
+            {$('#'+_idx).empty();$('#'+_idx).append(getDisplaytext(_page+"_l", _idx));})(each, textPrompts[_page+"_l"])}
+    }
 
 /**
 * gets text from the JSON object textPrompts for the requested page and item
@@ -102,6 +104,7 @@ function goMultiLingual(_language, _page)
         {textLocations = _locations;
             textPrompts = JSON.parse(_prompts[0]);
             updatePage(_page);
+            updatePage(_page+"_l");
         });
         let _choices = $('#lang_choices');
         _choices.empty(); let _str = '';
