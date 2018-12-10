@@ -62,6 +62,15 @@ function setupSeller(page, nested)
     {$(s_notify).removeClass('on'); $(s_notify).addClass('off'); }
     else {$(s_notify).removeClass('off'); $(s_notify).addClass('on'); }
     updatePage('seller');
+    updatePage('skins');
+
+    $('#seller_school_logo').css('background-color' , '');
+    $('#seller_school_logo').css('background-color', textPrompts.skins_l.logo_bg);
+    $('#seller_filter_prompt').css('color' , '');
+    $('#seller_filter_prompt').css('color', textPrompts.skins_l.seller_filter_text_color);
+    $('#seller_count').css('color', textPrompts.skins_l.seller_filter_text_color);
+    
+
     let _clear = $('#seller_clear');
     let _list = $('#sellerOrderStatus');
     let _orderDiv = $('#'+sellerOrderDiv);
