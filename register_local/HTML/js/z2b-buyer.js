@@ -404,13 +404,21 @@ function listOrdersByBuyerID(b_id)
  */
 function findActiveOrders(_orders)
 {
-    let activeOrder = true;
+    let activeOrder;
     for (let each in _orders)
     {(function(_idx, _arr)
         {
+            activeOrder = true;
             if ( (_arr[_idx].cancelled != '') || (_arr[_idx].dropped != '') )
                 {
                     if ( _arr[_idx].tuitionPaid == _arr[_idx].tuitionRefunded )
+                    {
+                        activeOrder = false;
+                    }
+                }
+            else
+                {
+                    if ((_arr[_idx].paid != '') || (_arr[_idx].orderRefunded != ''))
                     {
                         activeOrder = false;
                     }
@@ -437,8 +445,19 @@ function formatOrders(_target, _orders)
       {
         let active_tag = 'activeOrder';
 
+        if (!findActiveOrders)
+            active_tag = 'nonActiveOrder';
+
         if ( (_arr[_idx].cancelled != '') || (_arr[_idx].dropped != '') ) {
             if ( _arr[_idx].tuitionPaid == _arr[_idx].tuitionRefunded )
+            {
+                active_tag = 'nonActiveOrder';
+                inActiveOrders++;
+            }
+        }
+        else 
+        {
+            if ((_arr[_idx].paid != '') || (_arr[_idx].orderRefunded != ''))
             {
                 active_tag = 'nonActiveOrder';
                 inActiveOrders++;
@@ -635,7 +654,7 @@ function formatOrders(_target, _orders)
             });
             // use the notifyMe function to determine if this order is in the alert array. 
             // if it is, the highlight the $('#b_status'+_idx) html element by adding the 'highlight' class
-            if (notifyMe(b_alerts, _arr[_idx].id)) {$('#b_status'+_idx).addClass('highlight'); }
+            if (notifyMe(b_alerts, _arr[_idx].id)) {$('#b_status'+_idx).addClass('highlight'); $('#orderStatus').show();}
         })(each, _orders);
     }
     // reset the b_alerts array to a new array
