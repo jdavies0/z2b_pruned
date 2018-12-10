@@ -18,6 +18,7 @@
     },
   "skins_l": {
     "school_assets":"/assets/wtcc/",
+    "logo_bg":"#0180b7",
     "school_logo":"<img src=\"/assets/wtcc/my_header.jpg\">",
     "school_domain":"waketech.edu",
     "school_shortName":"Wake Tech"

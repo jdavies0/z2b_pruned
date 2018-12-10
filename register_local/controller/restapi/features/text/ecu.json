@@ -22,6 +22,7 @@
   },
     "skins_l": {
       "school_assets":"/assets/ecu/",
+      "logo_bg":"#42145F",
       "school_logo":"<img src=\"/assets/ecu/my_header.jpg\">",
     "school_domain":"ecu.edu",
     "school_shortName":"ECU"

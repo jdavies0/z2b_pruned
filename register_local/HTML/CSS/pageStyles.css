@@ -520,7 +520,28 @@ tr.hideRow {display: none;}
 .school-logo {
 	float: left;
 	background-repeat: no-repeat;
+	left: 0;
 	margin-left: 3px;
 	height: 72px;
 	width: 700px;
+}
+
+.buyerTable {
+	border-left-style: solid;
+	border-left-width: 1px;
+	border-right: 1px solid #C0C0C0;
+	border-top-style: solid;
+	border-top-width: 1px;
+	border-bottom: 1px solid #C0C0C0;
+}
+banner_bg {
+	top: 0px;
+	left: 0px;
+	background-color: #FFFFFF;
+}
+.auto-style2 {
+	text-align: right;
+}
+.banner_bg {
+	background-color : #FFFFFF;
 }

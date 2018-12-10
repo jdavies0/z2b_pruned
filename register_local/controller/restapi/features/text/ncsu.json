@@ -23,6 +23,7 @@
     },
     "skins_l": {
       "school_assets":"/assets/nscu/",
+      "logo_bg":"#FFFFFF",
       "school_logo":"<img src=\"/assets/ncsu/my_header.jpg\">",
       "school_domain":"ncsu.edu",
       "school_shortName": "NCSU"

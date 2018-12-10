@@ -58,6 +58,9 @@ function loadBuyerUX (nested)
         updatePage('buyer_login');
         updatePage('skins');
 
+        $('#school_logo').css('background-color' , '');
+        $('#school_logo').css('background-color', textPrompts.skins_l.logo_bg);
+
         let _list = $('#orderStatus');
         $('#students').hide();
         console.log ("domain: "+$('#school_domain').text());
@@ -184,6 +187,11 @@ function setupBuyer(page, nested, username)
     else {$(b_notify).removeClass('off'); $(b_notify).addClass('on'); }
       // update the text on the page using the prompt data for the selected language
     updatePage('buyer');
+    updatePage('skins');
+
+    $('#school_logo').css('background-color' , '');
+    $('#school_logo').css('background-color', textPrompts.skins_l.logo_bg);
+    
     // enable the buttons to process an onClick event
     let _create = $('#newOrder');
     let _list = $('#orderStatus');

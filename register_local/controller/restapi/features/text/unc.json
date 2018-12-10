@@ -18,6 +18,7 @@
   },
 "skins_l": {
     "school_assets":"/assets/unc/",
+    "logo_bg":"#FFFFFF",
     "school_logo":"<img src=\"/assets/unc/my_header.jpg\">",
     "school_domain":"unc.edu",
     "school_shortName":"UNC"

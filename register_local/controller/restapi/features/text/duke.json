@@ -22,6 +22,7 @@
   },
   "skins_l": {
     "school_assets":"/assets/duke/",
+    "logo_bg":"#001A57",
     "school_logo":"<img src=\"/assets/duke/my_header.jpg\">",
     "school_domain":"duke.edu",
     "school_shortName":"Duke"
