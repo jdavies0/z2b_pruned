@@ -5,6 +5,7 @@
         {"type": "Seller", "pw": "", "companyName": "NC State", "id": "registrar@ncsu.edu"},
         {"type": "Seller", "pw": "", "companyName": "UNC", "id": "registrar@unc.edu"},
         {"type": "Seller", "pw": "", "companyName": "Duke", "id": "registrar@duke.edu"},
+        {"type": "Seller", "pw": "", "companyName": "ECU", "id": "registrar@ecu.edu"},
         {"type": "Buyer",  "pw": "", "companyName":"Amabile Rodrigues", "dob":"07/08/1989", "address":"5212 Henslowe Dr",           "city":"Raleigh",   "state":"NC",       "zipcode":"27603", "phoneNumber":"919-555-7854", "id":"adrodrigues@my.waketech.edu",        "email":"adrodrigues@my.waketech.edu",      "advisor":"Joseph K. Parks",    "academic program":"Information Technology: Data Science and Prog Support Serv",    "resident":0},
         {"type": "Buyer",  "pw": "", "companyName":"Natalia Carmelengo","dob":"15/07/1992", "address":"509 Gleenwood Ave",          "city":"Raleigh",   "state":"NC",       "zipcode":"27607", "phoneNumber":"973-831-5578", "id":"nataliacarmelengo@my.waketech.edu",  "email":"nataliacarmelengo@my.waketech.edu",    "advisor":"Alison Consol",      "academic program":"Computer Programming & Development",                            "resident":0},
         {"type": "Buyer",  "pw": "", "companyName":"Joshua Moore",      "dob":"07/11/1985", "address":"7421 Spyglass Way",          "city":"Raleigh",   "state":"NC",       "zipcode":"27615", "phoneNumber":"919-560-0300", "id":"joshuamoore@durhamtech.edu",        "email":"joshuamoore@durhamtech.edu",        "advisor":"Keith Babuszczak",   "academic program":"Information Technology: Data Science and Prog Support Serv",    "resident":1},
@@ -25,7 +26,8 @@
         {"type": "Order", "id": "002", "buyer": "nataliacarmelengo@my.waketech.edu", "seller": "registrar@waketech.edu", "items": [{"itemNo": 1, "quantity": 1}, {"itemNo": 2, "quantity": 1}, {"itemNo": 3, "quantity": 1}] },
         {"type": "Order", "id": "003", "buyer": "joshuamoore@durhamtech.edu", "seller": "registrar@durhamtech.edu", "items": [{"itemNo": 1, "quantity": 1}, {"itemNo": 2, "quantity": 1}, {"itemNo": 3, "quantity": 1}] },
         {"type": "Order", "id": "004", "buyer": "jdavies@ncsu.edu", "seller": "registrar@ncsu.edu", "items": [{"itemNo": 8, "quantity": 1}, {"itemNo": 10, "quantity": 1}, {"itemNo": 11, "quantity": 1}] },
-        {"type": "Order", "id": "005", "buyer": "peterchen@duke.edu", "seller": "registrar@duke.edu", "items": [{"itemNo": 7, "quantity": 1}]}
+        {"type": "Order", "id": "005", "buyer": "peterchen@duke.edu", "seller": "registrar@duke.edu", "items": [{"itemNo": 7, "quantity": 1}]},
+        {"type": "Order", "id": "006", "buyer": "jeffjones@ecu.edu", "seller": "registrar@ecu.edu", "items": [{"itemNo": 10, "quantity": 1}]}
     ],
     "items":
     [

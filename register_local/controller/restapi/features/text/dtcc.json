@@ -22,6 +22,9 @@
     },
     "skins_l": {
       "school_assets":"/assets/dtcc/",
+      "logo_bg":"#FFFFFF",
+      "seller_filter_text_color": "#000000",
+      "seller_school_logo":"<img src=\"/assets/dtcc/my_header.jpg\">",
       "school_logo":"<img src=\"/assets/dtcc/my_header.jpg\">",
       "school_domain":"durhamtech.edu",
       "school_shortName":"Durham Tech"

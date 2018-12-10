@@ -8,7 +8,8 @@ div {clear: both}
 
 @media screen and ( max-height: 799px ) {
 	.scrollingPane{
-		height: calc(65vh - 5em);
+		height: calc(65vh - 12em);
+		margin-top: 0px;
 		margin-left: 0px;
 		width: 100%;
 		overflow: auto;
@@ -33,7 +34,7 @@ div {clear: both}
 	}
 	.scrollingPaneLeft{
 		position: fixed;
-		height: calc(80vh - 5em);
+		height: 100%;
 		margin-left: 1%;
 		width: 45%;
 		overflow: scroll;
@@ -48,8 +49,9 @@ div {clear: both}
 }
 @media screen and ( min-height: 800px ) {	
 	.scrollingPane{
-		height: calc(70vh - 5em);
+		height: calc(70vh - 10em);
 		margin-left: 0px;
+		margin-top: 0px;
 		width: 100%;
 		overflow: auto;
 	}
@@ -59,6 +61,7 @@ div {clear: both}
 		width: 100%;
 		overflow: auto;
 	}
+
 	.button-wide {
 		width: 15%;
 		color: blue;
@@ -67,7 +70,7 @@ div {clear: both}
 	}	
 	.scrollingPaneLeft{
 		position: fixed;
-		height: calc(85vh - 5em);
+		height: 100%;
 		margin-left: 1%;
 		width: 45%;
 		overflow: auto;
@@ -208,7 +211,7 @@ p.message{
 .blockchain {
 	background-color: black;
 	position: fixed;
-	height: 100px;
+	height: 80px;
 	margin-left: 1%;
 	width: 95%;
 	top: 93%;
@@ -255,9 +258,9 @@ p.message{
 .container{
 	width: 100%;
 }
- table {border: 1px solid #0000ff;}
+ table {}
  th {text-align: center; font-style: bold; font-size: 1em; padding: .25em;}
- td { border: 1px solid #0000ff; padding-left: .25em; padding-right: .25em}
+ td {  padding-left: .25em; padding-right: .25em}
  th.right {text-align: right; font-style: bold; font-size: 1em; padding: .25em;}
  th.left {text-align: left; font-style: bold; font-size: 1em; padding: .25em;}
  .border-none { border: 0px }
@@ -517,10 +520,87 @@ tr.hideRow {display: none;}
 .glyphicon-thumbs-down, .fail {background: #FF0000; font-size: 1.5em;}
 .glyphicon-warning-sign, .warn {background: #FFFF00; font-size: 1.5em;}
 
-.school-logo {
+school_logo,
+seller_school_logo {
 	float: left;
 	background-repeat: no-repeat;
+	left: 0;
 	margin-left: 3px;
-	height: 72px;
+	height: 75px;
 	width: 700px;
+	background-color : #FFFFFF;
+}
+
+seller_school_banner,
+school_banner {
+	float: left;
+	background-repeat: no-repeat;
+	left: 0;
+	margin-left: 3px;
+	height: 75px;
+	width: 100%;
+	background-color : #FFFFFF;
+}
+
+.buyerTable {
+	border-left-style: solid;
+	border-left-width: 1px;
+	border-right: 1px solid #C0C0C0;
+	border-top-style: solid;
+	border-top-width: 1px;
+	border-bottom: 1px solid #C0C0C0;
+}
+banner_bg {
+	top: 0px;
+	left: 0px;
+	background-color: #FFFFFF;
+}
+.auto-style2 {
+	text-align: right;
+}
+.banner_bg {
+	background-color : #FFFFFF;
+}
+.seller_company {
+	height: 2em;
+	width: 2em;
+	color: #000000;
+	text-align: top;
+	position: relative;
+	top: .4em;
+	float: left;
+	left: 200px;
+	visibility: visible;
+  }
+
+
+#seller_container {
+	width:100%;
+	height:75px;
+	position:relative;
+}  
+
+#seller_notify, 
+#seller_filter {
+	height: 2em;
+	top:5;
+	float: left;
+}
+
+#seller_filter {
+	width: 300px;
+	position:absolute;
+	right:5em;
+	z-index:10;
+}
+#seller_notify {
+	width: 2em;
+	position:absolute;
+	text-align: center;
+	color: #FFFFFF;
+	text-align: top;
+	top: .4em;
+	float: right;
+	right: .5em;
+	visibility: visible;
 }
