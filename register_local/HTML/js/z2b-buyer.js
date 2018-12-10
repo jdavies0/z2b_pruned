@@ -112,17 +112,25 @@ function loadBuyerUX (nested)
            if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(_username))
             {
                 let u =  findMember(_username,buyers);
-                let _userDomain = u.id.split('@')[1];
-
-                if ((typeof(u) === 'undefined') || (u === null) || (u.length === 0) || (u.companyName == 'not found'))
+                
+                if ( (typeof(u) === 'undefined') || (u === null) || (u.length === 0) || (u.companyName == 'not found'))
                 {
-                    if ( (_userDomain != textPrompts.skins_l.school_domain) || (_userDomain != 'my.waketech.edu') )
-                    alert("The information entered does not match a registered student in our system.\nPlease check and try again.")
+                    alert("The information entered does not match a registered student in our system.\nPlease check and try again.");
                 }
                 else
                 {
-                    $('#students').hide();
-                    loadLoggedinBuyerUX(nested, _username);
+                    let _userDomain = u.id.split('@')[1];
+                    let _tmpDomain = textPrompts.skins_l.school_domain;
+                    if ( (_userDomain === _tmpDomain) || ((_tmpDomain === "waketech.edu") && (_userDomain === "my.waketech.edu")) )
+                    {
+                        $('#students').hide();
+                        loadLoggedinBuyerUX(nested, _username);                        
+                    }
+                    else
+                    {
+                        alert("The information entered does not match a registered student in our system.\nPlease check and try again.");
+                    }
+                    
                 }
             }
             else
