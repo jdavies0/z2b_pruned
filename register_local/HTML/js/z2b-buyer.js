@@ -368,10 +368,12 @@ function listOrdersByBuyerID(b_id)
                         console.log("Found an active order");
                         formatOrders($('#orderDiv'), _results.orders);
                         $('#newOrder').hide();
+                        $('#orderStatus').show();
                     }
                     else // no active orders
                     {
                         $('#newOrder').show();
+                        $('#orderStatus').hide();
                         formatOrders($('#orderDiv'), _results.orders);
                     }
                 }  
