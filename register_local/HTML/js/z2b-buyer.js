@@ -112,8 +112,9 @@ function loadBuyerUX (nested)
                 let u =  findMember(_username,buyers);
                 let _userDomain = u.id.split('@')[1];
 
-                if ((typeof(u) === 'undefined') || (u === null) || (u.length === 0) || (u.companyName == 'not found') || (_userDomain != textPrompts.skins_l.school_domain))
+                if ((typeof(u) === 'undefined') || (u === null) || (u.length === 0) || (u.companyName == 'not found'))
                 {
+                    if ( (_userDomain != textPrompts.skins_l.school_domain) || (_userDomain != 'my.waketech.edu') )
                     alert("The information entered does not match a registered student in our system.\nPlease check and try again.")
                 }
                 else
