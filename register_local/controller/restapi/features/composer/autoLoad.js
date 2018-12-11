@@ -170,7 +170,7 @@ let adminConnection = new AdminConnection();
                             // first, an Order Object is created
                             let order = factory.newResource(config.composer.NS, _arr[_idx].type, _arr[_idx].id);
                             order = svc.createOrderTemplate(order);
-                            let _tmp = svc.addItems(_arr[_idx], itemTable); //addItems updated
+                            let _tmp = svc.addItems(_arr[_idx], itemTable, _arr[_idx].costPerCreditHour); //addItems updated
                             order.items = _tmp.items;
                             order.amount = _tmp.amount;
                             order.orderNumber = _arr[_idx].id;
@@ -185,7 +185,7 @@ let adminConnection = new AdminConnection();
                             createNew.order = factory.newRelationship(config.composer.NS, 'Order', order.$identifier);
                             createNew.buyer = factory.newRelationship(config.composer.NS, 'Buyer', _arr[_idx].buyer);
                             createNew.seller = factory.newRelationship(config.composer.NS, 'Seller', _arr[_idx].seller);                    
-                            order.amount = _tmp.amount * 268; // hard coded cost per credit hr for now
+                            order.amount = _tmp.amount ;
                             createNew.amount = order.amount;
                             // then the order is added to the asset registry.
                             return assetRegistry.add(order)
