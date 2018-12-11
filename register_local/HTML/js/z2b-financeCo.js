@@ -154,9 +154,9 @@ function formatFinanceOrders(_target, _orders)
         case orderStatus.RefundRequested.code:
             _date = _arr[_idx].refundRequested;
             _action += '<option value="'+textPrompts.orderProcess.PayRefund.select+'">'+textPrompts.orderProcess.PayRefund.message+'</option>';
-            r_string += '<br/><div id="f_RefundPrompt'+_idx+'">'+textPrompts.orderProcess.PayRefund.prompt+'<input id="f_amount'+_idx+'" type="number" value="'+_arr[_idx].refAmtRequested+'"></input></div>';
+            r_string += '<br/><div id="f_RefundPrompt'+_idx+'">'+textPrompts.orderProcess.PayRefund.prompt+'<input id="f_amount_refund'+_idx+'" type="number" value="'+_arr[_idx].refAmtRequested+'"></input></div>';
             _action += '<option value="'+textPrompts.orderProcess.DenyRefund.select+'">'+textPrompts.orderProcess.DenyRefund.message+'</option>';
-            r_string += '<br/><div id="f_RefundDenyPrompt'+_idx+'">'+textPrompts.orderProcess.DenyRefund.prompt+'<input id="f_reason'+_idx+'" type="text"></input></div>'
+            r_string += '<br/><div id="f_RefundDenyPrompt'+_idx+'">'+textPrompts.orderProcess.DenyRefund.prompt+'<input id="f_reason_denyRefund'+_idx+'" type="text"></input></div>'
             break;
         case orderStatus.Paid.code:
             _date = _arr[_idx].paid;
@@ -191,7 +191,6 @@ function formatFinanceOrders(_target, _orders)
             let remBal = 0;
             let tmp_amt = _arr[_idx].amount;
             let tmp_paid = _arr[_idx].tuitionPaid;
-            console.log("amt "+tmp_amt+" paid "+tmp_paid);
             remBal = tmp_amt - tmp_paid;
 
             if (_arr[_idx].paymentRequested == '' || remBal == 0)
@@ -217,11 +216,11 @@ function formatFinanceOrders(_target, _orders)
                 if ((options.action === 'Approve Refund') )
                 {
                     //options.reason = $('#f_reason'+_idx).val();
-                    options.tuitionRefunded = $('#f_amount'+_idx).val();
+                    options.tuitionRefunded = $('#f_amount_refund'+_idx).val();
                 }
                 if ((options.action === 'Deny Refund'))
                 {
-                    options.reason = $('#f_reason'+_idx).val();
+                    options.reason = $('#f_reason_denyRefund'+_idx).val();
                 }
                 $('#finance_messages').prepend(formatMessage('Processing '+options.action+' request for order number: '+options.orderNo));
                 $.when($.post('/composer/client/orderAction', options)).done(function (_results)
@@ -250,7 +249,7 @@ function formatDetail(_cur, _order)
     _out += '<tr><td id="created">Created</td><td>'+_order.buyer.split('#')[1]+'</td><td>'+_order.created+'</td><td></td></tr>';
     _out += (_order.bought === '') ?  '<tr><td id="purchased">'+textPrompts.financeCoOrder.purchased+'</td><td></td><td id="noPurchase">'+textPrompts.financeCoOrder.noPurchase+'</td><td></td></tr>' : '<tr><td id="purchased">'+textPrompts.financeCoOrder.purchased+'</td><td>'+_order.buyer.split('#')[1]+'</td><td>'+_order.bought+'</td><td></td></tr>';
     _out += (_order.ordered === '') ?  '<tr><td id="thirdParty">'+textPrompts.financeCoOrder.thirdParty+'</td><td></td><td id="nothirdParty">'+textPrompts.financeCoOrder.nothirdParty+'</td><td></td></tr>' : '<tr><td id="thirdParty">'+textPrompts.financeCoOrder.thirdParty+'</td><td>'+_order.seller.split('#')[1]+'</td><td>'+_order.ordered+'</td><td></td></tr>';
-    //_out += (_order.cancelled === '') ?  '<tr><td id="cancelled">'+textPrompts.financeCoOrder.cancelled+'?</td><td></td><td id="notCancel">'+textPrompts.financeCoOrder.notCancel+'</td><td></td></tr>' : '<tr><td id="cancelled">'+textPrompts.financeCoOrder.cancelled+'</td><td>'+_order.buyer.split('#')[1]+'</td><td>'+_order.cancelled+'</td><td>'+_order.cancel+'</td></tr>';
+    _out += (_order.cancelled === '') ?  '<tr><td id="cancelled">'+textPrompts.financeCoOrder.cancelled+'?</td><td></td><td id="notCancel">'+textPrompts.financeCoOrder.notCancel+'</td><td></td></tr>' : '<tr><td id="cancelled">'+textPrompts.financeCoOrder.cancelled+'</td><td>'+_order.buyer.split('#')[1]+'</td><td>'+_order.cancelled+'</td><td>'+_order.cancel+'</td></tr>';
     _out += (_order.dropped === '') ? '<tr><td>Registration Dropped?</td><td></td><td>(Not Dropped)</td><td></td></tr>' : '<tr><td>Registration Dropped?</td><td>'+_order.financeCo.split('#')[1]+'</td><td>'+_order.dropped+'</td><td>'+_order.drop+'</td></tr>';
     _out += (_order.approved === '') ?  '<tr><td>Payment Approved</td><td></td><td>(No Approval from Buyer)</td><td></td></tr>' : '<tr><td>Payment Approved</td><td>'+_order.buyer.split('#')[1]+'</td><td>'+_order.approved+'</td><td></td></tr>';
     _out += (_order.denied === '') ? '<tr><td>Registration Denied?</td><td></td><td>(Not Denied)</td><td></td></tr>' : '<tr><td>Registration Denied?</td><td>'+_order.seller.split('#')[1]+'</td><td>'+_order.denied+'</td><td>'+_order.deny+'</td></tr>';

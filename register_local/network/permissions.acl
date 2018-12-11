@@ -186,6 +186,16 @@ rule SellerRequestPayment {
     action: ALLOW
 }
 
+rule SellerACLCancel {
+    description: "Enable a Seller to CANCEL an Order"
+    participant(m): "org.acme.Z2BTestNetwork.Seller"
+    operation: READ, CREATE, UPDATE, DELETE
+    resource(v): "org.acme.Z2BTestNetwork.**"
+    transaction(tx): "org.acme.Z2BTestNetwork.OrderCancel"
+    condition: (v.seller.sellerID == m.getIdentifier())
+    action: ALLOW
+}
+
 /**
 *
 **/

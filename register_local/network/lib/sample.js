@@ -91,25 +91,21 @@ function Buy(purchase) {
  * @transaction
  */
 function OrderCancel(purchase) {
-    if ( (purchase.order.status == JSON.stringify(orderStatus.Created))
-        || (purchase.order.status == JSON.stringify(orderStatus.Bought)) )
-    {
-        purchase.order.buyer = purchase.buyer;
-        purchase.order.seller = purchase.seller;
-        purchase.order.financeCo = purchase.financeCo
-        purchase.order.cancelled = new Date().toISOString();
-        purchase.order.status = JSON.stringify(orderStatus.Cancelled);
-        purchase.order.cancel = purchase.cancel;
-        return getAssetRegistry('org.acme.Z2BTestNetwork.Order')
-            .then(function (assetRegistry) {
-                return assetRegistry.update(purchase.order)
-                .then (function (_res) 
-                {
-                    z2bEmit('Cancelled', purchase.order);
-                    return (_res);
-                }).catch(function(error){return(error);});
-            });
-        }
+    purchase.order.buyer = purchase.buyer;
+    purchase.order.seller = purchase.seller;
+    purchase.order.financeCo = purchase.financeCo
+    purchase.order.cancelled = new Date().toISOString();
+    purchase.order.status = JSON.stringify(orderStatus.Cancelled);
+    purchase.order.cancel = purchase.cancel;
+    return getAssetRegistry('org.acme.Z2BTestNetwork.Order')
+        .then(function (assetRegistry) {
+            return assetRegistry.update(purchase.order)
+            .then (function (_res) 
+            {
+                z2bEmit('Cancelled', purchase.order);
+                return (_res);
+            }).catch(function(error){return(error);});
+        });
 }
 
 /**
