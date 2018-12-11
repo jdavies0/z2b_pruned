@@ -22,12 +22,12 @@
     ],
     "assets":
     [   
-        {"type": "Order", "id": "001", "buyer": "adrodrigues@my.waketech.edu", "seller": "registrar@waketech.edu", "items": [{"itemNo": 1, "quantity": 1}, {"itemNo": 2, "quantity": 1}, {"itemNo": 3, "quantity": 1}] },
-        {"type": "Order", "id": "002", "buyer": "nataliacarmelengo@my.waketech.edu", "seller": "registrar@waketech.edu", "items": [{"itemNo": 1, "quantity": 1}, {"itemNo": 2, "quantity": 1}, {"itemNo": 3, "quantity": 1}] },
-        {"type": "Order", "id": "003", "buyer": "joshuamoore@durhamtech.edu", "seller": "registrar@durhamtech.edu", "items": [{"itemNo": 1, "quantity": 1}, {"itemNo": 2, "quantity": 1}, {"itemNo": 3, "quantity": 1}] },
-        {"type": "Order", "id": "004", "buyer": "jdavies@ncsu.edu", "seller": "registrar@ncsu.edu", "items": [{"itemNo": 8, "quantity": 1}, {"itemNo": 10, "quantity": 1}, {"itemNo": 11, "quantity": 1}] },
-        {"type": "Order", "id": "005", "buyer": "peterchen@duke.edu", "seller": "registrar@duke.edu", "items": [{"itemNo": 7, "quantity": 1}]},
-        {"type": "Order", "id": "006", "buyer": "jeffjones@ecu.edu", "seller": "registrar@ecu.edu", "items": [{"itemNo": 10, "quantity": 1}]}
+        {"type": "Order", "id": "001", "buyer": "adrodrigues@my.waketech.edu", "seller": "registrar@waketech.edu", "costPerCreditHour": 268, "items": [{"itemNo": 1, "quantity": 1}, {"itemNo": 2, "quantity": 1}, {"itemNo": 3, "quantity": 1}] },
+        {"type": "Order", "id": "002", "buyer": "nataliacarmelengo@my.waketech.edu", "seller": "registrar@waketech.edu", "costPerCreditHour": 76, "items": [{"itemNo": 1, "quantity": 1}, {"itemNo": 2, "quantity": 1}, {"itemNo": 3, "quantity": 1}] },
+        {"type": "Order", "id": "003", "buyer": "joshuamoore@durhamtech.edu", "seller": "registrar@durhamtech.edu", "costPerCreditHour": 76, "items": [{"itemNo": 1, "quantity": 1}, {"itemNo": 2, "quantity": 1}, {"itemNo": 3, "quantity": 1}] },
+        {"type": "Order", "id": "004", "buyer": "jdavies@ncsu.edu", "seller": "registrar@ncsu.edu", "costPerCreditHour": 76, "items": [{"itemNo": 8, "quantity": 1}, {"itemNo": 10, "quantity": 1}, {"itemNo": 11, "quantity": 1}] },
+        {"type": "Order", "id": "005", "buyer": "peterchen@duke.edu", "seller": "registrar@duke.edu", "costPerCreditHour": 268, "items": [{"itemNo": 7, "quantity": 1}]},
+        {"type": "Order", "id": "006", "buyer": "jeffjones@ecu.edu", "seller": "registrar@ecu.edu", "costPerCreditHour": 163, "items": [{"itemNo": 10, "quantity": 1}]}
     ],
     "items":
     [

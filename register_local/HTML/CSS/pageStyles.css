@@ -258,7 +258,7 @@ p.message{
 .container{
 	width: 100%;
 }
- table {}
+
  th {text-align: center; font-style: bold; font-size: 1em; padding: .25em;}
  td {  padding-left: .25em; padding-right: .25em}
  td.grid {  padding-left: .25em; padding-right: .25em; border: 1px solid #404040; }
@@ -266,6 +266,9 @@ p.message{
  th.left {text-align: left; font-style: bold; font-size: 1em; padding: .25em;}
  .border-none { border: 0px }
  
+ .finance table {border: 1px solid #0000ff;}
+ .finance td {border: 1px solid #0000ff;}
+
 .imageLabel {
 	color: black; text-align: center; font-style: bold; font-size: 1.5em; padding: .5em;}
 
