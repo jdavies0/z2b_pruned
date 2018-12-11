@@ -557,7 +557,7 @@ function formatOrders(_target, _orders)
             _date = _arr[_idx].refundRequested;
             break;
         case orderStatus.Refunded.code:
-            _date = _arr[_idx].orderRefunded;
+            _date = _arr[_idx].orderRefunded + '<br/>Amount Refunded: $' + _arr[_idx].tuitionRefunded + '.00';
             break;
         case orderStatus.Dropped.code:
             _date = _arr[_idx].dropped;
@@ -568,12 +568,12 @@ function formatOrders(_target, _orders)
             }
             break;
         case orderStatus.RefundDenied.code:
-            _date = _arr[_idx].refundDenied;
+            _date = _arr[_idx].refundDenied + '<br/> Reason: '+_arr[_idx].refundDeny;
             _action += '<option value="RequestRefund'+_idx+'">Request Refund</option>';
             r_string = '<br/><div id="RefundPrompt'+_idx+'">'+textPrompts.orderProcess.Refund.prompt+'<input id="b_reason'+_idx+'" type="text"></input><br/>Amount Requested: <br/><input id="b_amount'+_idx+'" type="number" value="'+_arr[_idx].tuitionPaid+'"></input></th></div>';
             break;
         case orderStatus.Partial.code:
-            _date = _arr[_idx].lastPayment + '<br/>Paid: ' + _arr[_idx].tuitionPaid
+            _date = _arr[_idx].lastPayment + '<br/>Remaining Balance : $' + (_arr[_idx].amount - _arr[_idx].tuitionPaid) + '.00';
             + '<br/>Remaining Balance: ' + (_arr[_idx].amount - _arr[_idx].tuitionPaid);
             _action += '<option value="'+textPrompts.orderProcess.AuthorizePayment.select+'">'+textPrompts.orderProcess.AuthorizePayment.message+'</option>';
             r_string = '<br/><div id="PayPrompt'+_idx+'">'+textPrompts.orderProcess.AuthorizePayment.prompt+'<input id="b_reason'+_idx+'" type="number"></input></th></div>';
