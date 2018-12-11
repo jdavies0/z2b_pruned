@@ -23,8 +23,9 @@
     "skins_l": {
       "school_assets":"/assets/ecu/",
       "logo_bg":"#42145F",
-      "seller_filter_text_color": "#FFFFFF",
-      "seller_school_logo":"<img src=\"/assets/ecu/my_header.jpg\">",
+      "seller_filter_text_color": "#000000",
+      "seller_logo_bg":"#FFFFFF",
+      "seller_school_logo":"<img src=\"/assets/ecu/admin_header.png\">",
       "school_logo":"<img src=\"/assets/ecu/my_header.jpg\">",
     "school_domain":"ecu.edu",
     "school_shortName":"ECU"

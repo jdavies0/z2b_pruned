@@ -59,8 +59,9 @@ function setupFinanceCo(page, nested)
       {$(f_notify).removeClass('on'); $(f_notify).addClass('off'); }
     else
       {$(f_notify).removeClass('off'); $(f_notify).addClass('on'); }
-    updatePage( 'financeCo');
-    let _clear = $('#financeCOclear');
+      updatePage( 'financeCo');
+      updatePage( 'skins');
+      let _clear = $('#financeCOclear');
     let _list = $('#financeCOorderStatus');
     let _orderDiv = $('#'+financeCOorderDiv);
     _clear.on('click', function(){_orderDiv.empty();});

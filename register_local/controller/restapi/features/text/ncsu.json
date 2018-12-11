@@ -25,7 +25,8 @@
       "school_assets":"/assets/nscu/",
       "logo_bg":"#FFFFFF",
       "seller_filter_text_color": "#000000",
-      "seller_school_logo":"<img src=\"/assets/ncsu/my_header.jpg\">",
+      "seller_logo_bg":"#FFFFFF",
+      "seller_school_logo":"<img src=\"/assets/ncsu/admin_header.jpg\">",
       "school_logo":"<img src=\"/assets/ncsu/my_header.jpg\">",
       "school_domain":"ncsu.edu",
       "school_shortName": "NCSU"

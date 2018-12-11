@@ -593,7 +593,7 @@ function formatOrders(_target, _orders)
                 { let _item = JSON.parse(_arr2[_idx2]);
 //                    _str += '<tr><td align="center" width="20%">'+_item.itemNo+'</td><td width="50%">'+_item.description+'</td><td align="center">'+_item.quantity+'</td><td align="right">$'+_item.extendedPrice+'.00</td><tr>'; 
 // edit here - html for displaying a course
-            _str += '<tr><td align="center" width="20%">'+_item.courseDept+"-"+_item.courseID+'</td><td width="50%">'+_item.courseDescription+'</td><td align="center">'+_item.creditHours+'</td><td align="right">$'+_item.extendedPrice+'.00</td><tr>';
+            _str += '<tr><td class="grid" align="center" width="20%">'+_item.courseDept+"-"+_item.courseID+'</td><td class="grid" width="50%">'+_item.courseDescription+'</td><td class="grid" align="center">'+_item.creditHours+'</td><td class="grid" align="right">$'+_item.extendedPrice+'.00</td><tr>';
                 })(every, _arr[_idx].items);
         }
         _str += '</table>';

@@ -241,5 +241,8 @@
     "noRefundRequested": "(no request for refund)"
     },
     "skins": {
+      "financeCo_filter_text_color": "#ffffff",
+      "financeCo_logo_bg":"#076A05",
+      "financeCo_logo":"<img src=\"/assets/easymoney.jpg\">",
       "school_logo":"<img src=\"/assets/unc/my_header.jpg\">"
     }

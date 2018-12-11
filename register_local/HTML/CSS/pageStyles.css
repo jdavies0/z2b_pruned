@@ -137,10 +137,10 @@ div {clear: both}
     top: 50%;
 }
 .buyer { background-color: #FFFFFF; }
-.seller { background-color: rgb(173, 242, 173);}
+.seller { background-color:#95DAEE;}
 .provider { background-color: rgb(192, 221, 252);}
 .shipper { background-color: rgb(242, 232, 156);}
-.finance { background-color: #95DAEE;}
+.finance { background-color: rgb(173, 242, 173);}
 .messagePane{
 	height: 3.5em;
 	margin-left: 0px;
@@ -261,6 +261,7 @@ p.message{
  table {}
  th {text-align: center; font-style: bold; font-size: 1em; padding: .25em;}
  td {  padding-left: .25em; padding-right: .25em}
+ td.grid {  padding-left: .25em; padding-right: .25em; border: 1px solid #404040; }
  th.right {text-align: right; font-style: bold; font-size: 1em; padding: .25em;}
  th.left {text-align: left; font-style: bold; font-size: 1em; padding: .25em;}
  .border-none { border: 0px }
@@ -294,12 +295,12 @@ p.message{
 }
 
 .showfocus, .acc_header, .acc_body {
-	margin: .125em;
+/*	margin: .125em;
   padding: .125em;
 	border: .125em solid #A5A5A5;
   -webkit-border-radius: .5em;
 	-moz-border-radius: .5em;
-	border-radius: .5em;
+	border-radius: .5em; */
 }
 
 button.hint { background:none; border:none;}
@@ -531,6 +532,7 @@ seller_school_logo {
 	background-color : #FFFFFF;
 }
 
+financeCo_banner,
 seller_school_banner,
 school_banner {
 	float: left;
@@ -573,13 +575,15 @@ banner_bg {
 	visibility: visible;
   }
 
-
+#financeCo_container, 
 #seller_container {
 	width:100%;
-	height:75px;
+	height:45px;
 	position:relative;
 }  
 
+#financeCo_notify, 
+#financeCo_filter, 
 #seller_notify, 
 #seller_filter {
 	height: 2em;
@@ -587,12 +591,15 @@ banner_bg {
 	float: left;
 }
 
+#financeCo_filter,
 #seller_filter {
 	width: 300px;
 	position:absolute;
 	right:5em;
 	z-index:10;
 }
+
+#financeCo_notify,
 #seller_notify {
 	width: 2em;
 	position:absolute;
@@ -604,3 +611,4 @@ banner_bg {
 	right: .5em;
 	visibility: visible;
 }
+
