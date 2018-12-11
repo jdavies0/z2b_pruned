@@ -1,0 +1,33 @@
+"index_l": {"language": "Durham Technical Community College"
+    },
+    "buyer_l": {
+      "title": "Student Chapter 12. Select Student to see their view: ",
+      "newOrder": "Create New Schedule",
+      "updateOrder": "Update Schedule",
+      "orderStatus": "Display Schedule Status",
+      "residentCreditCost": 76,
+      "nonResidentCreditCost":268
+    },
+    "buyer_login_l": {
+      "loginImage":"blah.jpg",
+      "title": "Student Login ",
+      "loginPrompt": "Login:",
+      "loginHint": "",
+      "loginPasswordPrompt": "Password",
+      "loginPasswordHint": "Reset my password",
+      "loginDefault": "UserName",
+      "loginPasswordDefault": "Password",
+      "loginButton":"Sign In",
+      "loginButtonColor":"#0577b1"
+    },
+    "skins_l": {
+      "school_assets":"/assets/dtcc/",
+      "logo_bg":"#FFFFFF",
+      "seller_filter_text_color": "#000000",
+      "seller_logo_bg":"#FFFFFF",
+      "seller_school_logo":"<img src=\"/assets/dtcc/admin_header.jpg\">",
+      "school_logo":"<img src=\"/assets/dtcc/my_header.jpg\">",
+      "school_domain":"durhamtech.edu",
+      "school_shortName":"Durham Tech"
+    }
+  

@@ -25,11 +25,21 @@ asset Order identified by orderNumber {
     o String orderNumber
     o String[] items
     o String status
+    // reasons
+    o String drop
+    o String deny
     o String dispute
     o String resolve
     o String backorder
-    o String refund
+    o String cancel
+    o String refundDeny
+    o String refundRequest
+    // amounts
     o Integer amount
+    o Integer refAmtRequested
+    o Integer tuitionRefunded
+    o Integer tuitionPaid
+    // dates
     o String created
     o String bought
     o String cancelled
@@ -41,9 +51,14 @@ asset Order identified by orderNumber {
     o String disputeOpened
     o String disputeResolved
     o String paymentRequested
+    o String refundRequested
     o String orderRefunded
     o String approved
     o String paid
+    o String lastPayment
+    o String dropped
+    o String denied
+    o String refundDenied
     --> Provider provider
     --> Shipper shipper
     --> Buyer buyer
@@ -59,9 +74,11 @@ asset Order identified by orderNumber {
     --> FinanceCo financeCo
 }
   transaction OrderCancel {
+    o String cancel
     --> Order order
     --> Buyer buyer
     --> Seller seller
+    --> FinanceCo financeCo
 }
   transaction Buy {
     --> Order order
@@ -111,9 +128,11 @@ asset Order identified by orderNumber {
   transaction RequestPayment {
     --> Order order
     --> Seller seller
+    --> Buyer buyer
     --> FinanceCo financeCo
 }
   transaction AuthorizePayment {
+    o Integer tuitionPaid
     --> Order order
     --> Buyer buyer
     --> FinanceCo financeCo
@@ -124,12 +143,42 @@ asset Order identified by orderNumber {
     --> FinanceCo financeCo
 }
   transaction Refund {
-    o String refund
+    o Integer tuitionRefunded
     --> Order order
+    --> Buyer buyer
     --> Seller seller
     --> FinanceCo financeCo
 }
+  transaction RequestRefund {
+    o String refundRequest
+    o Integer refAmtRequested
+    --> Order order
+    --> Buyer buyer
+    --> FinanceCo financeCo
+}
 
+  transaction DropSchedule {
+    o String drop
+    --> Order order
+    --> Buyer buyer
+    --> FinanceCo financeCo
+    --> Seller seller
+}
+
+  transaction DenyRefund {
+    o String refundDeny
+    --> Order order
+    --> Buyer buyer
+    --> FinanceCo financeCo
+  }
+
+
+  transaction DenySchedule {
+    o String deny
+    --> Order order
+    --> Buyer buyer
+    --> Seller seller
+  }
 
 abstract event BasicEvent {
 }
@@ -145,6 +194,7 @@ event Created extends Z2BEvent {
 event Bought extends Z2BEvent {
   o String sellerID
   o String buyerID
+  // adding financeCo since we now auto-buy from create
   o String financeCoID
 }
 
@@ -152,14 +202,14 @@ event Bought extends Z2BEvent {
 event Ordered extends Z2BEvent {
   o String sellerID
   o String buyerID
-  o String providerID
+  o String financeCoID
 }
 
 // notification that an order has been cancelled
 event Cancelled extends Z2BEvent {
   o String sellerID
   o String buyerID
-  o String providerID
+  o String financeCoID
 }
 
 // notification that items are on backorder 
@@ -213,23 +263,18 @@ event Resolved extends Z2BEvent {
 
 // notification that an order has been refunded 
 event Refunded extends Z2BEvent {
-  o String sellerID
   o String buyerID
-  o String providerID
-  o String shipperID
   o String financeCoID
 }
 
 // notification that a request for payment has been issued 
 event PaymentRequested extends Z2BEvent {
-  o String sellerID
   o String buyerID
   o String financeCoID
 }
 
 // notification that a request for payment has been approved by the buyer 
 event PaymentAuthorized extends Z2BEvent {
-  o String sellerID
   o String buyerID
   o String financeCoID
 }
@@ -238,7 +283,29 @@ event PaymentAuthorized extends Z2BEvent {
 event Paid extends Z2BEvent {
   o String sellerID
   o String buyerID
-  o String providerID
-  o String shipperID
+  o String financeCoID
+}
+
+// notification that a refund has been requested
+event RefundRequested extends Z2BEvent {
+  o String buyerID
+  o String financeCoID
+}
+
+// notification that a course has been dropped
+event Dropped extends Z2BEvent {
+    o String financeCoID
+    o String sellerID
+    o String buyerID
+}
+
+// notification that a course has been denied
+event Denied extends Z2BEvent {
+  o String buyerID
+  o String sellerID
+}
+
+event RefundDenied extends Z2BEvent {
+  o String buyerID
   o String financeCoID
 }

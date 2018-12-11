@@ -51,30 +51,47 @@ let  Z2Blockchain  = {
     createOrderTemplate: function (_inbound)
     {
         _inbound.orderNumber = '';
-        _inbound.amount = 0;
         _inbound.items = [];
         _inbound.status = JSON.stringify(this.orderStatus.Created);
+        // reasons
+        _inbound.drop = '';
+        _inbound.deny = '';
+        _inbound.dispute = '';
+        _inbound.resolve = '';
+        _inbound.backorder = '';
+        _inbound.cancel = '';
+        _inbound.refundDeny = '';
+        _inbound.refundRequest = '';
+        // amounts
+        _inbound.amount = 0;
+        _inbound.refAmtRequested = 0;
+        _inbound.tuitionRefunded = 0;
+        _inbound.tuitionPaid = 0;
+        // dates
         _inbound.created = new Date().toISOString();
+        _inbound.bought = '';
         _inbound.cancelled = '';
         _inbound.ordered = '';
-        _inbound.bought = '';
         _inbound.dateBackordered = '';
         _inbound.requestShipment = '';
         _inbound.delivered = '';
         _inbound.delivering = '';
         _inbound.disputeOpened = '';
         _inbound.disputeResolved = '';
-        _inbound.orderRefunded = '';
         _inbound.paymentRequested = '';
-        _inbound.paid = '';
+        _inbound.refundRequested = '';
+        _inbound.orderRefunded = '';
         _inbound.approved = '';
-        _inbound.dispute = '';
-        _inbound.resolve = '';
-        _inbound.backorder = '';
-        _inbound.refund = '';
+        _inbound.paid = '';
+        _inbound.lastPayment = '';
+        _inbound.dropped = '';
+        _inbound.denied = '';
+        _inbound.refundDenied ='';
+
         _inbound.provider = '';
         _inbound.shipper = '';
         _inbound.financeCo = '';
+        
         return(_inbound);
     },
 /**
@@ -242,10 +259,11 @@ saveItemTable: function (_table)
  * update an empty order with 4 items. update the amount field based on the sum of the line items
  * @param {addItems} _inbound - Order created with factory.newResource(NS, 'Order',.orderNumber)
  * @param {itemTable} _itemTable - arry of existing items
+ * @param {itemTable} _courseCost - cost per credit hour
  * @returns {Order} - updated order item with all required fields except for relationships (buyer, seller)
  * @utility
  */
-    addItems: function (_inbound, _itemTable)
+    addItems: function (_inbound, _itemTable, _courseCost)
     {
         let _amount = 0;
         let _items = [];
@@ -255,7 +273,6 @@ saveItemTable: function (_table)
                 {
                     // edit here
                     let _item = _this.getItem(_arr[_idx].itemNo, _itemTable);
-                    let courseCost;
                     _this.setItem(_arr[_idx].itemNo, _arr[_idx].quantity, _itemTable);
                     _arr[_idx].courseDept = _item.courseDept;
                     _arr[_idx].courseID = _item.courseID;
@@ -266,7 +283,7 @@ saveItemTable: function (_table)
                     _arr[_idx].location = _item.location;
                     _arr[_idx].seats = _item.seats;
                     _arr[_idx].instructor = _item.instructor;
-                    _arr[_idx].extendedPrice = _item.creditHours; // return the credit hours, do cost calc in autoload.js
+                    _arr[_idx].extendedPrice = _item.creditHours * _courseCost; // return the credit hours, do cost calc in autoload.js
                     _amount += _arr[_idx].extendedPrice;
                     _items.push(JSON.stringify(_arr[_idx]));
                 })(each, _inbound.items);}
@@ -306,15 +323,19 @@ orderStatus: {
     Ordered: {code: 4, text: 'Schedule Submitted to Cashier'},
     ShipRequest: {code: 5, text: 'Shipping Requested'},
     Delivered: {code: 6, text: 'Schedule Delivered'},
-    Delivering: {code: 15, text: 'Schedule being Delivered'},
     Backordered: {code: 7, text: 'Schedule Backordered'},
     Dispute: {code: 8, text: 'Schedule Disputed'},
     Resolve: {code: 9, text: 'Schedule Dispute Resolved'},
     PayRequest: {code: 10, text: 'Payment Requested'},
     Authorize: {code: 11, text: 'Payment Approved'},
+    RefundRequested: {code: 12, text: 'Schedule Refund Requested'},
+    Refunded: {code: 13, text: 'Schedule Refunded'},
     Paid: {code: 14, text: 'Payment Processed'},
-    Refund: {code: 12, text: 'Schedule Refund Requested'},
-    Refunded: {code: 13, text: 'Schedule Refunded'}
+    Delivering: {code: 15, text: 'Schedule being Delivered'},
+    Dropped: {code: 16, text: 'Course Dropped'},
+    Denied: {code:17, text: 'Schedule Denied'},
+    Partial: {code:18, text: 'Partial Payment Made'},
+    RefundDenied: {code:19, text: 'Refund Denied'}
 },
 /**
  * New code to support sending messages to socket clients

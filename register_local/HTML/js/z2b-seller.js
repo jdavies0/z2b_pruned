@@ -22,12 +22,14 @@ let s_count = '#seller_count';
 let s_id;
 let total_creditHours =0;
 let total_tuition=0;
+let s_inActiveOrders=0;
 
 /**
  * load the administration Seller Experience
  */
 function loadSellerUX (nested)
 {
+    currentPage = 'seller.html';
     console.log ("in loadSellerUX");
     console.log ("buyer.length = "+ buyers.length +" seller.length = "+sellers.length); 
     let toLoad = 'seller.html';
@@ -60,6 +62,14 @@ function setupSeller(page, nested)
     {$(s_notify).removeClass('on'); $(s_notify).addClass('off'); }
     else {$(s_notify).removeClass('off'); $(s_notify).addClass('on'); }
     updatePage('seller');
+    updatePage('skins');
+
+    $('#seller_school_logo').css('background-color' , '');
+    $('#seller_school_logo').css('background-color', textPrompts.skins_l.seller_logo_bg);
+    $('#seller_filter_prompt').css('color', textPrompts.skins_l.seller_filter_text_color);
+    $('#seller_count').css('color', textPrompts.skins_l.seller_filter_text_color);
+    
+
     let _clear = $('#seller_clear');
     let _list = $('#sellerOrderStatus');
     let _orderDiv = $('#'+sellerOrderDiv);
@@ -69,10 +79,11 @@ function setupSeller(page, nested)
     //
     _list.on('click', function(){listSellerOrders();});
     $('#seller').empty();
-    $('#seller').append(s_string);
+    //$('#seller').append(s_string);
+    $('#seller').append('registrar@'+textPrompts.skins_l.school_domain);
     $('#sellerCompany').empty();
-    $('#sellerCompany').append(sellers[0].companyName);
-    s_id = sellers[0].id;
+    $('#sellerCompany').append(textPrompts.skins_l.school_shortName);
+    s_id = 'registrar@'+textPrompts.skins_l.school_domain;
     z2bSubscribe('Seller', s_id);
     // create a function to execute when the user selects a different provider
       $('#seller').on('change', function() {
@@ -92,7 +103,7 @@ function listSellerOrders()
     //
     // seller instead of buyer
     //
-    options.id= $('#seller').find(':selected').val();
+    options.id= 'registrar@'+textPrompts.skins_l.school_domain;
     options.userID = options.id;
     $.when($.post('/composer/client/getMyOrders', options)).done(function(_results)
     {
@@ -111,13 +122,25 @@ function formatSellerOrders(_target, _orders)
 {
     _target.empty();
     let _str = ''; let _date = '';
-
+    let r_string = '';
     for (let each in _orders)
     {        
+        r_string = '';
         total_creditHours = 0;
         total_tuition = 0;
             (function(_idx, _arr)
-        { let _action = '<th><select id=s_action'+_idx+'><option value="'+textPrompts.orderProcess.NoAction.select+'">'+textPrompts.orderProcess.NoAction.message+'</option>';
+        {
+            let active_tag = 's_ActiveOrder';
+            if ( (_arr[_idx].cancelled != '') || (_arr[_idx].dropped != '') ) {
+                if ( _arr[_idx].tuitionPaid == _arr[_idx].tuitionRefunded )
+                {
+                    active_tag = 's_nonActiveOrder';
+                    s_inActiveOrders++;
+                }
+            }
+            _str += '<div id="s_orderType'+_idx+'" class="'+active_tag+'">';
+
+            let _action = '<th><select id=s_action'+_idx+' onchange="changePromptSeller('+_idx+');"><option value="'+textPrompts.orderProcess.NoAction.select+'">'+textPrompts.orderProcess.NoAction.message+'</option>';
         //
         // each order can have different states and the action that a buyer can take is directly dependent on the state of the order. 
         // this switch/case table displays selected order information based on its current status and displays selected actions, which
@@ -131,51 +154,91 @@ function formatSellerOrders(_target, _orders)
         {
         case orderStatus.PayRequest.code:
             _date = _arr[_idx].paymentRequested;
+            _action += '<option value="'+textPrompts.orderProcess.Cancel.select+'">'+textPrompts.orderProcess.Cancel.message+'</option>';
+            r_string += '<br/><div id="s_CancelPrompt'+_idx+'">'+textPrompts.orderProcess.Cancel.prompt+'<input id="s_reason_cancel'+_idx+'" type="text"></input></div>';
             break;
         case orderStatus.Bought.code:
             _date = _arr[_idx].bought;
+            // approve the registration
             _action += '<option value="'+textPrompts.orderProcess.Order.select+'">'+textPrompts.orderProcess.Order.message+'</option>';
+            // deny the registration
+            _action += '<option value="'+textPrompts.orderProcess.Deny.select+'">'+textPrompts.orderProcess.Deny.message+'</option>';
+            r_string += '<br/><div id="s_DenyPrompt'+_idx+'">'+textPrompts.orderProcess.Deny.prompt+'<input id="s_reason_deny'+_idx+'" type="text"></input></div>';
+            _action += '<option value="'+textPrompts.orderProcess.Cancel.select+'">'+textPrompts.orderProcess.Cancel.message+'</option>';
+            r_string += '<br/><div id="s_CancelPrompt'+_idx+'">'+textPrompts.orderProcess.Cancel.prompt+'<input id="s_reason_cancel'+_idx+'" type="text"></input></div>';
             break;
         case orderStatus.Delivered.code:
             _date = _arr[_idx].delivered;
             _action += '<option value="'+textPrompts.orderProcess.PayRequest.select+'">'+textPrompts.orderProcess.PayRequest.message+'</option>';
+            _action += '<option value="'+textPrompts.orderProcess.Cancel.select+'">'+textPrompts.orderProcess.Cancel.message+'</option>';
+            r_string += '<br/><div id="s_CancelPrompt'+_idx+'">'+textPrompts.orderProcess.Cancel.prompt+'<input id="s_reason_cancel'+_idx+'" type="text"></input></div>';
             break;
         case orderStatus.ShipRequest.code:
             _date = _arr[_idx].requestShipment;
+            _action += '<option value="'+textPrompts.orderProcess.Cancel.select+'">'+textPrompts.orderProcess.Cancel.message+'</option>';
+            r_string += '<br/><div id="s_CancelPrompt'+_idx+'">'+textPrompts.orderProcess.Cancel.prompt+'<input id="s_reason_cancel'+_idx+'" type="text"></input></div>';
             break;
         case orderStatus.Delivering.code:
             _date = _arr[_idx].delivering;
+            _action += '<option value="'+textPrompts.orderProcess.Cancel.select+'">'+textPrompts.orderProcess.Cancel.message+'</option>';
+            r_string += '<br/><div id="s_CancelPrompt'+_idx+'">'+textPrompts.orderProcess.Cancel.prompt+'<input id="s_reason_cancel'+_idx+'" type="text"></input></div>';
             break;
         case orderStatus.Ordered.code:
             _date = _arr[_idx].ordered;
+            _action += '<option value="'+textPrompts.orderProcess.Cancel.select+'">'+textPrompts.orderProcess.Cancel.message+'</option>';
+            r_string += '<br/><div id="s_CancelPrompt'+_idx+'">'+textPrompts.orderProcess.Cancel.prompt+'<input id="s_reason_cancel'+_idx+'" type="text"></input></div>';
             break;
         case orderStatus.Backordered.code:
             _date = _arr[_idx].dateBackordered + '<br/>'+_arr[_idx].backorder;
+            _action += '<option value="'+textPrompts.orderProcess.Cancel.select+'">'+textPrompts.orderProcess.Cancel.message+'</option>';
+            r_string += '<br/><div id="s_CancelPrompt'+_idx+'">'+textPrompts.orderProcess.Cancel.prompt+'<input id="s_reason_cancel'+_idx+'" type="text"></input></div>';
             break;
         case orderStatus.Dispute.code:
             _date = _arr[_idx].disputeOpened + '<br/>'+_arr[_idx].dispute;
             _action += '<option value="'+textPrompts.orderProcess.Resolve.select+'">'+textPrompts.orderProcess.Resolve.message+'</option>';
             _action += '<option value="'+textPrompts.orderProcess.Refund.select+'">'+textPrompts.orderProcess.Refund.message+'</option>';
-            let _string = '<br/>'+textPrompts.orderProcess.Refund.prompt+'<input id="s_reason'+_idx+'" type="text"></input>';
+            r_string = '<br/><div id="s_RefundPrompt'+_idx+'">'+textPrompts.orderProcess.Refund.prompt+'<input id="s_reason_refund'+_idx+'" type="text"></input></div>';
             break;
         case orderStatus.Resolve.code:
             _date = _arr[_idx].disputeResolved + '<br/>'+_arr[_idx].resolve;
             _action += '<option value="'+textPrompts.orderProcess.PayRequest.select+'">'+textPrompts.orderProcess.PayRequest.message+'</option>';
+            _action += '<option value="'+textPrompts.orderProcess.Cancel.select+'">'+textPrompts.orderProcess.Cancel.message+'</option>';
+            r_string += '<br/><div id="s_CancelPrompt'+_idx+'">'+textPrompts.orderProcess.Cancel.prompt+'<input id="s_reason_cancel'+_idx+'" type="text"></input></div>';
             break;
         case orderStatus.Cancelled.code:
             _date = _arr[_idx].cancelled;
             break;
         case orderStatus.Paid.code:
             _date = _arr[_idx].paid;
+            _action += '<option value="'+textPrompts.orderProcess.Cancel.select+'">'+textPrompts.orderProcess.Cancel.message+'</option>';
+            r_string += '<br/><div id="s_CancelPrompt'+_idx+'">'+textPrompts.orderProcess.Cancel.prompt+'<input id="s_reason_cancel'+_idx+'" type="text"></input></div>';
+            break;
+        case orderStatus.Authorize.code:
+            _date = _arr[_idx].approved;
+            _action += '<option value="'+textPrompts.orderProcess.Cancel.select+'">'+textPrompts.orderProcess.Cancel.message+'</option>';
+            r_string += '<br/><div id="s_CancelPrompt'+_idx+'">'+textPrompts.orderProcess.Cancel.prompt+'<input id="s_reason_cancel'+_idx+'" type="text"></input></div>';
+            break;
+        case orderStatus.RefundRequested.code:
+            _date = _arr[_idx].refundRequested;
+            break;
+        case orderStatus.Refunded.code:
+            _date = _arr[_idx].orderRefunded;
+            break;
+        case orderStatus.Dropped.code:
+            _date = _arr[_idx].dropped;
+            break;
+        case orderStatus.Partial.code:
+            _date = _arr[_idx].lastPayment;
+            _action += '<option value="'+textPrompts.orderProcess.Cancel.select+'">'+textPrompts.orderProcess.Cancel.message+'</option>';
+            r_string += '<br/><div id="s_CancelPrompt'+_idx+'">'+textPrompts.orderProcess.Cancel.prompt+'<input id="s_reason_cancel'+_idx+'" type="text"></input></div>';
             break;
         default:
             break;
         }
         let _button = '<th><button id="s_btn_'+_idx+'">'+textPrompts.orderProcess.ex_button+'</button></th>'
         _action += '</select>';
-        if (_idx > 0) {_str += '<div class="spacer"></div>';}
         _str += '<table class="wide"><tr><th>'+textPrompts.orderProcess.orderno+'</th><th>'+textPrompts.orderProcess.status+'</th><th class="right">'+textPrompts.orderProcess.total+'</th><th colspan="3" class="right message">'+textPrompts.orderProcess.buyer+findMember(_arr[_idx].buyer.split('#')[1],buyers).companyName+'</th></tr>';
-        _str += '<tr><th id ="s_order'+_idx+'" width="20%">'+_arr[_idx].id+'</th><th width="50%" id="s_status'+_idx+'">'+JSON.parse(_arr[_idx].status).text+': '+_date+'</th><th class="right">$'+_arr[_idx].amount+'.00</th>'+_action+'<br/>'+_button+'</tr></table>';
+        _str += '<tr><th id ="s_order'+_idx+'" width="20%">'+_arr[_idx].id+'</th><th width="50%" id="s_status'+_idx+'">'+JSON.parse(_arr[_idx].status).text+': '+_date+'</th><th class="right">$'+_arr[_idx].amount+'.00</th>'+_action+r_string+'<br/>'+_button+'</tr></table>';
         _str+= '<table class="wide"><tr align="center"><th>'+textPrompts.orderProcess.itemno+'</th><th>'+textPrompts.orderProcess.description+'</th><th>'+textPrompts.orderProcess.qty+'</th><th>'+textPrompts.orderProcess.price+'</th></tr>'
         for (let every in _arr[_idx].items)
         {(function(_idx2, _arr2)
@@ -188,10 +251,25 @@ function formatSellerOrders(_target, _orders)
         }
         _str += '<tr><th align="center"><b>Total</td><td></td><td align="center"><b>'+total_creditHours+'</td><td align="right"><b>$'+total_tuition+'.00</td></tr>';
         _str += '</table>';
+         // insert spacer 
+         if (_idx == 0 || _idx < _arr.length -1 ) {
+            _str += '<div id="spacer'+_idx+'" class="spacer"></div>';
+        }
+        _str += '</div>';
+        _str += '</div>';
     })(each, _orders);
     }
 
     _target.append(_str);
+    changeSellerView();
+    // Hide all input prompts initially.
+    for (let each in _orders)
+    {(function(_idx)
+        {
+            hidePromptsSeller(_idx);
+        })(each, _orders);
+    }
+
     for (let each in _orders)
     {(function(_idx, _arr)
       { $('#s_btn_'+_idx).on('click', function ()
@@ -199,16 +277,99 @@ function formatSellerOrders(_target, _orders)
           let options = {};
           options.action = $('#s_action'+_idx).find(':selected').text();
           options.orderNo = $('#s_order'+_idx).text();
-          options.participant = $('#seller').val();
+          options.participant = 'registrar@'+textPrompts.skins_l.school_domain;
           options.provider = $('#providers'+_idx).find(':selected').val();
-          if ((options.action === 'Resolve') || (options.action === 'Refund')) {options.reason = $('#s_reason'+_idx).val();}
+          switch (options.action)
+          {
+              case 'Resolve':
+                options.reason = $('#s_reason_resolve'+_idx).val();
+                break;
+              case 'Refund':
+                options.reason = $('#s_reason_refund'+_idx).val();
+                break;
+              case 'Deny Registration':
+                options.reason = $('#s_reason_deny'+_idx).val();
+                break;
+              case 'Cancel Schedule':
+                options.reason = $('#s_reason_cancel'+_idx).val();
+                break;
+              default:
+                break;
+          }
           $('#seller_messages').prepend(formatMessage(options.action+textPrompts.orderProcess.processing_msg.format(options.action, options.orderNo)+options.orderNo));
           $.when($.post('/composer/client/orderAction', options)).done(function (_results)
           { $('#seller_messages').prepend(formatMessage(_results.result)); });
       });
-        if (notifyMe(s_alerts, _arr[_idx].id)) {$('#s_status'+_idx).addClass('highlight'); }
+        if (notifyMe(s_alerts, _arr[_idx].id)) {$('#s_status'+_idx).addClass('highlight'); $('#orderStatus').show(); }
     })(each, _orders);
     }
     s_alerts = new Array();
     toggleAlert($('#seller_notify'), s_alerts, s_alerts.length);
+}
+
+/**
+ * Shows the needed input prompts
+ * @param {Index} _index - index of the current order
+ */
+function changePromptSeller(_index) {
+    hidePromptsSeller(_index);
+console.log("in change Prompt");
+    let _tmp = '#s_action' + _index;
+    let _val = $(_tmp).find(':selected').text();
+    switch (_val)
+    {
+        case 'Request Refund':
+            $('#s_RefundPrompt'+_index).show();        
+            break;
+        case 'Pay Tuition':
+            $('#s_PayPrompt'+_index).show();        
+            break;
+        case 'Cancel Schedule':
+            $('#s_CancelPrompt'+_index).show();    
+            break;
+        case 'Drop Schedule':
+            $('#s_DropPrompt'+_index).show();    
+            break;
+        case 'Deny Registration':
+            $('#s_DenyPrompt'+_index).show();
+            break;
+        default:
+            break;
+    }
+}
+
+/**
+ * Hides all of the input prompts
+ * @param {Index} _index - index of the current order
+ */
+function hidePromptsSeller(_idx) {
+    $('#s_PayPrompt'+_idx).hide();
+    $('#s_DisputePrompt'+_idx).hide();
+    $('#s_ResolvePrompt'+_idx).hide();
+    $('#s_CancelPrompt'+_idx).hide();
+    $('#s_DropPrompt'+_idx).hide();
+    $('#s_RefundPrompt'+_idx).hide();
+    $('#s_DenyPrompt'+_idx).hide();
+}
+
+function changeSellerView(){
+    if (s_inActiveOrders == 0)
+        return;
+        
+    // get the value of the selection
+    let _val = $('#s_DisplayPreference').val();
+    console.log("_val in changeSellerView "+_val);
+    switch (_val)
+    {
+        case 'ActiveOnly':
+            //$('#nonActiveOrder').hide();
+            $(".s_nonActiveOrder").addClass("hide");
+            $(".s_nonActiveOrder").removeClass("show");
+            break;
+        case 'ShowAll':
+            //$('#nonActiveOrder').show();
+            $(".s_nonActiveOrder").addClass("show");
+            $(".s_nonActiveOrder").removeClass("hide");
+            break;
+    }
 }

@@ -36,15 +36,19 @@ let orderStatus = {
     Ordered: {code: 4, text: 'Schedule Submitted to Cashier'},
     ShipRequest: {code: 5, text: 'Shipping Requested'},
     Delivered: {code: 6, text: 'Schedule Delivered'},
-    Delivering: {code: 15, text: 'Schedule being Delivered'},
     Backordered: {code: 7, text: 'Schedule Backordered'},
     Dispute: {code: 8, text: 'Schedule Disputed'},
     Resolve: {code: 9, text: 'Schedule Dispute Resolved'},
     PayRequest: {code: 10, text: 'Payment Requested'},
     Authorize: {code: 11, text: 'Payment Approved'},
+    RefundRequested: {code: 12, text: 'Schedule Refund Requested'},
+    Refunded: {code: 13, text: 'Schedule Refunded'},
     Paid: {code: 14, text: 'Payment Processed'},
-    Refund: {code: 12, text: 'Schedule Refund Requested'},
-    Refunded: {code: 13, text: 'Schedule Refunded'}
+    Delivering: {code: 15, text: 'Schedule being Delivered'},
+    Dropped: {code: 16, text: 'Course Dropped'},
+    Denied: {code:17, text: 'Schedule Denied'},
+    Partial: {code:18, text: 'Partial Payment Made'},
+    RefundDenied: {code:19, text: 'Refund Denied'}
 };
 
 /**

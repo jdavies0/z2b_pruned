@@ -18,15 +18,19 @@ var orderStatus = {
     Ordered: {code: 4, text: 'Schedule Submitted to Cashier'},
     ShipRequest: {code: 5, text: 'Shipping Requested'},
     Delivered: {code: 6, text: 'Schedule Delivered'},
-    Delivering: {code: 15, text: 'Schedule being Delivered'},
     Backordered: {code: 7, text: 'Schedule Backordered'},
     Dispute: {code: 8, text: 'Schedule Disputed'},
     Resolve: {code: 9, text: 'Schedule Dispute Resolved'},
     PayRequest: {code: 10, text: 'Payment Requested'},
     Authorize: {code: 11, text: 'Payment Approved'},
+    RefundRequested: {code: 12, text: 'Schedule Refund Requested'},
+    Refunded: {code: 13, text: 'Schedule Refunded'},
     Paid: {code: 14, text: 'Payment Processed'},
-    Refund: {code: 12, text: 'Schedule Refund Requested'},
-    Refunded: {code: 13, text: 'Schedule Refunded'}
+    Delivering: {code: 15, text: 'Schedule being Delivered'},
+    Dropped: {code: 16, text: 'Course Dropped'},
+    Denied: {code:17, text: 'Schedule Denied'},
+    Partial: {code:18, text: 'Partial Payment Made'},
+    RefundDenied: {code:19, text: 'Refund Denied'}
 };
 
 var ns = 'org.acme.Z2BTestNetwork';
@@ -39,15 +43,20 @@ var ns = 'org.acme.Z2BTestNetwork';
 function CreateOrder(purchase) {
     purchase.order.buyer = purchase.buyer;
     purchase.order.amount = purchase.amount;
+    purchase.order.seller = purchase.seller;
     purchase.order.financeCo = purchase.financeCo;
     purchase.order.created = new Date().toISOString();
     purchase.order.status = JSON.stringify(orderStatus.Created);
+    // kicking this to auto-Buy
+    purchase.order.bought = new Date().toISOString();
+    purchase.order.status = JSON.stringify(orderStatus.Bought);
     return getAssetRegistry('org.acme.Z2BTestNetwork.Order')
         .then(function (assetRegistry) {
             return assetRegistry.update(purchase.order)
             .then (function (_res) 
             {
-                z2bEmit('Created', purchase.order);
+                //z2bEmit('Created', purchase.order);
+                z2bEmit('Bought', purchase.order);
                 return (_res);
             }).catch(function(error){return(error);});
         });
@@ -58,7 +67,8 @@ function CreateOrder(purchase) {
  * @transaction
  */
 function Buy(purchase) {
-    if (purchase.order.status == JSON.stringify(orderStatus.Created))
+    if ( (purchase.order.status == JSON.stringify(orderStatus.Created))
+        || (purchase.order.status == JSON.stringify(orderStatus.Denied)) )
     {
         purchase.order.buyer = purchase.buyer;
         purchase.order.seller = purchase.seller;
@@ -81,31 +91,31 @@ function Buy(purchase) {
  * @transaction
  */
 function OrderCancel(purchase) {
-    if ((purchase.order.status == JSON.stringify(orderStatus.Created)) || (purchase.order.status == JSON.stringify(orderStatus.Bought)) || (purchase.order.status == JSON.stringify(orderStatus.Backordered)))
-    {
-        purchase.order.buyer = purchase.buyer;
-        purchase.order.seller = purchase.seller;
-        purchase.order.cancelled = new Date().toISOString();
-        purchase.order.status = JSON.stringify(orderStatus.Cancelled);
-        return getAssetRegistry('org.acme.Z2BTestNetwork.Order')
-            .then(function (assetRegistry) {
-                return assetRegistry.update(purchase.order)
-                .then (function (_res) 
-                {
-                    z2bEmit('Cancelled', purchase.order);
-                    return (_res);
-                }).catch(function(error){return(error);});
-            });
-        }
+    purchase.order.buyer = purchase.buyer;
+    purchase.order.seller = purchase.seller;
+    purchase.order.financeCo = purchase.financeCo
+    purchase.order.cancelled = new Date().toISOString();
+    purchase.order.status = JSON.stringify(orderStatus.Cancelled);
+    purchase.order.cancel = purchase.cancel;
+    return getAssetRegistry('org.acme.Z2BTestNetwork.Order')
+        .then(function (assetRegistry) {
+            return assetRegistry.update(purchase.order)
+            .then (function (_res) 
+            {
+                z2bEmit('Cancelled', purchase.order);
+                return (_res);
+            }).catch(function(error){return(error);});
+        });
 }
+
 /**
  * Record a request to order by seller from supplier
+ * Repurposed to act as submit to cashier (approve)
  * @param {org.acme.Z2BTestNetwork.OrderFromSupplier} purchase - the order to be processed
  * @transaction
  */
 function OrderFromSupplier(purchase) {
-    console.log('In OrderFromSupplier');
-    if (purchase.order.status == JSON.stringify(orderStatus.Bought))
+    if ( purchase.order.status == JSON.stringify(orderStatus.Bought) )
     {
         purchase.order.financeCo = purchase.financeCo;
         purchase.order.ordered = new Date().toISOString();
@@ -127,7 +137,8 @@ function OrderFromSupplier(purchase) {
  * @transaction
  */
 function RequestShipping(purchase) {
-    if ((purchase.order.status == JSON.stringify(orderStatus.Ordered)) || (purchase.order.status == JSON.stringify(orderStatus.Backordered)))
+    if ( (purchase.order.status == JSON.stringify(orderStatus.Ordered))
+    || (purchase.order.status == JSON.stringify(orderStatus.Backordered)) )
     {
         purchase.order.shipper = purchase.shipper;
         purchase.order.requestShipment = new Date().toISOString();
@@ -149,7 +160,8 @@ function RequestShipping(purchase) {
  * @transaction
  */
 function Delivering(purchase) {
-    if ((purchase.order.status == JSON.stringify(orderStatus.ShipRequest)) || (JSON.parse(purchase.order.status).code == orderStatus.Delivering.code))
+    if ( (purchase.order.status == JSON.stringify(orderStatus.ShipRequest))
+    || (JSON.parse(purchase.order.status).code == orderStatus.Delivering.code) )
     {
         purchase.order.delivering = new Date().toISOString();
         var _status = orderStatus.Delivering;
@@ -172,7 +184,8 @@ function Delivering(purchase) {
  * @transaction
  */
 function Deliver(purchase) {
-    if ((purchase.order.status == JSON.stringify(orderStatus.ShipRequest)) || (JSON.parse(purchase.order.status).code == orderStatus.Delivering.code))
+    if ( (purchase.order.status == JSON.stringify(orderStatus.ShipRequest))
+    || (JSON.parse(purchase.order.status).code == orderStatus.Delivering.code) )
     {
         purchase.order.delivered = new Date().toISOString();
         purchase.order.status = JSON.stringify(orderStatus.Delivered);
@@ -193,30 +206,43 @@ function Deliver(purchase) {
  * @transaction
  */
 function RequestPayment(purchase) {
-    if ((JSON.parse(purchase.order.status).text == orderStatus.Order.text) || (JSON.parse(purchase.order.status).text == orderStatus.Resolve.text))
-        {purchase.order.status = JSON.stringify(orderStatus.PayRequest);
-        purchase.order.financeCo = purchase.financeCo;
-        purchase.order.paymentRequested = new Date().toISOString();
-        return getAssetRegistry('org.acme.Z2BTestNetwork.Order')
-        .then(function (assetRegistry) {
-            return assetRegistry.update(purchase.order)
-            .then (function (_res) 
-            {
-                z2bEmit('PaymentRequested', purchase.order);
-                return (_res);
-            }).catch(function(error){return(error);});
-        });
+    if ( (JSON.parse(purchase.order.status).text == orderStatus.Ordered.text) )
+        {
+            purchase.order.status = JSON.stringify(orderStatus.PayRequest);
+            purchase.order.financeCo = purchase.financeCo;
+            purchase.order.paymentRequested = new Date().toISOString();
+            return getAssetRegistry('org.acme.Z2BTestNetwork.Order')
+            .then(function (assetRegistry) {
+                return assetRegistry.update(purchase.order)
+                .then (function (_res) 
+                {
+                    z2bEmit('PaymentRequested', purchase.order);
+                    return (_res);
+                }).catch(function(error){return(error);});
+            });
         }
 }
  /**
+ * Make a payment to the cashier
+ * 
  * Record a payment to the seller
  * @param {org.acme.Z2BTestNetwork.AuthorizePayment} purchase - the order to be processed
  * @transaction
  */
 function AuthorizePayment(purchase) {
-    if ((JSON.parse(purchase.order.status).text == orderStatus.PayRequest.text ) || (JSON.parse(purchase.order.status).text == orderStatus.Resolve.text ))
-    {purchase.order.status = JSON.stringify(orderStatus.Authorize);
+    if ( (JSON.parse(purchase.order.status).text == orderStatus.PayRequest.text)
+        || (JSON.parse(purchase.order.status).text == orderStatus.Partial.text) )
+    {
+        purchase.order.status = JSON.stringify(orderStatus.Partial);
         purchase.order.approved = new Date().toISOString();
+        purchase.order.lastPayment = new Date().toISOString();
+        purchase.order.tuitionPaid += purchase.tuitionPaid;
+        // mark the purchase as paid in full if tuitition paid is >= tuition amount
+        if ( purchase.order.tuitionPaid >= purchase.order.amount )
+        {
+            purchase.order.status = JSON.stringify(orderStatus.Paid);
+            purchase.order.paid = new Date().toISOString();    
+        }
         return getAssetRegistry('org.acme.Z2BTestNetwork.Order')
         .then(function (assetRegistry) {
             return assetRegistry.update(purchase.order)
@@ -226,9 +252,11 @@ function AuthorizePayment(purchase) {
                 return (_res);
             }).catch(function(error){return(error);});
         });
-        }
+    }
 }
  /**
+ * Cashier accepts the payment
+ * 
  * Record a payment to the seller
  * @param {org.acme.Z2BTestNetwork.Pay} purchase - the order to be processed
  * @transaction
@@ -292,8 +320,8 @@ function Resolve(purchase) {
  * @transaction
  */
 function Refund(purchase) {
-    purchase.order.status = JSON.stringify(orderStatus.Refund);
-    purchase.order.refund = purchase.refund;
+    purchase.order.status = JSON.stringify(orderStatus.Refunded);
+    purchase.order.tuitionRefunded += parseInt(purchase.tuitionRefunded, 10);
     purchase.order.orderRefunded = new Date().toISOString();
     return getAssetRegistry('org.acme.Z2BTestNetwork.Order')
         .then(function (assetRegistry) {
@@ -305,6 +333,55 @@ function Refund(purchase) {
             }).catch(function(error){return(error);});
         });
 }
+
+/**
+ * Record a refund request from the buyer
+ * @param {org.acme.Z2BTestNetwork.RequestRefund} purchase - the order to be processed
+ * @transaction
+ */
+function RequestRefund(purchase) {
+    if (purchase.order.paid != '' || purchase.order.lastPayment != '')
+    {
+        purchase.order.status = JSON.stringify(orderStatus.RefundRequested);
+        purchase.order.refundRequest = purchase.refundRequest;
+        purchase.order.refundRequested = new Date().toISOString();
+        // update the amount refunded
+        purchase.order.refAmtRequested = parseInt(purchase.refAmtRequested, 10);
+        return getAssetRegistry('org.acme.Z2BTestNetwork.Order')
+            .then(function (assetRegistry) {
+                return assetRegistry.update(purchase.order)
+                .then (function (_res) 
+                {
+                    z2bEmit('RefundRequested', purchase.order);
+                    return (_res);
+                }).catch(function(error){return(error);});
+            });
+    }
+}
+
+/**
+ * Deny the refund with reason
+ * @param {org.acme.Z2BTestNetwork.DenyRefund} purchase - the registration to be processed
+ * @transaction
+ */
+function DenyRefund(purchase) {
+    if (purchase.order.RefundRequested != '')
+    {
+        purchase.order.status = JSON.stringify(orderStatus.RefundDenied);
+        purchase.order.refundDeny = purchase.refundDeny;
+        purchase.order.refundDenied = new Date().toISOString();
+        return getAssetRegistry('org.acme.Z2BTestNetwork.Order')
+            .then(function (assetRegistry) {
+                return assetRegistry.update(purchase.order)
+                .then (function (_res) 
+                {
+                    z2bEmit('RefundDenied', purchase.order);
+                    return (_res);
+                }).catch(function(error){return(error);});
+            });
+    }
+}
+
  /**
  * Record a backorder by the supplier
  * @param {org.acme.Z2BTestNetwork.BackOrder} purchase - the order to be processed
@@ -324,6 +401,51 @@ function BackOrder(purchase) {
             return (_res);
         }).catch(function(error){return(error);});
     });
+}
+
+/**
+ * Drop an entire schedule
+ * @param {org.acme.Z2BTestNetwork.DropSchedule} purchase - the schedule to be processed
+ * @transaction
+ */
+function DropSchedule(purchase) {
+    purchase.order.buyer = purchase.buyer;
+    purchase.order.seller = purchase.seller;
+    purchase.order.financeCo = purchase.financeCo;
+    purchase.order.dropped = new Date().toISOString();
+    purchase.order.status = JSON.stringify(orderStatus.Dropped);
+    purchase.order.drop = purchase.drop;
+    return getAssetRegistry('org.acme.Z2BTestNetwork.Order')
+        .then(function (assetRegistry) {
+            return assetRegistry.update(purchase.order)
+            .then (function (_res) 
+            {
+                z2bEmit('Dropped', purchase.order);
+                return (_res);
+            }).catch(function(error){return(error);});
+        });
+}
+
+/**
+ * Registrar Denies registration
+ * @param {org.acme.Z2BTestNetwork.DenySchedule} purchase - the schedule to be processed
+ * @transaction
+ */
+function DenySchedule(purchase) {
+    purchase.order.buyer = purchase.buyer;
+    purchase.order.seller = purchase.seller;
+    purchase.order.denied = new Date().toISOString();
+    purchase.order.deny = purchase.deny;
+    purchase.order.status = JSON.stringify(orderStatus.Denied);
+    return getAssetRegistry('org.acme.Z2BTestNetwork.Order')
+        .then(function (assetRegistry) {
+            return assetRegistry.update(purchase.order)
+            .then(function (_res)
+            {
+                z2bEmit('Denied', purchase.order);
+                return (_res);
+            }).catch(function(error){return(error);});
+        });
 }
 
 /**
@@ -358,17 +480,19 @@ function z2bEmit(_event, _order)
 
         break;
         case 'Bought':
-            z2bEvent.buyerID = _order.buyer.$identifier;
+        case 'Denied':
             z2bEvent.sellerID = _order.seller.$identifier;
             z2bEvent.financeCoID = _order.financeCo.$identifier;
         break;
         case 'PaymentRequested':
-        z2bEvent.buyerID = _order.buyer.$identifier;
+        case 'RefundRequested':
+        case 'RefundDenied':
         z2bEvent.financeCoID = _order.financeCo.$identifier;
         break;
         case 'Ordered':
         case 'Cancelled':
         case 'Backordered':
+        case 'Dropped':
             z2bEvent.sellerID = _order.seller.$identifier;
             z2bEvent.financeCoID = _order.financeCo.$identifier;
         break;
@@ -376,20 +500,17 @@ function z2bEmit(_event, _order)
         case 'DeliveryStarted':
         case 'DeliveryCompleted':
             z2bEvent.sellerID = _order.seller.$identifier;
-            z2bEvent.providerID = _order.provider.$identifier;
-            z2bEvent.shipperID = _order.shipper.$identifier;
         break;
         case 'DisputeOpened':
         case 'Resolved':
-        case 'Refunded':
         case 'Paid':
             z2bEvent.sellerID = _order.seller.$identifier;
-            z2bEvent.providerID = _order.provider.$identifier;
-            z2bEvent.shipperID = _order.shipper.$identifier;
+            z2bEvent.financeCoID = _order.financeCo.$identifier;
+        break;
+        case 'Refunded':
             z2bEvent.financeCoID = _order.financeCo.$identifier;
         break;
         case 'PaymentAuthorized':
-            z2bEvent.sellerID = _order.seller.$identifier;
             z2bEvent.financeCoID = _order.financeCo.$identifier;
         break;
         default:

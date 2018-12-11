@@ -1,8 +1,7 @@
-{
-  "index": {"language": "Wake Technical Community College",
+    "index": {
     "title": "Wake Tech Blockchain Registration for:",
     "header": "WakeTech Online Registration",
-    "titleBar": "WakeTech Blockchain Registration",
+    "titleBar": "Blockchain Registration System",
     "idx_unified": "load Unified User Experience",
     "idx_buyer": "load Student User Experience",
     "idx_seller": "load Registrar User Experience",
@@ -71,23 +70,9 @@
     "title": "Student Chapter 12. Select Student to see their view: ",
     "newOrder": "Create New Schedule",
     "updateOrder": "Update Schedule",
-    "orderStatus": "Display Schedule Status",
-    "residentCreditCost": 76,
-    "nonResidentCreditCost":268
+    "orderStatus": "Display Schedule Status"
   },
-  "buyer_login": {
-    "loginImage":"blah.jpg",
-    "title": "Student Login ",
-    "loginPrompt": "Login:",
-    "loginHint": "Note: Use your full school email address as your login",
-    "loginPasswordPrompt": "Password:",
-    "loginPasswordHint": "Reset my password",
-    "loginDefault": "",
-    "loginPasswordDefault": "",
-    "loginButton":"Login",
-    "loginButtonColor":"#0577b1",
-    "residentCreditCost": 76,
-    "nonResidentCreditCost":268
+  "buyer_login": { 
   },
   "createConnectionProfile": {
     "title": "type the name of the new profile here: ",
@@ -254,9 +239,10 @@
     "noDispute": "(not in Dispute)",
     "refundRequested": "Refund Requested",
     "noRefundRequested": "(no request for refund)"
-  },
-  "skins": {
-    "school_logo":"<img src=\"http://www.movingstuff.com/z2b_assets/wtcc_my_header.jpg\">",
-    "school_domain":"waketech.edu"
-  }
-}
+    },
+    "skins": {
+      "financeCo_filter_text_color": "#ffffff",
+      "financeCo_logo_bg":"#076A05",
+      "financeCo_logo":"<img src=\"/assets/easymoney.jpg\">",
+      "school_logo":"<img src=\"/assets/unc/my_header.jpg\">"
+    }

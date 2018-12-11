@@ -15,6 +15,8 @@
 // z2c-utilities.js
 
 'use strict';
+let currentPage = '';
+
 /**
   * creates a set of utilities inside the named space: z2c
  * All utilities are accessed as z2c.functionName()
@@ -72,7 +74,9 @@ function updatePage(_page)
 {
     for (let each in textPrompts[_page]){(function(_idx, _array)
         {$('#'+_idx).empty();$('#'+_idx).append(getDisplaytext(_page, _idx));})(each, textPrompts[_page])}
-}
+    for (let each in textPrompts[_page+"_l"]){(function(_idx, _array)
+            {$('#'+_idx).empty();$('#'+_idx).append(getDisplaytext(_page+"_l", _idx));})(each, textPrompts[_page+"_l"])}
+    }
 
 /**
 * gets text from the JSON object textPrompts for the requested page and item
@@ -102,6 +106,24 @@ function goMultiLingual(_language, _page)
         {textLocations = _locations;
             textPrompts = JSON.parse(_prompts[0]);
             updatePage(_page);
+            updatePage(_page+"_l");
+            switch (currentPage)
+            {
+                case 'buyer.html':
+                    loadBuyerUX();
+                    break;
+                case 'seller.html':
+                    loadSellerUX();
+                    break;
+                case 'financeCo.html':
+                    loadFinanceCoUX();
+                    break;
+                case 'singleUX.html':
+                    singleUX();
+                    break;
+                default:
+                    break;
+            }
         });
         let _choices = $('#lang_choices');
         _choices.empty(); let _str = '';

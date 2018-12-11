@@ -1,0 +1,28 @@
+"index_l": {"language": "University of North Carolina at Chapel Hill"
+},
+"buyer_l": {
+  "residentCreditCost": 76,
+  "nonResidentCreditCost":268
+},
+"buyer_login_l": {
+  "loginImage":"blah.jpg",
+  "title": "Student Login ",
+  "loginPrompt": "Login:",
+  "loginHint": "Note: Use your full school email address as your login",
+  "loginPasswordPrompt": "Password:",
+  "loginPasswordHint": "Reset my password",
+  "loginDefault": "",
+  "loginPasswordDefault": "",
+  "loginButton":"Login",
+  "loginButtonColor":"#0577b1"
+  },
+"skins_l": {
+    "school_assets":"/assets/unc/",
+    "logo_bg":"#FFFFFF",
+    "seller_filter_text_color": "#000000",
+    "seller_logo_bg":"#FFFFFF",
+    "seller_school_logo":"<img src=\"/assets/unc/admin_header.png\">",
+    "school_logo":"<img src=\"/assets/unc/my_header.jpg\">",
+    "school_domain":"unc.edu",
+    "school_shortName":"UNC"
+}
